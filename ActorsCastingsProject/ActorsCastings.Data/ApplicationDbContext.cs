@@ -12,6 +12,17 @@ namespace ActorsCastings.Web.Data
         {
         }
 
+        public virtual DbSet<ActorProfile> ActorProfiles { get; set; }
+        public virtual DbSet<CastingAgentProfile> CastingAgentProfiles { get; set; }
+        public virtual DbSet<Movie> Movies { get; set; }
+        public virtual DbSet<Play> Plays { get; set; }
+        public virtual DbSet<Casting> Castings { get; set; }
+        public virtual DbSet<ActorCasting> ActorsCastings { get; set; }
+        public virtual DbSet<ActorMovie> ActorsMovies { get; set; }
+        public virtual DbSet<ActorPlay> ActorsPlays { get; set; }
+
+
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
