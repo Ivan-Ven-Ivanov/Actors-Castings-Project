@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ActorsCastings.Data\ActorsCastings.Data.csproj" />
+    <ProjectReference Include="..\ActorsCastings.Web.ViewModels\ActorsCastings.Web.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>
