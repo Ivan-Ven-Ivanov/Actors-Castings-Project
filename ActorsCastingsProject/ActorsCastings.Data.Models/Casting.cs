@@ -41,5 +41,9 @@ namespace ActorsCastings.Data.Models
         public Guid CastingAgentId { get; set; }
 
         public CastingAgentProfile CastingAgent { get; set; } = null!;
+
+        [Required]
+        [Comment("Soft delete")]
+        public bool IsDeleted { get; set; }
     }
 }

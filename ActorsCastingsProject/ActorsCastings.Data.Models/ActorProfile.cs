@@ -47,6 +47,10 @@ namespace ActorsCastings.Data.Models
         [Required]
         public ApplicationUser User { get; set; }
 
+        [Required]
+        [Comment("Soft delete")]
+        public bool IsDeleted { get; set; }
+
         public IList<ActorMovie> ActorsMovies { get; set; }
             = new List<ActorMovie>();
 

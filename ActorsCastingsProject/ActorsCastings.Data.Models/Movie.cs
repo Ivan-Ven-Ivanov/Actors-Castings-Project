@@ -38,6 +38,10 @@ namespace ActorsCastings.Data.Models
         [Comment("Image URL of the movie")]
         public string? ImageUrl { get; set; }
 
+        [Required]
+        [Comment("Soft delete")]
+        public bool IsDeleted { get; set; }
+
         public IList<ActorMovie> ActorsMovies { get; set; }
             = new List<ActorMovie>();
     }
