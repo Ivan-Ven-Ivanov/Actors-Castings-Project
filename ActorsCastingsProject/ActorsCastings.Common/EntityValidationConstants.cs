@@ -37,6 +37,7 @@
             public const int CastingTitleMaxLength = 100;
             public const int CastingDescriptionMinLength = 10;
             public const int CastingDescriptionMaxLength = 500;
+            public const string CastingCastingEndDateTimeFormatString = "HH dd.MM.yy";
         }
 
         public static class CastingAgentProfile

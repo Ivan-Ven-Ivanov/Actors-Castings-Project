@@ -1,0 +1,20 @@
+﻿@model IEnumerable<CastingViewModel>
+
+<h2>Castings</h2>
+
+<a asp-action="Create" class="btn-primary m-1"><strong>Add new casting</strong></a>
+
+<div class="row">
+    @foreach (var casting in Model)
+    {
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">@casting.Title</h5>
+                    <p class="card-text">@casting.Description</p>
+                    <a asp-action="Details" asp-route-id="@casting.Id" class="btn btn-secondary">View casting details</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
