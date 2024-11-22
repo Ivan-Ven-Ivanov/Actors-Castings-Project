@@ -2,7 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
+using ActorsCastings.Common;
 using ActorsCastings.Data.Models;
+using ActorsCastings.Web.Data;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -24,12 +26,15 @@ namespace ActorsCastings.Web.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
 
+        private readonly ApplicationDbContext _context;
+
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             IUserStore<ApplicationUser> userStore,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            ApplicationDbContext context)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -37,6 +42,7 @@ namespace ActorsCastings.Web.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _context = context;
         }
 
         /// <summary>
@@ -91,6 +97,11 @@ namespace ActorsCastings.Web.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            [Required(ErrorMessage = "This field is required")]
+            [RegularExpression("Actor|CastingAgent", ErrorMessage = "Invalid role")]
+            [Display(Name = "You are:")]
+            public string Role { get; set; }
         }
 
 
@@ -114,6 +125,29 @@ namespace ActorsCastings.Web.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
+                    await _userManager.AddToRoleAsync(user, Input.Role);
+
+                    if (Input.Role == ApplicationRoles.Actor)
+                    {
+                        ActorProfile actor = new ActorProfile();
+                        actor.UserId = user.Id;
+
+                        user.ActorProfileId = actor.Id;
+
+                        await _context.ActorProfiles.AddAsync(actor);
+                    }
+                    else if (Input.Role == ApplicationRoles.CastingAgent)
+                    {
+                        CastingAgentProfile castingAgent = new CastingAgentProfile();
+                        castingAgent.UserId = user.Id;
+
+                        user.CastingAgentProfileId = castingAgent.Id;
+
+                        await _context.CastingAgentProfiles.AddAsync(castingAgent);
+                    }
+
+                    await _context.SaveChangesAsync();
+
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);

@@ -24,6 +24,7 @@
     <ProjectReference Include="..\ActorsCastings.Data.Models\ActorsCastings.Data.Models.csproj" />
     <ProjectReference Include="..\ActorsCastings.Data\ActorsCastings.Data.csproj" />
     <ProjectReference Include="..\ActorsCastings.Web.ViewModels\ActorsCastings.Web.ViewModels.csproj" />
+    <ProjectReference Include="..\AvtorsCastings.Web.Infrastructure\ActorsCastings.Web.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

@@ -18,7 +18,6 @@ namespace ActorsCastings.Web.Controllers
         {
             _context = context;
             _userManager = userManager;
-
         }
 
         [HttpGet]

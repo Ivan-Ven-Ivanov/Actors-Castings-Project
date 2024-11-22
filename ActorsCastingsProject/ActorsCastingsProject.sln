@@ -3,19 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActorsCastings.Web", "ActorsCastings.Web\ActorsCastings.Web.csproj", "{563A62BB-1C96-46E5-A85D-311F377CDCA6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActorsCastings.Web", "ActorsCastings.Web\ActorsCastings.Web.csproj", "{563A62BB-1C96-46E5-A85D-311F377CDCA6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActorsCastings.Web.ViewModels", "ActorsCastings.Web.ViewModels\ActorsCastings.Web.ViewModels.csproj", "{E9B12A89-4579-4F70-B342-E3853BCC4C7D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActorsCastings.Web.ViewModels", "ActorsCastings.Web.ViewModels\ActorsCastings.Web.ViewModels.csproj", "{E9B12A89-4579-4F70-B342-E3853BCC4C7D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActorsCastings.Common", "ActorsCastings.Common\ActorsCastings.Common.csproj", "{E1DD57E1-CA9D-4447-AE4A-10DD0F21867C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActorsCastings.Common", "ActorsCastings.Common\ActorsCastings.Common.csproj", "{E1DD57E1-CA9D-4447-AE4A-10DD0F21867C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActorsCastings.Data.Models", "ActorsCastings.Data.Models\ActorsCastings.Data.Models.csproj", "{1257CA8A-3405-4AEF-B1D3-2C135054BCC8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActorsCastings.Data.Models", "ActorsCastings.Data.Models\ActorsCastings.Data.Models.csproj", "{1257CA8A-3405-4AEF-B1D3-2C135054BCC8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{09D87C71-CFEB-4B5B-A21B-E5C535DEE4A4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{E12612C0-20E4-4FE1-98A8-C48A51FC654C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActorsCastings.Data", "ActorsCastings.Data\ActorsCastings.Data.csproj", "{5DD54BF5-2F15-464D-8DE3-D381396B6548}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActorsCastings.Data", "ActorsCastings.Data\ActorsCastings.Data.csproj", "{5DD54BF5-2F15-464D-8DE3-D381396B6548}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActorsCastings.Web.Infrastructure", "AvtorsCastings.Web.Infrastructure\ActorsCastings.Web.Infrastructure.csproj", "{F055D604-5559-457D-AF3A-0C5F0601A9C6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +45,10 @@ Global
 		{5DD54BF5-2F15-464D-8DE3-D381396B6548}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5DD54BF5-2F15-464D-8DE3-D381396B6548}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5DD54BF5-2F15-464D-8DE3-D381396B6548}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F055D604-5559-457D-AF3A-0C5F0601A9C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F055D604-5559-457D-AF3A-0C5F0601A9C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F055D604-5559-457D-AF3A-0C5F0601A9C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F055D604-5559-457D-AF3A-0C5F0601A9C6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -52,6 +58,7 @@ Global
 		{E9B12A89-4579-4F70-B342-E3853BCC4C7D} = {09D87C71-CFEB-4B5B-A21B-E5C535DEE4A4}
 		{1257CA8A-3405-4AEF-B1D3-2C135054BCC8} = {E12612C0-20E4-4FE1-98A8-C48A51FC654C}
 		{5DD54BF5-2F15-464D-8DE3-D381396B6548} = {E12612C0-20E4-4FE1-98A8-C48A51FC654C}
+		{F055D604-5559-457D-AF3A-0C5F0601A9C6} = {09D87C71-CFEB-4B5B-A21B-E5C535DEE4A4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AD30E846-29DB-416E-AF31-CA581A77BACE}
