@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
-using static ActorsCastings.Common.ApplicationConstants.MovieValidationConstants;
+using static ActorsCastings.Common.EntityValidationConstants.Movie;
 
 namespace ActorsCastings.Data.Models
 {

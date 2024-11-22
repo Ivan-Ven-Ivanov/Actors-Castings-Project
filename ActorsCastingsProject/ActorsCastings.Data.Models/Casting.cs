@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-using static ActorsCastings.Common.ApplicationConstants.CastingValidationConstants;
+using static ActorsCastings.Common.EntityValidationConstants.Casting;
 
 namespace ActorsCastings.Data.Models
 {
