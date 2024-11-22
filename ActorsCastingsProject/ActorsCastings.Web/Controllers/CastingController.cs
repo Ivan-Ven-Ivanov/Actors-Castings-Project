@@ -1,6 +1,8 @@
-﻿using ActorsCastings.Data.Models;
+﻿using ActorsCastings.Common;
+using ActorsCastings.Data.Models;
 using ActorsCastings.Web.Data;
 using ActorsCastings.Web.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -37,12 +39,14 @@ namespace ActorsCastings.Web.Controllers
             return View(models);
         }
 
+        [Authorize(Roles = ApplicationRoles.CastingAgent)]
         [HttpGet]
         public IActionResult Add()
         {
             return View(new CastingViewModel());
         }
 
+        [Authorize(Roles = ApplicationRoles.CastingAgent)]
         [HttpPost]
         public async Task<IActionResult> Add(CastingViewModel model)
         {

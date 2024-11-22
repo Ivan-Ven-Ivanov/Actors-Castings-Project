@@ -127,26 +127,7 @@ namespace ActorsCastings.Web.Areas.Identity.Pages.Account
                 {
                     await _userManager.AddToRoleAsync(user, Input.Role);
 
-                    if (Input.Role == ApplicationRoles.Actor)
-                    {
-                        ActorProfile actor = new ActorProfile();
-                        actor.UserId = user.Id;
 
-                        user.ActorProfileId = actor.Id;
-
-                        await _context.ActorProfiles.AddAsync(actor);
-                    }
-                    else if (Input.Role == ApplicationRoles.CastingAgent)
-                    {
-                        CastingAgentProfile castingAgent = new CastingAgentProfile();
-                        castingAgent.UserId = user.Id;
-
-                        user.CastingAgentProfileId = castingAgent.Id;
-
-                        await _context.CastingAgentProfiles.AddAsync(castingAgent);
-                    }
-
-                    await _context.SaveChangesAsync();
 
                     _logger.LogInformation("User created a new account with password.");
 
@@ -169,6 +150,16 @@ namespace ActorsCastings.Web.Areas.Identity.Pages.Account
                     else
                     {
                         await _signInManager.SignInAsync(user, isPersistent: false);
+
+                        if (Input.Role == ApplicationRoles.Actor)
+                        {
+                            return RedirectToAction("CompleteProfile", "Actor");
+                        }
+                        else if (Input.Role == ApplicationRoles.CastingAgent)
+                        {
+                            return RedirectToAction("CompleteProfile", "CastingAgent");
+                        }
+
                         return LocalRedirect(returnUrl);
                     }
                 }

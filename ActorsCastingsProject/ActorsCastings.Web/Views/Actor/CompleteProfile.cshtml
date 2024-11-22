@@ -1,0 +1,32 @@
+﻿@model ActorProfileViewModel
+
+<h1>Complete Your Actor Profile</h1>
+
+<form asp-action="CompleteProfile" method="post">
+    <div class="form-group">
+        <label asp-for="FirstName"></label>
+        <input asp-for="FirstName" class="form-control" />
+        <span asp-validation-for="FirstName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="LastName"></label>
+        <input asp-for="LastName" class="form-control" />
+        <span asp-validation-for="LastName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Age"></label>
+        <input asp-for="Age" class="form-control" />
+        <span asp-validation-for="Age" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ProfilePictureUrl"></label>
+        <input asp-for="ProfilePictureUrl" class="form-control" />
+        <span asp-validation-for="ProfilePictureUrl" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Portfolio"></label>
+        <input asp-for="Portfolio" class="form-control" />
+        <span asp-validation-for="Portfolio" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>

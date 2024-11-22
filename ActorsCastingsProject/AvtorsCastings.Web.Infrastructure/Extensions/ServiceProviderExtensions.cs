@@ -5,7 +5,7 @@ using static ActorsCastings.Common.ApplicationRoles;
 
 namespace ActorsCastings.Web.Infrastructure.Extensions
 {
-    public static class ServiceCollectionExtensions
+    public static class ServiceProviderExtensions
     {
         public static async Task SeedRoles(this IServiceProvider serviceProvider)
         {

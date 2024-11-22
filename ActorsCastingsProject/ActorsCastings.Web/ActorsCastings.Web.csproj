@@ -27,4 +27,8 @@
     <ProjectReference Include="..\AvtorsCastings.Web.Infrastructure\ActorsCastings.Web.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\CastingAgent\" />
+  </ItemGroup>
+
 </Project>
