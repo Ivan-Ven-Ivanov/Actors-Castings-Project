@@ -6,12 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ActorsCastings.Web.Controllers
 {
-    public class Actor : Controller
+    public class ActorController : Controller
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public Actor(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public ActorController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _userManager = userManager;
