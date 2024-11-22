@@ -1,0 +1,24 @@
+﻿@model CastingViewModel
+
+<h2>Add a New Casting</h2>
+
+<form asp-action="Add" method="post">
+    <div>
+        <label for="Title">Casting Title</label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+    <div>
+        <label for="Description">Description</label>
+        <input asp-for="Description" class="form-control" />
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <div>
+        <label for="CastingEnd">Casting End</label>
+        <input asp-for="CastingEnd" type="datetime" class="form-control" />
+        <span asp-validation-for="CastingEnd" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary mt-2">Create Casting</button>
+</form>
+
+<a asp-action="Index">Back to Casting List</a>
