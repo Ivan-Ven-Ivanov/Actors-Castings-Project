@@ -10,8 +10,10 @@
         <div class="col-md-4">
             <div class="card mb-4 shadow-sm">
                 <div class="card-body">
-                    <h5 class="card-title">@casting.Title</h5>
-                    <p class="card-text">@casting.Description</p>
+                    <h5 class="card-title">@casting.Title</h5>    
+                </div>
+                <div class="card-footer">
+                    <p class="card-text">You can apply until <strong>@casting.CastingEnd</strong></p>
                     <a asp-action="Details" asp-route-id="@casting.Id" class="btn btn-secondary">View casting details</a>
                 </div>
             </div>

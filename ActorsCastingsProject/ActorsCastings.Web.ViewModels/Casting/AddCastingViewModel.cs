@@ -1,14 +1,11 @@
-﻿namespace ActorsCastings.Web.ViewModels
+﻿namespace ActorsCastings.Web.ViewModels.Casting
 {
-    public class CastingViewModel
+    public class AddCastingViewModel
     {
-        public string? Id { get; set; }
         public string Title { get; set; } = null!;
 
         public string Description { get; set; } = null!;
 
         public string CastingEnd { get; set; } = null!;
-
-        public string? CastingAgentId { get; set; }
     }
 }

@@ -1,0 +1,21 @@
+﻿@model CastingDetailsViewModel
+
+@{
+    ViewData["Title"] = "Casting Details";
+}
+
+<h1>@Model.Title</h1>
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Casting Information</h5>
+        <p class="card-text">@Model.Description</p>
+        <p class="card-text"><strong>End Date:</strong> @Model.CastingEnd</p>
+        <p class="card-text"><strong>Casting Agent:</strong> @Model.CastingAgent</p>
+    </div>
+</div>
+
+<div class="d-flex mt-3">
+    <a asp-action="Index" class="btn btn-secondary">Back to Castings</a>
+    <a asp-action="Apply" asp-route-id="@Model.Id" class="btn btn-primary">Edit Casting</a>
+</div>
