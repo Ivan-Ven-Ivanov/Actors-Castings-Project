@@ -40,7 +40,7 @@ namespace ActorsCastings.Data.Models
         [Comment("The Casting agent that has created the casting - foreign key")]
         public Guid CastingAgentId { get; set; }
 
-        public CastingAgentProfile CastingAgent { get; set; } = null!;
+        public CastingAgent CastingAgent { get; set; } = null!;
 
         [Required]
         [Comment("Soft delete")]

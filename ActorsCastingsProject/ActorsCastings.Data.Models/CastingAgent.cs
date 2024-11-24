@@ -6,9 +6,9 @@ using static ActorsCastings.Common.EntityValidationConstants.CastingAgentProfile
 
 namespace ActorsCastings.Data.Models
 {
-    public class CastingAgentProfile
+    public class CastingAgent
     {
-        public CastingAgentProfile()
+        public CastingAgent()
         {
             Id = Guid.NewGuid();
         }

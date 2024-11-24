@@ -13,7 +13,7 @@ namespace ActorsCastings.Data.Models
         public Guid ActorProfileId { get; set; }
 
         [Required]
-        public ActorProfile Actor { get; set; } = null!;
+        public Actor Actor { get; set; } = null!;
 
         [Required]
         [ForeignKey(nameof(Play))]

@@ -22,6 +22,55 @@ namespace ActorsCastings.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("ActorsCastings.Data.Models.Actor", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasComment("Actor profile unique identifier");
+
+                    b.Property<int?>("Age")
+                        .HasColumnType("int")
+                        .HasComment("Age of the actor");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasComment("First name of the actor");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit")
+                        .HasComment("Soft delete");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasComment("Last name of the actor");
+
+                    b.Property<string>("Portfolio")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)")
+                        .HasComment("Portfolio of the actor");
+
+                    b.Property<string>("ProfilePictureUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasComment("Url of the profile picture of the actor");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasComment("Foreign key to User");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("Actors");
+                });
+
             modelBuilder.Entity("ActorsCastings.Data.Models.ActorCasting", b =>
                 {
                     b.Property<Guid>("ActorId")
@@ -71,55 +120,6 @@ namespace ActorsCastings.Data.Migrations
                     b.HasIndex("PlayId");
 
                     b.ToTable("ActorsPlays");
-                });
-
-            modelBuilder.Entity("ActorsCastings.Data.Models.ActorProfile", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasComment("Actor profile unique identifier");
-
-                    b.Property<int?>("Age")
-                        .HasColumnType("int")
-                        .HasComment("Age of the actor");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)")
-                        .HasComment("First name of the actor");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit")
-                        .HasComment("Soft delete");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)")
-                        .HasComment("Last name of the actor");
-
-                    b.Property<string>("Portfolio")
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)")
-                        .HasComment("Portfolio of the actor");
-
-                    b.Property<string>("ProfilePictureUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasComment("Url of the profile picture of the actor");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasComment("Foreign key to User");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
-
-                    b.ToTable("ActorProfiles");
                 });
 
             modelBuilder.Entity("ActorsCastings.Data.Models.ApplicationUser", b =>
@@ -236,7 +236,7 @@ namespace ActorsCastings.Data.Migrations
                     b.ToTable("Castings");
                 });
 
-            modelBuilder.Entity("ActorsCastings.Data.Models.CastingAgentProfile", b =>
+            modelBuilder.Entity("ActorsCastings.Data.Models.CastingAgent", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -267,7 +267,7 @@ namespace ActorsCastings.Data.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("CastingAgentProfiles");
+                    b.ToTable("CastingAgents");
                 });
 
             modelBuilder.Entity("ActorsCastings.Data.Models.Movie", b =>
@@ -485,9 +485,20 @@ namespace ActorsCastings.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("ActorsCastings.Data.Models.Actor", b =>
+                {
+                    b.HasOne("ActorsCastings.Data.Models.ApplicationUser", "User")
+                        .WithOne("ActorProfile")
+                        .HasForeignKey("ActorsCastings.Data.Models.Actor", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("ActorsCastings.Data.Models.ActorCasting", b =>
                 {
-                    b.HasOne("ActorsCastings.Data.Models.ActorProfile", "Actor")
+                    b.HasOne("ActorsCastings.Data.Models.Actor", "Actor")
                         .WithMany("ActorsCastings")
                         .HasForeignKey("ActorId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -506,7 +517,7 @@ namespace ActorsCastings.Data.Migrations
 
             modelBuilder.Entity("ActorsCastings.Data.Models.ActorMovie", b =>
                 {
-                    b.HasOne("ActorsCastings.Data.Models.ActorProfile", "Actor")
+                    b.HasOne("ActorsCastings.Data.Models.Actor", "Actor")
                         .WithMany("ActorsMovies")
                         .HasForeignKey("ActorProfileId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -525,7 +536,7 @@ namespace ActorsCastings.Data.Migrations
 
             modelBuilder.Entity("ActorsCastings.Data.Models.ActorPlay", b =>
                 {
-                    b.HasOne("ActorsCastings.Data.Models.ActorProfile", "Actor")
+                    b.HasOne("ActorsCastings.Data.Models.Actor", "Actor")
                         .WithMany("ActorsPlays")
                         .HasForeignKey("ActorProfileId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -542,20 +553,9 @@ namespace ActorsCastings.Data.Migrations
                     b.Navigation("Play");
                 });
 
-            modelBuilder.Entity("ActorsCastings.Data.Models.ActorProfile", b =>
-                {
-                    b.HasOne("ActorsCastings.Data.Models.ApplicationUser", "User")
-                        .WithOne("ActorProfile")
-                        .HasForeignKey("ActorsCastings.Data.Models.ActorProfile", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("ActorsCastings.Data.Models.Casting", b =>
                 {
-                    b.HasOne("ActorsCastings.Data.Models.CastingAgentProfile", "CastingAgent")
+                    b.HasOne("ActorsCastings.Data.Models.CastingAgent", "CastingAgent")
                         .WithMany("Castings")
                         .HasForeignKey("CastingAgentId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -564,11 +564,11 @@ namespace ActorsCastings.Data.Migrations
                     b.Navigation("CastingAgent");
                 });
 
-            modelBuilder.Entity("ActorsCastings.Data.Models.CastingAgentProfile", b =>
+            modelBuilder.Entity("ActorsCastings.Data.Models.CastingAgent", b =>
                 {
                     b.HasOne("ActorsCastings.Data.Models.ApplicationUser", "User")
                         .WithOne("CastingAgentProfile")
-                        .HasForeignKey("ActorsCastings.Data.Models.CastingAgentProfile", "UserId")
+                        .HasForeignKey("ActorsCastings.Data.Models.CastingAgent", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -626,7 +626,7 @@ namespace ActorsCastings.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ActorsCastings.Data.Models.ActorProfile", b =>
+            modelBuilder.Entity("ActorsCastings.Data.Models.Actor", b =>
                 {
                     b.Navigation("ActorsCastings");
 
@@ -642,7 +642,7 @@ namespace ActorsCastings.Data.Migrations
                     b.Navigation("CastingAgentProfile");
                 });
 
-            modelBuilder.Entity("ActorsCastings.Data.Models.CastingAgentProfile", b =>
+            modelBuilder.Entity("ActorsCastings.Data.Models.CastingAgent", b =>
                 {
                     b.Navigation("Castings");
                 });

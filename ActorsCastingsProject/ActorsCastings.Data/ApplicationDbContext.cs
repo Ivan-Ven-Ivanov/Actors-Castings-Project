@@ -12,8 +12,8 @@ namespace ActorsCastings.Web.Data
         {
         }
 
-        public virtual DbSet<ActorProfile> ActorProfiles { get; set; }
-        public virtual DbSet<CastingAgentProfile> CastingAgentProfiles { get; set; }
+        public virtual DbSet<Actor> Actors { get; set; }
+        public virtual DbSet<CastingAgent> CastingAgents { get; set; }
         public virtual DbSet<Movie> Movies { get; set; }
         public virtual DbSet<Play> Plays { get; set; }
         public virtual DbSet<Casting> Castings { get; set; }

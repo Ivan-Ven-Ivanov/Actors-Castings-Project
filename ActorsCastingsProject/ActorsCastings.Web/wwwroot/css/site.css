@@ -20,3 +20,9 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.thumbnail-image {
+    width: 200px;
+    height: 100%;
+    object-fit: cover;
+}

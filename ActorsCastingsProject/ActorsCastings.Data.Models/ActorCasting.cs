@@ -10,7 +10,7 @@ namespace ActorsCastings.Data.Models
         [ForeignKey(nameof(Actor))]
         public Guid ActorId { get; set; }
 
-        public ActorProfile Actor { get; set; }
+        public Actor Actor { get; set; }
 
         [Comment("Foreign key to Casting")]
         [ForeignKey(nameof(Casting))]

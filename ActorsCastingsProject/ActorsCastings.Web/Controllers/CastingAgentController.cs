@@ -39,7 +39,7 @@ namespace ActorsCastings.Web.Controllers
                 return View("Error");
             }
 
-            var castingAgentProfile = new CastingAgentProfile()
+            var castingAgentProfile = new CastingAgent()
             {
                 Name = model.Name,
                 CastingAgency = model.CastingAgency,
@@ -49,7 +49,7 @@ namespace ActorsCastings.Web.Controllers
 
             currentUser.CastingAgentProfileId = castingAgentProfile.Id;
 
-            await _context.CastingAgentProfiles.AddAsync(castingAgentProfile);
+            await _context.CastingAgents.AddAsync(castingAgentProfile);
             await _context.SaveChangesAsync();
 
             return RedirectToAction("Index", "Home");

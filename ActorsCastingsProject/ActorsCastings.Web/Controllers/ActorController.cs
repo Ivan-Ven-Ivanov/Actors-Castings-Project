@@ -1,8 +1,10 @@
 ﻿using ActorsCastings.Data.Models;
 using ActorsCastings.Web.Data;
 using ActorsCastings.Web.ViewModels;
+using ActorsCastings.Web.ViewModels.Actor;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace ActorsCastings.Web.Controllers
 {
@@ -15,6 +17,21 @@ namespace ActorsCastings.Web.Controllers
         {
             _context = context;
             _userManager = userManager;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            List<ActorIndexViewModel> models = await _context.Actors
+                .Select(a => new ActorIndexViewModel
+                {
+                    Id = a.Id.ToString(),
+                    FirstName = a.FirstName,
+                    LastName = a.LastName,
+                    ProfilePictureUrl = a.ProfilePictureUrl
+                })
+                .ToListAsync();
+
+            return View(models);
         }
 
         [HttpGet]
@@ -40,7 +57,7 @@ namespace ActorsCastings.Web.Controllers
                 return View("Error");
             }
 
-            var actorProfile = new ActorProfile()
+            var actorProfile = new Actor()
             {
                 FirstName = model.FirstName,
                 LastName = model.LastName,
@@ -53,7 +70,7 @@ namespace ActorsCastings.Web.Controllers
 
             currentUser.ActorProfileId = actorProfile.Id;
 
-            await _context.ActorProfiles.AddAsync(actorProfile);
+            await _context.Actors.AddAsync(actorProfile);
             await _context.SaveChangesAsync();
 
             return RedirectToAction("Index", "Home");
