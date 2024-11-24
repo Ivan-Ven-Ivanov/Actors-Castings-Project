@@ -19,6 +19,7 @@ namespace ActorsCastings.Web.Controllers
             _userManager = userManager;
         }
 
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             List<ActorIndexViewModel> models = await _context.Actors
@@ -74,6 +75,35 @@ namespace ActorsCastings.Web.Controllers
             await _context.SaveChangesAsync();
 
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(string id)
+        {
+            bool isGuidValid = Guid.TryParse(id, out Guid castingId);
+
+            if (!isGuidValid)
+            {
+                return RedirectToAction("Index");
+            }
+
+            Actor? actor = await _context.Actors.FindAsync(castingId);
+
+            if (actor == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            ActorDetailsViewModel model = new ActorDetailsViewModel
+            {
+                FirstName = actor.FirstName,
+                LastName = actor.LastName,
+                Age = actor.Age.ToString(),
+                Portfolio = actor.Portfolio,
+                ProfilePictureUrl = actor.ProfilePictureUrl
+            };
+
+            return View(model);
         }
     }
 }
