@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ActorsCastings.Web.Controllers
 {
-    public class ActorController : Controller
+    public class ActorController : BaseController
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;

@@ -7,12 +7,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Globalization;
 using static ActorsCastings.Common.EntityValidationConstants.Casting;
 
 namespace ActorsCastings.Web.Controllers
 {
-    public class CastingController : Controller
+    public class CastingController : BaseController
     {
         private readonly ApplicationDbContext _context; //TODO: Remove
         private readonly ICastingService _castingService;
@@ -45,45 +44,25 @@ namespace ActorsCastings.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(AddCastingViewModel model)
         {
-
-            ApplicationUser? user = await _userManager.GetUserAsync(User);
-
-            if (user == null)
-            {
-                return View("Error");
-            }
-
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
 
-            bool isDateCorrect = DateTime.TryParseExact(model.CastingEnd, CastingCastingEndDateTimeFormatString, CultureInfo.CurrentCulture, DateTimeStyles.None, out DateTime dateTime);
-
-            if (!isDateCorrect)
+            bool result = await _castingService.AddCastingAsync(model, User);
+            if (!result)
             {
-                return View(model);
+                return View("Error");
             }
-            //TODO: Fix
-            Casting casting = new Casting()
-            {
-                Title = model.Title,
-                Description = model.Description,
-                CastingEnd = dateTime,
-                CastingAgentId = (Guid)user.CastingAgentProfileId
-            };
-
-            await _context.Castings.AddAsync(casting);
-            await _context.SaveChangesAsync();
 
             return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> Details(string id)
         {
-            bool isGuidValid = Guid.TryParse(id, out Guid castingId);
+            Guid castingId = Guid.Empty;
 
-            if (!isGuidValid)
+            if (!IsGuidValid(id, ref castingId))
             {
                 return RedirectToAction("Index");
             }

@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ActorsCastings.Web.Controllers
 {
-    public class CastingAgentController : Controller
+    public class CastingAgentController : BaseController
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
