@@ -64,7 +64,7 @@ namespace ActorsCastings.Web.Controllers
                 LastName = model.LastName,
                 Age = model.Age,
                 ProfilePictureUrl = model.ProfilePictureUrl,
-                Portfolio = model.Portfolio,
+                Biography = model.Biography,
                 UserId = currentUser.Id
             };
 
@@ -99,7 +99,7 @@ namespace ActorsCastings.Web.Controllers
                 FirstName = actor.FirstName,
                 LastName = actor.LastName,
                 Age = actor.Age.ToString(),
-                Portfolio = actor.Portfolio,
+                Biography = actor.Biography,
                 ProfilePictureUrl = actor.ProfilePictureUrl
             };
 

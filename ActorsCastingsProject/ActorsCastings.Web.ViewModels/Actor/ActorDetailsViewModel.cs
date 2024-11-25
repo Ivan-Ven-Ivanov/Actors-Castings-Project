@@ -10,6 +10,6 @@
 
         public string ProfilePictureUrl { get; set; } = null!;
 
-        public string? Portfolio { get; set; }
+        public string? Biography { get; set; }
     }
 }

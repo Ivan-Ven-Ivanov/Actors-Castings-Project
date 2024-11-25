@@ -101,7 +101,7 @@ namespace ActorsCastings.Web.Areas.Identity.Pages.Account
             [Required(ErrorMessage = "This field is required")]
             [RegularExpression("Actor|CastingAgent", ErrorMessage = "Invalid role")]
             [Display(Name = "You are:")]
-            public string Role { get; set; }
+            public string ProfileType { get; set; }
         }
 
 
@@ -125,10 +125,6 @@ namespace ActorsCastings.Web.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
-                    await _userManager.AddToRoleAsync(user, Input.Role);
-
-
-
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);
@@ -151,11 +147,11 @@ namespace ActorsCastings.Web.Areas.Identity.Pages.Account
                     {
                         await _signInManager.SignInAsync(user, isPersistent: false);
 
-                        if (Input.Role == ApplicationRoles.Actor)
+                        if (Input.ProfileType == ProfileTypes.Actor)
                         {
                             return RedirectToAction("CompleteProfile", "Actor");
                         }
-                        else if (Input.Role == ApplicationRoles.CastingAgent)
+                        else if (Input.ProfileType == ProfileTypes.CastingAgent)
                         {
                             return RedirectToAction("CompleteProfile", "CastingAgent");
                         }

@@ -1,4 +1,6 @@
 using ActorsCastings.Data.Models;
+using ActorsCastings.Services.Data;
+using ActorsCastings.Services.Data.Interfaces;
 using ActorsCastings.Web.Data;
 using ActorsCastings.Web.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Identity;
@@ -22,6 +24,10 @@ namespace ActorsCastings.Web
                 .AddDefaultIdentity<ApplicationUser>(/*options => options.SignIn.RequireConfirmedAccount = true*/)
                 .AddRoles<IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            builder.Services.RegisterRepositories(typeof(Actor).Assembly);
+
+            builder.Services.AddScoped<ICastingService, CastingService>();
 
             builder.Services.AddControllersWithViews();
 

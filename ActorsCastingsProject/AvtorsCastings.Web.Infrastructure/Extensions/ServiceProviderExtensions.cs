@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 
-using static ActorsCastings.Common.ApplicationRoles;
+using static ActorsCastings.Common.ProfileTypes;
 
 namespace ActorsCastings.Web.Infrastructure.Extensions
 {
@@ -11,7 +11,7 @@ namespace ActorsCastings.Web.Infrastructure.Extensions
         {
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole<Guid>>>();
 
-            var roles = AllRoles;
+            var roles = AllProfiles;
 
             foreach (var role in roles)
             {

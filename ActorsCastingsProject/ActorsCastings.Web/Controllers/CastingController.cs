@@ -1,5 +1,6 @@
 ﻿using ActorsCastings.Common;
 using ActorsCastings.Data.Models;
+using ActorsCastings.Services.Data.Interfaces;
 using ActorsCastings.Web.Data;
 using ActorsCastings.Web.ViewModels.Casting;
 using Microsoft.AspNetCore.Authorization;
@@ -13,26 +14,22 @@ namespace ActorsCastings.Web.Controllers
 {
     public class CastingController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context; //TODO: Remove
+        private readonly ICastingService _castingService;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public CastingController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public CastingController(ApplicationDbContext context, ICastingService castingService, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _castingService = castingService;
             _userManager = userManager;
         }
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            List<CastingViewModel> models = await _context.Castings
-                .Select(c => new CastingViewModel
-                {
-                    Id = c.Id.ToString(),
-                    Title = c.Title,
-                    CastingEnd = c.CastingEnd.ToString(CastingCastingEndDateTimeFormatString)
-                })
-                .ToListAsync();
+            IEnumerable<CastingViewModel> models = await _castingService
+                .IndexGetAllAsync();
 
             return View(models);
         }
@@ -44,7 +41,7 @@ namespace ActorsCastings.Web.Controllers
             return View(new AddCastingViewModel());
         }
 
-        [Authorize(Roles = ApplicationRoles.CastingAgent)]
+        [Authorize(Roles = ProfileTypes.CastingAgent)]
         [HttpPost]
         public async Task<IActionResult> Add(AddCastingViewModel model)
         {

@@ -15,6 +15,6 @@ namespace ActorsCastings.Web.ViewModels
 
         public int? Age { get; set; }
 
-        public string? Portfolio { get; set; }
+        public string? Biography { get; set; }
     }
 }

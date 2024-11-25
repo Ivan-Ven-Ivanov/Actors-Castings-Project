@@ -37,7 +37,7 @@ namespace ActorsCastings.Data.Models
 
         [Comment("Portfolio of the actor")]
         [MaxLength(ActorPortfolioMaxLength)]
-        public string? Portfolio { get; set; }
+        public string? Biography { get; set; }
 
         [Required]
         [ForeignKey(nameof(User))]

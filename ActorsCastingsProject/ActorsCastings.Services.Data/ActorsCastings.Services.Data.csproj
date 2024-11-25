@@ -7,13 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.11" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\ActorsCastings.Common\ActorsCastings.Common.csproj" />
     <ProjectReference Include="..\ActorsCastings.Data.Models\ActorsCastings.Data.Models.csproj" />
     <ProjectReference Include="..\ActorsCastings.Data\ActorsCastings.Data.csproj" />
+    <ProjectReference Include="..\ActorsCastings.Web.ViewModels\ActorsCastings.Web.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>
