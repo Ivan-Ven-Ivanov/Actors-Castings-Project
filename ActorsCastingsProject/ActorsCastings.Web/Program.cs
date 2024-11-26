@@ -1,6 +1,5 @@
 using ActorsCastings.Data.Models;
 using ActorsCastings.Services.Data;
-using ActorsCastings.Services.Data.Interfaces;
 using ActorsCastings.Web.Data;
 using ActorsCastings.Web.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Identity;
@@ -27,7 +26,7 @@ namespace ActorsCastings.Web
 
             builder.Services.RegisterRepositories(typeof(Actor).Assembly);
 
-            builder.Services.AddScoped<ICastingService, CastingService>();
+            builder.Services.RegisterUserDefinedServices(typeof(CastingService).Assembly);
 
             builder.Services.AddControllersWithViews();
 

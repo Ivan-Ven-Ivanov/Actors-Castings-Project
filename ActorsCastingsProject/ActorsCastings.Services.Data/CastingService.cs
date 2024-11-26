@@ -67,7 +67,7 @@ namespace ActorsCastings.Services.Data
 
         public async Task<IEnumerable<CastingViewModel>> IndexGetAllAsync()
         {
-            IEnumerable<CastingViewModel> models = await castingRepository.GetAllAttached()
+            IEnumerable<CastingViewModel> models = await _castingRepository.GetAllAttached()
                 .Select(c => new CastingViewModel
                 {
                     Id = c.Id.ToString(),
