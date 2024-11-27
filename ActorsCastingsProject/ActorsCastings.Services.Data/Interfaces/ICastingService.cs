@@ -9,6 +9,8 @@ namespace ActorsCastings.Services.Data.Interfaces
 
         Task<bool> AddCastingAsync(AddCastingViewModel model, ClaimsPrincipal userPrincipal);
 
-        Task<CastingDetailsViewModel> GetCastingDetailsByIdAsync(Guid id);
+        Task<CastingDetailsViewModel> GetCastingDetailsByIdAsync(string id);
+
+        Task<bool> ApplyForCastingAsync(string id, ClaimsPrincipal userPrincipal);
     }
 }

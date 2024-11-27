@@ -22,8 +22,8 @@ namespace ActorsCastings.Web.Infrastructure.Extensions
                     Type repositoryInterface = typeof(IRepository<,>);
                     Type repositoryInstanceType = typeof(BaseRepository<,>);
                     PropertyInfo? idPropertyInfo = type.GetProperties()
-                        .Where(p => p.Name.ToLower() == "id")
-                        .SingleOrDefault();
+                        .Where(p => p.Name.ToLower().EndsWith("id"))
+                        .FirstOrDefault();
 
                     Type[] constructArgs = new Type[2];
                     constructArgs[0] = type;

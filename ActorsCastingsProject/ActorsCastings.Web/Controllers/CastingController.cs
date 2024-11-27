@@ -6,8 +6,6 @@ using ActorsCastings.Web.ViewModels.Casting;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using static ActorsCastings.Common.EntityValidationConstants.Casting;
 
 namespace ActorsCastings.Web.Controllers
 {
@@ -60,73 +58,21 @@ namespace ActorsCastings.Web.Controllers
 
         public async Task<IActionResult> Details(string id)
         {
-            Guid castingId = Guid.Empty;
-
-            if (!IsGuidValid(id, ref castingId))
-            {
-                return RedirectToAction("Index");
-            }
-
-            Casting? casting = await _context.Castings
-                .Include(c => c.CastingAgent)
-                .FirstOrDefaultAsync(c => c.Id == castingId);
-
-            if (casting == null)
-            {
-                return NotFound();
-            }
-
-            CastingDetailsViewModel model = new CastingDetailsViewModel
-            {
-                Id = castingId.ToString(),
-                Title = casting.Title,
-                Description = casting.Description,
-                CastingEnd = casting.CastingEnd.ToString(CastingCastingEndDateTimeFormatString),
-                CastingAgent = casting.CastingAgent.Name
-            };
-
+            CastingDetailsViewModel model
+                = await _castingService.GetCastingDetailsByIdAsync(id);
 
             return View(model);
         }
 
         public async Task<IActionResult> Apply(string id)
         {
-            bool isGuidValid = Guid.TryParse(id, out Guid castingId);
+            bool result = await _castingService.ApplyForCastingAsync(id, User);
 
-            if (!isGuidValid)
+            if (!result)
             {
-                return RedirectToAction("Index");
+                //TODO:
+                return RedirectToAction("Error");
             }
-
-            Casting? casting = await _context.Castings
-                .FindAsync(castingId);
-
-            if (casting == null)
-            {
-                return NotFound();
-            }
-
-            ApplicationUser? user = await _userManager.GetUserAsync(User);
-
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            //TODO: Fix and add "You already applied for this casting"
-            if (await _context.ActorsCastings.AnyAsync(ac => ac.ActorId == user.ActorProfileId && ac.CastingId == castingId))
-            {
-                return RedirectToAction("Index");
-            }
-
-            ActorCasting actorCasting = new ActorCasting
-            {
-                ActorId = (Guid)user.ActorProfileId,
-                CastingId = castingId
-            };
-
-            await _context.ActorsCastings.AddAsync(actorCasting);
-            await _context.SaveChangesAsync();
 
             return RedirectToAction("Index");
         }

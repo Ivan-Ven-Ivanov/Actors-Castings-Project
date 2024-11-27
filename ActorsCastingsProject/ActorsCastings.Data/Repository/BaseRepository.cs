@@ -30,13 +30,17 @@ namespace ActorsCastings.Data.Repository
 
         public TType FirstOrDefault(Func<TType, bool> predicate)
         {
-            throw new NotImplementedException();
+            TType entity = _dbSet.FirstOrDefault(predicate);
+
+            return entity;
         }
 
 
-        public Task<TType> FirstOrDefaultAsync(Expression<Func<TType, bool>> predicate)
+        public async Task<TType> FirstOrDefaultAsync(Expression<Func<TType, bool>> predicate)
         {
-            throw new NotImplementedException();
+            TType entity = await _dbSet.FirstOrDefaultAsync(predicate);
+
+            return entity;
         }
 
         public IEnumerable<TType> GetAll()

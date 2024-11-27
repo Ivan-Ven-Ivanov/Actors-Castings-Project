@@ -68,7 +68,7 @@ namespace ActorsCastings.Data.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("Actors");
+                    b.ToTable("Actors", (string)null);
                 });
 
             modelBuilder.Entity("ActorsCastings.Data.Models.ActorCasting", b =>
@@ -85,7 +85,7 @@ namespace ActorsCastings.Data.Migrations
 
                     b.HasIndex("CastingId");
 
-                    b.ToTable("ActorsCastings");
+                    b.ToTable("ActorsCastings", (string)null);
                 });
 
             modelBuilder.Entity("ActorsCastings.Data.Models.ActorMovie", b =>
@@ -102,7 +102,7 @@ namespace ActorsCastings.Data.Migrations
 
                     b.HasIndex("MovieId");
 
-                    b.ToTable("ActorsMovies");
+                    b.ToTable("ActorsMovies", (string)null);
                 });
 
             modelBuilder.Entity("ActorsCastings.Data.Models.ActorPlay", b =>
@@ -119,7 +119,7 @@ namespace ActorsCastings.Data.Migrations
 
                     b.HasIndex("PlayId");
 
-                    b.ToTable("ActorsPlays");
+                    b.ToTable("ActorsPlays", (string)null);
                 });
 
             modelBuilder.Entity("ActorsCastings.Data.Models.ApplicationUser", b =>
@@ -233,7 +233,7 @@ namespace ActorsCastings.Data.Migrations
 
                     b.HasIndex("CastingAgentId");
 
-                    b.ToTable("Castings");
+                    b.ToTable("Castings", (string)null);
                 });
 
             modelBuilder.Entity("ActorsCastings.Data.Models.CastingAgent", b =>
@@ -267,7 +267,7 @@ namespace ActorsCastings.Data.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("CastingAgents");
+                    b.ToTable("CastingAgents", (string)null);
                 });
 
             modelBuilder.Entity("ActorsCastings.Data.Models.Movie", b =>
@@ -310,7 +310,7 @@ namespace ActorsCastings.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Movies");
+                    b.ToTable("Movies", (string)null);
                 });
 
             modelBuilder.Entity("ActorsCastings.Data.Models.Play", b =>
@@ -347,7 +347,7 @@ namespace ActorsCastings.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Plays");
+                    b.ToTable("Plays", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
