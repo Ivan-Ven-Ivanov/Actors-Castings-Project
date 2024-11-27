@@ -17,5 +17,12 @@
 
 <div class="d-flex mt-3">
     <a asp-action="Index" class="btn btn-secondary">Back to Castings</a>
-    <a asp-action="Apply" asp-route-id="@Model.Id" class="btn btn-primary">Apply for Casting</a>
+    @if (Model.HasActorApplied)
+    {
+        <div class="btn btn-success">Already applied</div>
+    }
+    else
+    {
+        <a asp-action="Apply" asp-route-id="@Model.Id" class="btn btn-primary">Apply for Casting</a>
+    }
 </div>

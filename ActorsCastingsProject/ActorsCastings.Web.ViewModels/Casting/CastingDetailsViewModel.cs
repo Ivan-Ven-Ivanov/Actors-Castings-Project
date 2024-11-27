@@ -9,5 +9,7 @@
         public string CastingEnd { get; set; } = null!;
 
         public string CastingAgent { get; set; } = null!;
+
+        public bool HasActorApplied { get; set; }
     }
 }

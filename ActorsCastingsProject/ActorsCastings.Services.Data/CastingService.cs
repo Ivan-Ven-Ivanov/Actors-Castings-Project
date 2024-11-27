@@ -109,7 +109,7 @@ namespace ActorsCastings.Services.Data
             return true;
         }
 
-        public async Task<CastingDetailsViewModel> GetCastingDetailsByIdAsync(string id)
+        public async Task<CastingDetailsViewModel> GetCastingDetailsByIdAsync(string id, ClaimsPrincipal userPrincipal)
         {
             Guid castingId = Guid.Empty;
 
@@ -131,13 +131,17 @@ namespace ActorsCastings.Services.Data
                 throw new Exception();
             }
 
+            string? userId = _userManager.GetUserId(userPrincipal);
+            ApplicationUser? user = await _userManager.FindByIdAsync(userId);
+
             CastingDetailsViewModel model = new CastingDetailsViewModel
             {
                 Id = id.ToString(),
                 Title = casting.Title,
                 Description = casting.Description,
                 CastingEnd = casting.CastingEnd.ToString(CastingCastingEndDateTimeFormatString),
-                CastingAgent = casting.CastingAgent.Name
+                CastingAgent = casting.CastingAgent.Name,
+                HasActorApplied = await _actorCastingRepository.GetAllAttached().AnyAsync(ac => ac.ActorId == user.ActorProfileId && ac.CastingId == castingId)
             };
 
             return model;

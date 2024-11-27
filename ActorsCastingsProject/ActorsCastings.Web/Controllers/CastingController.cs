@@ -59,7 +59,7 @@ namespace ActorsCastings.Web.Controllers
         public async Task<IActionResult> Details(string id)
         {
             CastingDetailsViewModel model
-                = await _castingService.GetCastingDetailsByIdAsync(id);
+                = await _castingService.GetCastingDetailsByIdAsync(id, User);
 
             return View(model);
         }
