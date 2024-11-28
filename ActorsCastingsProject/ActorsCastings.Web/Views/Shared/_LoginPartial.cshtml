@@ -16,11 +16,11 @@
                 string? userId = currentUser?.Id.ToString();
                 if (await ActorService.IsUserActorAsync(userId))
                 {
-                    <a class="nav-link text-capitalize" asp-controller="ActorProfileController" asp-action="Index">My Profile</a>
+                    <a class="nav-link text-dark" asp-controller="ActorProfile" asp-action="Index">My Profile</a>
                 }
                 else if (await CastingAgentService.IsUserCastingAgentAsync(userId))
                 {
-                    <a class="nav-link text-capitalize" asp-controller="CastingAgentProfileController" asp-action="Index">My Profile</a>
+                    <a class="nav-link text-dark" asp-controller="CastingAgentProfile" asp-action="Index">My Profile</a>
                 }
             }
         </li>

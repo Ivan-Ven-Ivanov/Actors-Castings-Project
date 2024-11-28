@@ -20,10 +20,10 @@ namespace ActorsCastings.Web.ViewModels.ActorProfile
 
         public string? Biography { get; set; }
 
-        IList<MovieViewModel> Movies { get; set; }
+        public IList<MovieViewModel> Movies { get; set; }
             = new List<MovieViewModel>();
 
-        IList<PlayViewModel> Plays { get; set; }
+        public IList<PlayViewModel> Plays { get; set; }
             = new List<PlayViewModel>();
     }
 }

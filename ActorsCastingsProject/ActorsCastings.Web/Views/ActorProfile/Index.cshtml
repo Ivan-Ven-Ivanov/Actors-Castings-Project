@@ -1,0 +1,60 @@
+﻿@model ActorsCastings.Web.ViewModels.ActorProfile.ActorProfileViewModel
+
+<div class="container mt-5">
+    <h1 class="text-center">My Profile</h1>
+
+    <div class="row mt-4">
+        <div class="col-md-4 text-center">
+            <img src="@Model.ProfilePictureUrl" alt="Profile Picture" class="img-thumbnail rounded-circle" style="width: 150px; height: 150px;">
+        </div>
+        <div class="col-md-8">
+            <h2>@Model.FirstName @Model.LastName</h2>
+            <p><strong>Age:</strong> @(Model.Age.HasValue ? Model.Age.Value.ToString() : "N/A")</p>
+            <p><strong>Biography:</strong> @(!string.IsNullOrWhiteSpace(Model.Biography) ? Model.Biography : "No biography available.")</p>
+        </div>
+    </div>
+
+    <hr />
+
+    <div class="mt-4">
+        <h3>Movies</h3>
+        @if (Model.Movies.Any())
+        {
+            <ul class="list-group">
+                @foreach (var movie in Model.Movies)
+                {
+                    <li class="list-group-item">
+                        <strong>@movie.Title</strong> - @movie.ReleaseYear <br />
+                        <small>@movie.Director</small>
+                    </li>
+                }
+            </ul>
+        }
+        else
+        {
+            <p>No movies listed yet.</p>
+        }
+    </div>
+
+    <hr />
+
+    <div class="mt-4">
+        <h3>Plays</h3>
+        @if (Model.Plays.Any())
+        {
+            <ul class="list-group">
+                @foreach (var play in Model.Plays)
+                {
+                    <li class="list-group-item">
+                        <strong>@play.Title</strong> - @play.ReleaseYear <br />
+                        <small>@play.Director</small>
+                    </li>
+                }
+            </ul>
+        }
+        else
+        {
+            <p>No plays listed yet.</p>
+        }
+    </div>
+</div>

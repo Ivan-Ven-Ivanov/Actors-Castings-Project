@@ -31,7 +31,7 @@ namespace ActorsCastings.Services.Data
 
             bool result = await _actorRepository
                 .GetAllAttached()
-                .AnyAsync(a => a.Id == guidId);
+                .AnyAsync(a => a.UserId == guidId);
 
             return result;
         }

@@ -6,6 +6,8 @@
 
         public string Director { get; set; } = null!;
 
+        public string ReleaseYear { get; set; } = null!;
+
         public string? ImageUrl { get; set; }
     }
 }

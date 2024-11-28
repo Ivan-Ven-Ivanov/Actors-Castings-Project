@@ -31,6 +31,10 @@ namespace ActorsCastings.Data.Models
         [MaxLength(MovieDirectorMaxLength)]
         public string Director { get; set; } = null!;
 
+        [Required]
+        [Comment("Release year of the movie")]
+        public int ReleaseYear { get; set; }
+
         [Comment("Description of the movie")]
         [MaxLength(MovieDescriptionMaxLength)]
         public string? Description { get; set; }
