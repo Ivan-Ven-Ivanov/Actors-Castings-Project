@@ -1,7 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ActorsCastings.Web.ViewModels
+namespace ActorsCastings.Web.ViewModels.ActorProfile
 {
+    using Movie;
+    using Play;
+
     public class ActorProfileViewModel
     {
         [Required]
@@ -16,5 +19,11 @@ namespace ActorsCastings.Web.ViewModels
         public int? Age { get; set; }
 
         public string? Biography { get; set; }
+
+        IList<MovieViewModel> Movies { get; set; }
+            = new List<MovieViewModel>();
+
+        IList<PlayViewModel> Plays { get; set; }
+            = new List<PlayViewModel>();
     }
 }

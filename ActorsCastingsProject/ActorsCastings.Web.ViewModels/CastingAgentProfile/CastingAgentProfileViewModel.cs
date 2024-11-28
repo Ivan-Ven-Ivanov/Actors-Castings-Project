@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ActorsCastings.Web.ViewModels
+namespace ActorsCastings.Web.ViewModels.CastingAgentProfile
 {
     public class CastingAgentProfileViewModel
     {

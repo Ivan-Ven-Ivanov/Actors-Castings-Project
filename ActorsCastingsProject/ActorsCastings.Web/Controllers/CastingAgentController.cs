@@ -1,6 +1,6 @@
 ﻿using ActorsCastings.Data.Models;
 using ActorsCastings.Web.Data;
-using ActorsCastings.Web.ViewModels;
+using ActorsCastings.Web.ViewModels.CastingAgentProfile;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 

@@ -2,7 +2,7 @@
 
 namespace ActorsCastings.Web.Controllers
 {
-    public class ProfileController : BaseController
+    public class CastingAgentProfileController : BaseController
     {
         public IActionResult Index()
         {
