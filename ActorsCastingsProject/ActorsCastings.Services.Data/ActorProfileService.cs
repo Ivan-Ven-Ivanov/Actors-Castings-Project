@@ -28,6 +28,7 @@ namespace ActorsCastings.Services.Data
                 .Where(m => m.IsApproved && !m.IsDeleted)
                 .Select(m => new MovieViewModel
                 {
+                    Id = m.Id.ToString(),
                     Title = m.Title,
                     Director = m.Director,
                     ImageUrl = m.ImageUrl,
@@ -65,6 +66,7 @@ namespace ActorsCastings.Services.Data
                 Movies = actor.ActorsMovies
                     .Select(am => new MovieViewModel
                     {
+                        Id = am.MovieId.ToString(),
                         Title = am.Movie.Title,
                         ImageUrl = am.Movie.ImageUrl,
                         Director = am.Movie.Director,
@@ -73,6 +75,7 @@ namespace ActorsCastings.Services.Data
                 Plays = actor.ActorsPlays
                     .Select(ap => new PlayViewModel
                     {
+                        Id = ap.PlayId.ToString(),
                         Title = ap.Play.Title,
                         ImageUrl = ap.Play.ImageUrl,
                         Director = ap.Play.Director,
