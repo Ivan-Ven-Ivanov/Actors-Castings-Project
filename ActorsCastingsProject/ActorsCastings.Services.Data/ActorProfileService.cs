@@ -4,7 +4,6 @@ using ActorsCastings.Services.Data.Interfaces;
 using ActorsCastings.Web.ViewModels.ActorProfile;
 using ActorsCastings.Web.ViewModels.Movie;
 using ActorsCastings.Web.ViewModels.Play;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace ActorsCastings.Services.Data
@@ -12,13 +11,33 @@ namespace ActorsCastings.Services.Data
     public class ActorProfileService : BaseService, IActorProfileService
     {
         private readonly IRepository<Actor, Guid> _actorRepository;
+        private readonly IRepository<Movie, Guid> _movieRepository;
 
         public ActorProfileService(
             IRepository<Actor, Guid> actorRepository,
-            UserManager<ApplicationUser> userManager)
+            IRepository<Movie, Guid> movieRepository)
         {
             _actorRepository = actorRepository;
+            _movieRepository = movieRepository;
         }
+
+        public async Task<IEnumerable<MovieViewModel>> GetAllMoviesAsync()
+        {
+            IEnumerable<MovieViewModel> models = await _movieRepository
+                .GetAllAttached()
+                .Where(m => m.IsApproved && !m.IsDeleted)
+                .Select(m => new MovieViewModel
+                {
+                    Title = m.Title,
+                    Director = m.Director,
+                    ImageUrl = m.ImageUrl,
+                    ReleaseYear = m.ReleaseYear.ToString()
+                })
+                .ToListAsync();
+
+            return models;
+        }
+
         public async Task<ActorProfileViewModel> IndexGetMyProfileAsync(string id)
         {
             Guid guidId = Guid.Empty;

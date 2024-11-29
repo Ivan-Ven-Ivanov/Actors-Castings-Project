@@ -1,6 +1,7 @@
 ﻿using ActorsCastings.Data.Models;
 using ActorsCastings.Services.Data.Interfaces;
 using ActorsCastings.Web.ViewModels.ActorProfile;
+using ActorsCastings.Web.ViewModels.Movie;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -29,6 +30,13 @@ namespace ActorsCastings.Web.Controllers
             ActorProfileViewModel model = await _actorProfileService.IndexGetMyProfileAsync(user.Id.ToString());
 
             return View(model);
+        }
+
+        public async Task<IActionResult> AddMovieFromProfile()
+        {
+            IEnumerable<MovieViewModel> models = await _actorProfileService.GetAllMoviesAsync();
+
+            return View(models);
         }
     }
 }

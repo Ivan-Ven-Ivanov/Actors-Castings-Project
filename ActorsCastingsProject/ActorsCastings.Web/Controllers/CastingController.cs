@@ -1,7 +1,6 @@
 ﻿using ActorsCastings.Common;
 using ActorsCastings.Data.Models;
 using ActorsCastings.Services.Data.Interfaces;
-using ActorsCastings.Web.Data;
 using ActorsCastings.Web.ViewModels.Casting;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -11,13 +10,11 @@ namespace ActorsCastings.Web.Controllers
 {
     public class CastingController : BaseController
     {
-        private readonly ApplicationDbContext _context; //TODO: Remove
         private readonly ICastingService _castingService;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public CastingController(ApplicationDbContext context, ICastingService castingService, UserManager<ApplicationUser> userManager)
+        public CastingController(ICastingService castingService, UserManager<ApplicationUser> userManager)
         {
-            _context = context;
             _castingService = castingService;
             _userManager = userManager;
         }
@@ -47,7 +44,13 @@ namespace ActorsCastings.Web.Controllers
                 return View(model);
             }
 
-            bool result = await _castingService.AddCastingAsync(model, User);
+            ApplicationUser? user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return View("Error");
+            }
+
+            bool result = await _castingService.AddCastingAsync(model, user.Id.ToString());
             if (!result)
             {
                 return View("Error");
@@ -56,22 +59,37 @@ namespace ActorsCastings.Web.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
         public async Task<IActionResult> Details(string id)
         {
+            ApplicationUser? user = await _userManager.GetUserAsync(User);
+
+            if (user == null)
+            {
+                return View("Error");
+            }
+
             CastingDetailsViewModel model
-                = await _castingService.GetCastingDetailsByIdAsync(id, User);
+                = await _castingService.GetCastingDetailsByIdAsync(id, user.Id.ToString());
 
             return View(model);
         }
 
         public async Task<IActionResult> Apply(string id)
         {
-            bool result = await _castingService.ApplyForCastingAsync(id, User);
+            ApplicationUser? user = await _userManager.GetUserAsync(User);
+
+            if (user == null)
+            {
+                return View("Error");
+            }
+
+            bool result = await _castingService.ApplyForCastingAsync(id, user.Id.ToString());
 
             if (!result)
             {
                 //TODO:
-                return RedirectToAction("Error");
+                return View("Error");
             }
 
             return RedirectToAction("Index");

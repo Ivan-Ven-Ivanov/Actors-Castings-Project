@@ -1,5 +1,4 @@
 ﻿using ActorsCastings.Web.ViewModels.Casting;
-using System.Security.Claims;
 
 namespace ActorsCastings.Services.Data.Interfaces
 {
@@ -7,10 +6,10 @@ namespace ActorsCastings.Services.Data.Interfaces
     {
         Task<IEnumerable<CastingViewModel>> IndexGetAllAsync();
 
-        Task<bool> AddCastingAsync(AddCastingViewModel model, ClaimsPrincipal userPrincipal);
+        Task<bool> AddCastingAsync(AddCastingViewModel model, string userId);
 
-        Task<CastingDetailsViewModel> GetCastingDetailsByIdAsync(string id, ClaimsPrincipal userPrincipal);
+        Task<CastingDetailsViewModel> GetCastingDetailsByIdAsync(string id, string userId);
 
-        Task<bool> ApplyForCastingAsync(string id, ClaimsPrincipal userPrincipal);
+        Task<bool> ApplyForCastingAsync(string id, string userId);
     }
 }

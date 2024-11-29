@@ -46,5 +46,17 @@
             public const int CastingAgentNameMaxLength = 30;
             public const int CastingAgentAgencyMaxLength = 50;
         }
+
+        public static class ActorMovie
+        {
+            public const int ActorMovieRoleMinLength = 2;
+            public const int ActorMovieRoleMaxLength = 50;
+        }
+
+        public static class ActorPlay
+        {
+            public const int ActorPlayRoleMinLength = 2;
+            public const int ActorPlayRoleMaxLength = 50;
+        }
     }
 }

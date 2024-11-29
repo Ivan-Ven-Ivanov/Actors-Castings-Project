@@ -17,18 +17,28 @@
     <hr />
 
     <div class="mt-4">
-        <h3>Movies</h3>
+        <h3>My Movies</h3>
+        <div class="mb-3">
+            <a asp-action="AddMovieFromProfile" class="btn btn-primary btn-lg">
+                <i class="fas fa-plus"></i> Add Movie
+            </a>
+        </div>
         @if (Model.Movies.Any())
         {
-            <ul class="list-group">
+            <div class="d-flex overflow-auto">
                 @foreach (var movie in Model.Movies)
                 {
-                    <li class="list-group-item">
-                        <strong>@movie.Title</strong> - @movie.ReleaseYear <br />
-                        <small>@movie.Director</small>
-                    </li>
+                    <div class="card m-2" style="min-width: 200px;">
+                        <div class="card-body">
+                            <h5 class="card-title">@movie.Title</h5>
+                            <p class="card-text">
+                                <strong>Release Year:</strong> @movie.ReleaseYear <br />
+                                <strong>Director:</strong> @movie.Director
+                            </p>
+                        </div>
+                    </div>
                 }
-            </ul>
+            </div>
         }
         else
         {
@@ -39,18 +49,28 @@
     <hr />
 
     <div class="mt-4">
-        <h3>Plays</h3>
+        <h3>My Plays</h3>
+        <div class="mb-3">
+            <a asp-action="AddPlayFromProfile" class="btn btn-primary btn-lg">
+                <i class="fas fa-plus"></i> Add Play
+            </a>
+        </div>
         @if (Model.Plays.Any())
         {
-            <ul class="list-group">
+            <div class="d-flex overflow-auto">
                 @foreach (var play in Model.Plays)
                 {
-                    <li class="list-group-item">
-                        <strong>@play.Title</strong> - @play.ReleaseYear <br />
-                        <small>@play.Director</small>
-                    </li>
+                    <div class="card m-2" style="min-width: 200px;">
+                        <div class="card-body">
+                            <h5 class="card-title">@play.Title</h5>
+                            <p class="card-text">
+                                <strong>Release Year:</strong> @play.ReleaseYear <br />
+                                <strong>Director:</strong> @play.Director
+                            </p>
+                        </div>
+                    </div>
                 }
-            </ul>
+            </div>
         }
         else
         {
@@ -58,3 +78,5 @@
         }
     </div>
 </div>
+
+<script src="https://kit.fontawesome.com/2adefc9ae5.js" crossorigin="anonymous"></script>

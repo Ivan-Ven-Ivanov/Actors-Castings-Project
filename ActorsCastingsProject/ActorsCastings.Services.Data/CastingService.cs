@@ -5,7 +5,6 @@ using ActorsCastings.Web.ViewModels.Casting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
-using System.Security.Claims;
 
 using static ActorsCastings.Common.EntityValidationConstants.Casting;
 
@@ -14,30 +13,34 @@ namespace ActorsCastings.Services.Data
     public class CastingService : BaseService, ICastingService
     {
         private readonly IRepository<Casting, Guid> _castingRepository;
+        private readonly IRepository<Actor, Guid> _actorRepository;
         private readonly IRepository<CastingAgent, Guid> _castingAgentRepository;
         private readonly IRepository<ActorCasting, Guid> _actorCastingRepository;
         private readonly UserManager<ApplicationUser> _userManager;
 
         public CastingService(
             IRepository<Casting, Guid> repository,
+            IRepository<Actor, Guid> actorRepository,
             IRepository<CastingAgent, Guid> castingAgentRepository,
             IRepository<ActorCasting, Guid> actorCastingRepository,
             UserManager<ApplicationUser> userManager)
         {
             _castingRepository = repository;
+            _actorRepository = actorRepository;
             _castingAgentRepository = castingAgentRepository;
             _actorCastingRepository = actorCastingRepository;
             _userManager = userManager;
         }
-        public async Task<bool> AddCastingAsync(AddCastingViewModel model, ClaimsPrincipal userPrincipal)
+        public async Task<bool> AddCastingAsync(AddCastingViewModel model, string userId)
         {
-            string? userId = _userManager.GetUserId(userPrincipal);
-            ApplicationUser? user = await _userManager.FindByIdAsync(userId);
+            Guid guidUserId = Guid.Empty;
+            bool isGuidValid = IsGuidValid(userId, ref guidUserId);
 
-            if (user == null)
+            if (!isGuidValid)
             {
                 return false;
             }
+
             bool isDateCorrect = DateTime.TryParseExact
                 (model.CastingEnd,
                 Common.EntityValidationConstants.Casting.CastingCastingEndDateTimeFormatString,
@@ -49,7 +52,7 @@ namespace ActorsCastings.Services.Data
             }
 
             CastingAgent? current = await _castingAgentRepository
-                .GetByIdAsync(user.Id);
+                .FirstOrDefaultAsync(ca => ca.UserId == guidUserId);
 
             if (current == null)
             {
@@ -68,7 +71,7 @@ namespace ActorsCastings.Services.Data
             return true;
         }
 
-        public async Task<bool> ApplyForCastingAsync(string id, ClaimsPrincipal userPrincipal)
+        public async Task<bool> ApplyForCastingAsync(string id, string userId)
         {
             Guid castingId = Guid.Empty;
             bool isGuidValid = IsGuidValid(id, ref castingId);
@@ -85,23 +88,30 @@ namespace ActorsCastings.Services.Data
                 return false;
             }
 
-            string? userId = _userManager.GetUserId(userPrincipal);
-            ApplicationUser? user = await _userManager.FindByIdAsync(userId);
+            Guid guidUserId = Guid.Empty;
+            bool isUserGuidValid = IsGuidValid(userId, ref guidUserId);
 
-            if (user == null)
+            if (!isUserGuidValid)
             {
                 return false;
             }
 
-            //TODO: Fix and add "You already applied for this casting"
-            if (await _actorCastingRepository.GetAllAttached().AnyAsync(ac => ac.ActorId == user.ActorProfileId && ac.CastingId == castingId))
+            //TODO: Fix
+            if (await _actorCastingRepository.GetAllAttached().AnyAsync(ac => ac.Actor.UserId == guidUserId && ac.CastingId == castingId))
+            {
+                return false;
+            }
+
+            Actor currentActor = await _actorRepository.FirstOrDefaultAsync(a => a.UserId == guidUserId);
+
+            if (currentActor == null)
             {
                 return false;
             }
 
             ActorCasting actorCasting = new ActorCasting
             {
-                ActorId = user.Id,
+                ActorId = currentActor.Id,
                 CastingId = castingId
             };
 
@@ -109,10 +119,9 @@ namespace ActorsCastings.Services.Data
             return true;
         }
 
-        public async Task<CastingDetailsViewModel> GetCastingDetailsByIdAsync(string id, ClaimsPrincipal userPrincipal)
+        public async Task<CastingDetailsViewModel> GetCastingDetailsByIdAsync(string id, string userId)
         {
             Guid castingId = Guid.Empty;
-
             bool result = IsGuidValid(id, ref castingId);
 
             //TODO: 
@@ -131,8 +140,15 @@ namespace ActorsCastings.Services.Data
                 throw new Exception();
             }
 
-            string? userId = _userManager.GetUserId(userPrincipal);
-            ApplicationUser? user = await _userManager.FindByIdAsync(userId);
+            Guid guidUserId = Guid.Empty;
+            bool isGuidValid = IsGuidValid(userId, ref guidUserId);
+
+            if (!isGuidValid)
+            {
+                throw new Exception();
+            }
+
+
 
             CastingDetailsViewModel model = new CastingDetailsViewModel
             {
@@ -141,7 +157,7 @@ namespace ActorsCastings.Services.Data
                 Description = casting.Description,
                 CastingEnd = casting.CastingEnd.ToString(CastingCastingEndDateTimeFormatString),
                 CastingAgent = casting.CastingAgent.Name,
-                HasActorApplied = await _actorCastingRepository.GetAllAttached().AnyAsync(ac => ac.ActorId == user.ActorProfileId && ac.CastingId == castingId)
+                HasActorApplied = await _actorCastingRepository.GetAllAttached().AnyAsync(ac => ac.Actor.UserId == guidUserId && ac.CastingId == castingId)
             };
 
             return model;

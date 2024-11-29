@@ -41,6 +41,10 @@ namespace ActorsCastings.Data.Models
         [Comment("Soft delete")]
         public bool IsDeleted { get; set; }
 
+        [Required]
+        [Comment("Is the Play approved by Admin")]
+        public bool IsApproved { get; set; }
+
         public IList<ActorPlay> ActorsPlays { get; set; }
             = new List<ActorPlay>();
     }

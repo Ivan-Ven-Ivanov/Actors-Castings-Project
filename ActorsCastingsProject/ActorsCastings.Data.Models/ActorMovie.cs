@@ -2,6 +2,8 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
+using static ActorsCastings.Common.EntityValidationConstants.ActorMovie;
+
 namespace ActorsCastings.Data.Models
 {
     [PrimaryKey(nameof(ActorProfileId), nameof(MovieId))]
@@ -22,5 +24,10 @@ namespace ActorsCastings.Data.Models
 
         [Required]
         public Movie Movie { get; set; } = null!;
+
+        [Required]
+        [Comment("The role of the actor in the movie")]
+        [MaxLength(ActorMovieRoleMaxLength)]
+        public string Role { get; set; } = null!;
     }
 }
