@@ -1,0 +1,52 @@
+[
+  {
+    "Id": "3f857443-4eec-42b0-9ed0-101973987ad7",
+    "Title": "Movie Casting Woman",
+    "Description": "We're looking for a woman at an age from 25 to 35 for a secondary role in new movie",
+    "CreatedOn": "2024-11-25T01:42:40",
+    "CastingEnd": "2024-12-21T18:00:00",
+    "CastingAgentId": "f5208d8b-a974-43ed-b8b0-54826c061a6e",
+    "IsDeleted": false,
+    "IsApproved": true
+  },
+  {
+    "Id": "5656965a-e13f-43d3-9754-639f3398191c",
+    "Title": "TV Series Casting for a man",
+    "Description": "We're looking for a man at an age from 55 to 65 for a main role in new TV series. The actor should have a beard and white hair.",
+    "CreatedOn": "2024-11-24T01:42:40",
+    "CastingEnd": "2024-12-22T14:00:00",
+    "CastingAgentId": "8d91e4cf-b8d7-4cbd-938f-e377fb6913e2",
+    "IsDeleted": false,
+    "IsApproved": true
+  },
+  {
+    "Id": "cfac6138-1a01-4a9b-a3c6-e52d32640124",
+    "Title": "Sports ad Casting for a young woman",
+    "Description": "We're looking for a woman at an age from 18 to 26 for a role in a sports ad. The actress should know how to swim.",
+    "CreatedOn": "2024-11-23T01:42:40",
+    "CastingEnd": "2024-12-23T15:00:00",
+    "CastingAgentId": "f5208d8b-a974-43ed-b8b0-54826c061a6e",
+    "IsDeleted": false,
+    "IsApproved": true
+  },
+  {
+    "Id": "7ff7f307-2277-48f8-9533-b47345f43c00",
+    "Title": "Casting a man for new action movie",
+    "Description": "We're looking for a man at an age from 25 to 35 for a main role in new action movie. The actor should have athletic skills.",
+    "CreatedOn": "2024-11-22T01:42:40",
+    "CastingEnd": "2024-12-24T18:30:00",
+    "CastingAgentId": "8b299bb7-7857-49be-b953-47d0961d6de7",
+    "IsDeleted": false,
+    "IsApproved": true
+  },
+  {
+    "Id": "1c801301-f82a-4c69-aedf-8aef41afb68b",
+    "Title": "Coca Cola Casting for a mother and a little boy",
+    "Description": "We're looking for a woman at an age from 30 to 40 and a boy aged 6 to 9 for a Coca Cola ad.",
+    "CreatedOn": "2024-11-21T01:42:40",
+    "CastingEnd": "2024-12-25T10:00:00",
+    "CastingAgentId": "dc9a62c2-46f0-41b6-8fc2-0975dfba24bb",
+    "IsDeleted": false,
+    "IsApproved": true
+  }
+]

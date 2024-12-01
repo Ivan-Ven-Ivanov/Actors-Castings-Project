@@ -6,13 +6,13 @@ using static ActorsCastings.Common.EntityValidationConstants.ActorMovie;
 
 namespace ActorsCastings.Data.Models
 {
-    [PrimaryKey(nameof(ActorProfileId), nameof(MovieId))]
+    [PrimaryKey(nameof(ActorId), nameof(MovieId))]
     public class ActorMovie
     {
         [Required]
         [ForeignKey(nameof(Actor))]
-        [Comment("Foreign key to ActorProfile")]
-        public Guid ActorProfileId { get; set; }
+        [Comment("Foreign key to Actor")]
+        public Guid ActorId { get; set; }
 
         [Required]
         public Actor Actor { get; set; } = null!;
@@ -25,9 +25,8 @@ namespace ActorsCastings.Data.Models
         [Required]
         public Movie Movie { get; set; } = null!;
 
-        [Required]
         [Comment("The role of the actor in the movie")]
         [MaxLength(ActorMovieRoleMaxLength)]
-        public string Role { get; set; } = null!;
+        public string? Role { get; set; }
     }
 }

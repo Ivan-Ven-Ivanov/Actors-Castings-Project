@@ -4,6 +4,7 @@ using ActorsCastings.Web.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ActorsCastings.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241130153309_RemovedTwoPropertiesFromApplicationUser")]
+    partial class RemovedTwoPropertiesFromApplicationUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -74,7 +77,7 @@ namespace ActorsCastings.Data.Migrations
                 {
                     b.Property<Guid>("ActorId")
                         .HasColumnType("uniqueidentifier")
-                        .HasComment("Foreign key to Actor");
+                        .HasComment("Foreign key to ActorProfile");
 
                     b.Property<Guid>("CastingId")
                         .HasColumnType("uniqueidentifier")
@@ -89,20 +92,21 @@ namespace ActorsCastings.Data.Migrations
 
             modelBuilder.Entity("ActorsCastings.Data.Models.ActorMovie", b =>
                 {
-                    b.Property<Guid>("ActorId")
+                    b.Property<Guid>("ActorProfileId")
                         .HasColumnType("uniqueidentifier")
-                        .HasComment("Foreign key to Actor");
+                        .HasComment("Foreign key to ActorProfile");
 
                     b.Property<Guid>("MovieId")
                         .HasColumnType("uniqueidentifier")
                         .HasComment("Foreign key to Movie");
 
                     b.Property<string>("Role")
+                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)")
                         .HasComment("The role of the actor in the movie");
 
-                    b.HasKey("ActorId", "MovieId");
+                    b.HasKey("ActorProfileId", "MovieId");
 
                     b.HasIndex("MovieId");
 
@@ -111,20 +115,21 @@ namespace ActorsCastings.Data.Migrations
 
             modelBuilder.Entity("ActorsCastings.Data.Models.ActorPlay", b =>
                 {
-                    b.Property<Guid>("ActorId")
+                    b.Property<Guid>("ActorProfileId")
                         .HasColumnType("uniqueidentifier")
-                        .HasComment("Foreign key to Actor");
+                        .HasComment("Foreign key to ActorProfile");
 
                     b.Property<Guid>("PlayId")
                         .HasColumnType("uniqueidentifier")
                         .HasComment("Foreign key to Play");
 
                     b.Property<string>("Role")
+                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)")
                         .HasComment("The role of the actor in the play");
 
-                    b.HasKey("ActorId", "PlayId");
+                    b.HasKey("ActorProfileId", "PlayId");
 
                     b.HasIndex("PlayId");
 
@@ -541,7 +546,7 @@ namespace ActorsCastings.Data.Migrations
                 {
                     b.HasOne("ActorsCastings.Data.Models.Actor", "Actor")
                         .WithMany("ActorsMovies")
-                        .HasForeignKey("ActorId")
+                        .HasForeignKey("ActorProfileId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -560,7 +565,7 @@ namespace ActorsCastings.Data.Migrations
                 {
                     b.HasOne("ActorsCastings.Data.Models.Actor", "Actor")
                         .WithMany("ActorsPlays")
-                        .HasForeignKey("ActorId")
+                        .HasForeignKey("ActorProfileId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

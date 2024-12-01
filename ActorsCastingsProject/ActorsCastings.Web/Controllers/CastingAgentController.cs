@@ -46,9 +46,6 @@ namespace ActorsCastings.Web.Controllers
                 UserId = currentUser.Id
             };
 
-
-            currentUser.CastingAgentProfileId = castingAgentProfile.Id;
-
             await _context.CastingAgents.AddAsync(castingAgentProfile);
             await _context.SaveChangesAsync();
 

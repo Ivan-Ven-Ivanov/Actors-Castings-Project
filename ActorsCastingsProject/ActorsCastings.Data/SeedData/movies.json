@@ -1,0 +1,57 @@
+[
+  {
+    "Id": "7f3c4a10-2f6f-4434-840b-73f135c83aca",
+    "Title": "Love.net",
+    "Genre": "Drama",
+    "Director": "Ilian Djevelekov",
+    "ReleaseYear": 2011,
+    "Description": "Follows the parallel stories of a number of characters who are trying to change their lives via the Internet or are simply having fun online.",
+    "ImageUrl": "https://www.cinefish.bg/data/movies_images/138/p_138649.jpg",
+    "IsDeleted": false,
+    "IsApproved": true
+  },
+  {
+    "Id": "d5aa5fca-551e-4721-a332-b56a5821dd73",
+    "Title": "Bubblegum",
+    "Genre": "Drama",
+    "Director": "Stanislav Todorov Rogi",
+    "ReleaseYear": 2017,
+    "Description": "Kalin (35) is a talented advertising specialist, weary of life. Bilyana (35) is a free spirit, still uncertain of what she wants. They grew up in Socialist Bulgaria, where they were part of a mad group of friends, for whom every day was a different adventure. Childlike, they had a pact to get married. The two of them meet 25 years later.",
+    "ImageUrl": "https://www.ciela.com/media/catalog/product/cache/9a7ceae8a5abbd0253425b80f9ef99a5/d/y/dyvka-za-baloncheta-dvd.jpg",
+    "IsDeleted": false,
+    "IsApproved": true
+  },
+  {
+    "Id": "0276d235-774d-441f-ac77-9badafc4d814",
+    "Title": "War of Letters",
+    "Genre": "History Drama",
+    "Director": "Zoran Petrovski, Viktor Chuchkov",
+    "ReleaseYear": 2022,
+    "Description": "10th century, the most powerful state in Europe rests on a terrible secret that may threaten the very foundations of Christianity. Captured between political intrigues and warrior battles the young prince Bayan is searching for an ancient alphabet that could save his doomed love or his kingdom. A medieval mystery drama about the birth of the Cyrillic alphabet.",
+    "ImageUrl": "https://m.media-amazon.com/images/M/MV5BZDljYzNlNmMtNTViYi00N2Y1LWFiOTItYzhkMzBiMzY0ZDM3XkEyXkFqcGc@._V1_.jpg",
+    "IsDeleted": false,
+    "IsApproved": true
+  },
+  {
+    "Id": "688dec9c-6a78-4769-80cc-b2281c4c7d2a",
+    "Title": "Undercover",
+    "Genre": "Action",
+    "Director": "Victor Bojinov",
+    "ReleaseYear": 2011,
+    "Description": "Trained young policeman goes undercover in the gang of the most dangerous mafia boss in Bulgaria.",
+    "ImageUrl": "https://www.vivacom.bg/web/files/arena/630/image/thumb_388x564_%D0%9F%D0%BE%D0%B4%20%D0%BF%D1%80%D0%B8%D0%BA%D1%80%D0%B8%D1%82%D0%B8%D0%B5.jpg",
+    "IsDeleted": false,
+    "IsApproved": true
+  },
+  {
+    "Id": "cbe7da20-087d-4f57-bd21-9b9af1690bc1",
+    "Title": "German Lessons",
+    "Genre": "Drama",
+    "Director": "Pavel G. Vesnakov",
+    "ReleaseYear": 2020,
+    "Description": "A middle aged man named Nikola is struggling with his life in his home country Bulgaria. He decides to move to Germany and is desperately trying to restore relationships with all his beloved people, just a day before he leaves. This is director's first feature film.",
+    "ImageUrl": "https://www.bta.bg/upload/4349066/Vergov_Fyre.jpg?l=1000&original=41849178c4da42705e2edc8c815ef18546c6d52e",
+    "IsDeleted": false,
+    "IsApproved": true
+  }
+]

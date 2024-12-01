@@ -68,9 +68,6 @@ namespace ActorsCastings.Web.Controllers
                 UserId = currentUser.Id
             };
 
-
-            currentUser.ActorProfileId = actorProfile.Id;
-
             await _context.Actors.AddAsync(actorProfile);
             await _context.SaveChangesAsync();
 

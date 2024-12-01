@@ -1,0 +1,52 @@
+[
+  {
+    "Id": "0f6d3a0c-b710-4e8d-ae81-460396b39a91",
+    "FirstName": "Zahari",
+    "LastName": "Baharov",
+    "ProfilePictureUrl": "https://nationaltheatre.bg/storage/profiles/28079f3b7c33cc2e5a34a62aa023631f86d.jpg",
+    "Age": 44,
+    "Biography": "Zahari Baharov was born on August 12, 1980 in Sofia. He started acting by accident in high school, and in 1998 was admitted to NATFIZ in the class of prof. Nadezhda Seikova and graduated in 2002.",
+    "UserId": "00437133-5332-45a7-952e-dc8b6b740b76",
+    "IsDeleted": false
+  },
+  {
+    "Id": "01bd7e28-6449-4efc-9f1f-f70a29caaac3",
+    "FirstName": "Teodora",
+    "LastName": "Duhovnikova",
+    "ProfilePictureUrl": "https://nationaltheatre.bg/storage/profiles/61272290fa286b2621edbb2f92ee5cfd8c.JPG",
+    "Age": 47,
+    "Biography": "Born on December 14, 1977. in Sofia. As a child, in the 1980s, he participated in television films for the Bulgarian Television. He received his secondary education at NGDEK. In the year 2000 graduated from NATFIZ with a major in acting for dramatic theater in the class of professor Snezhina Tankovska and associate professor Andrey Batashov.",
+    "UserId": "efc80aaa-7890-4f3f-80c0-5a86b0afe157",
+    "IsDeleted": false
+  },
+  {
+    "Id": "44c54c7a-b031-404c-afd6-830dd00e7b83",
+    "FirstName": "Nencho",
+    "LastName": "Kostov",
+    "ProfilePictureUrl": "https://alternativavestnik.home.blog/wp-content/uploads/2023/02/received_1184727408853038.jpeg?w=683",
+    "Age": 31,
+    "Biography": "He graduated from NATFIZ Krastyo Sarafov in 2017. in the class of prof. Ivaylo Hristov.",
+    "UserId": "0719936f-703e-4836-ade1-1d00e7225256",
+    "IsDeleted": false
+  },
+  {
+    "Id": "8141b06f-e8e8-4988-b317-c43665f74e8a",
+    "FirstName": "Julian",
+    "LastName": "Vergov",
+    "ProfilePictureUrl": "https://interview.to/wp-content/uploads/2015/09/img_1755.jpg",
+    "Age": 54,
+    "Biography": "Graduated acting at Luben Groys Theater College in the class of Professor Tsvetana Maneva in 2001. He made his debut on the stage of the Ivan Vazov National Theater in Romeo and Juliet by William Shakespeare, staged by Lilia Abadzhieva.",
+    "UserId": "be1c5570-a3dd-444a-9d43-bc0fef22a105",
+    "IsDeleted": false
+  },
+  {
+    "Id": "072212c8-bfb2-4179-802c-3cc46648bbdc",
+    "FirstName": "Vladimir",
+    "LastName": "Penev",
+    "ProfilePictureUrl": "https://nationaltheatre.bg/storage/profiles/517ce32090fd407133468811fd50563a9.jpg",
+    "Age": 66,
+    "Biography": "He was born in Sofia, Bulgaria. His father is Nikola Penev, a journalist from the Zemedelsko zname newspaper. He completed his secondary education at Vasil Levski 8th Secondary School. Since 1982 is a master of acting for dramatic theater in the class of prof. Nikolay Lyutskanov with assistant Margarita Mladenova, VITIZ Krastyo Sarafov.",
+    "UserId": "c36656b1-d6c7-4682-92fd-2b5f5c982241",
+    "IsDeleted": false
+  }
+]

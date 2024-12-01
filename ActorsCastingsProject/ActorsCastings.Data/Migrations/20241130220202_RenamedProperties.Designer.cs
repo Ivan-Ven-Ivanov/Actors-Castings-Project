@@ -4,6 +4,7 @@ using ActorsCastings.Web.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ActorsCastings.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241130220202_RenamedProperties")]
+    partial class RenamedProperties
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -98,6 +101,7 @@ namespace ActorsCastings.Data.Migrations
                         .HasComment("Foreign key to Movie");
 
                     b.Property<string>("Role")
+                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)")
                         .HasComment("The role of the actor in the movie");
@@ -120,6 +124,7 @@ namespace ActorsCastings.Data.Migrations
                         .HasComment("Foreign key to Play");
 
                     b.Property<string>("Role")
+                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)")
                         .HasComment("The role of the actor in the play");

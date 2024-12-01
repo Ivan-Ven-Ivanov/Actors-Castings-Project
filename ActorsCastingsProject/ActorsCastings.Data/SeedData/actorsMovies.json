@@ -1,0 +1,52 @@
+[
+  {
+    "ActorId": "0f6d3a0c-b710-4e8d-ae81-460396b39a91",
+    "MovieId": "7f3c4a10-2f6f-4434-840b-73f135c83aca",
+    "Role": "Andrey Bogatev"
+  },
+  {
+    "ActorId": "01bd7e28-6449-4efc-9f1f-f70a29caaac3",
+    "MovieId": "d5aa5fca-551e-4721-a332-b56a5821dd73",
+    "Role": "Bilyana"
+  },
+  {
+    "ActorId": "0f6d3a0c-b710-4e8d-ae81-460396b39a91",
+    "MovieId": "0276d235-774d-441f-ac77-9badafc4d814",
+    "Role": "Sursuvul"
+  },
+  {
+    "ActorId": "01bd7e28-6449-4efc-9f1f-f70a29caaac3",
+    "MovieId": "0276d235-774d-441f-ac77-9badafc4d814",
+    "Role": "Mariam"
+  },
+  {
+    "ActorId": "0f6d3a0c-b710-4e8d-ae81-460396b39a91",
+    "MovieId": "688dec9c-6a78-4769-80cc-b2281c4c7d2a",
+    "Role": "Ivo Andonov"
+  },
+  {
+    "ActorId": "072212c8-bfb2-4179-802c-3cc46648bbdc",
+    "MovieId": "688dec9c-6a78-4769-80cc-b2281c4c7d2a",
+    "Role": "Emil Popov"
+  },
+  {
+    "ActorId": "44c54c7a-b031-404c-afd6-830dd00e7b83",
+    "MovieId": "0276d235-774d-441f-ac77-9badafc4d814",
+    "Role": "Petar"
+  },
+  {
+    "ActorId": "8141b06f-e8e8-4988-b317-c43665f74e8a",
+    "MovieId": "cbe7da20-087d-4f57-bd21-9b9af1690bc1",
+    "Role": "Nikola"
+  },
+  {
+    "ActorId": "072212c8-bfb2-4179-802c-3cc46648bbdc",
+    "MovieId": "7f3c4a10-2f6f-4434-840b-73f135c83aca",
+    "Role": "The chief"
+  },
+  {
+    "ActorId": "01bd7e28-6449-4efc-9f1f-f70a29caaac3",
+    "MovieId": "688dec9c-6a78-4769-80cc-b2281c4c7d2a",
+    "Role": "Elica Vladeva"
+  }
+]

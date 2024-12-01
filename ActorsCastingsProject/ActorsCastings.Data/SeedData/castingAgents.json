@@ -1,0 +1,37 @@
+[
+  {
+    "Id": "f5208d8b-a974-43ed-b8b0-54826c061a6e",
+    "Name": "Petar Ivanov",
+    "CastingAgency": "SmartCast",
+    "UserId": "386f0ce1-1884-4c63-beb0-746bb8e73634",
+    "IsDeleted": false
+  },
+  {
+    "Id": "8d91e4cf-b8d7-4cbd-938f-e377fb6913e2",
+    "Name": "Maria Ivanova",
+    "CastingAgency": "Artist Studio",
+    "UserId": "e5aeebb4-3d1b-4c8b-b19e-1ea073938b16",
+    "IsDeleted": false
+  },
+  {
+    "Id": "8b299bb7-7857-49be-b953-47d0961d6de7",
+    "Name": "Martin Georgiev",
+    "CastingAgency": "New Actors Studio",
+    "UserId": "0487d986-ece3-4f68-9e3a-2d064f15a14a",
+    "IsDeleted": false
+  },
+  {
+    "Id": "dc9a62c2-46f0-41b6-8fc2-0975dfba24bb",
+    "Name": "Anna Petkova",
+    "CastingAgency": "Cast.bg",
+    "UserId": "e9e3fa9c-ff55-4788-9085-cd00806062ec",
+    "IsDeleted": false
+  },
+  {
+    "Id": "b3ddcdfc-21fb-4b60-8e99-8386cea3155a",
+    "Name": "Dimitar Dimitrov",
+    "CastingAgency": "CastingCrew",
+    "UserId": "a5faafe7-4729-4102-a2de-adf525f9d042",
+    "IsDeleted": false
+  }
+]
