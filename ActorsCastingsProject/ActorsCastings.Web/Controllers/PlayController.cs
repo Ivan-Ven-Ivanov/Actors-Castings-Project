@@ -1,12 +1,23 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ActorsCastings.Services.Data.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ActorsCastings.Web.Controllers
 {
     public class PlayController : Controller
     {
-        public IActionResult Index()
+        private readonly IPlayService _playService;
+
+        public PlayController(IPlayService playService)
         {
-            return View();
+            _playService = playService;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Index()
+        {
+            var models = await _playService.IndexGetAllPlaysAsync();
+
+            return View(models);
         }
     }
 }

@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ActorsCastings.Web.ViewModels.Play;
 
 namespace ActorsCastings.Services.Data.Interfaces
 {
-    internal interface IPlayService
+    public interface IPlayService
     {
+        Task<IEnumerable<PlayViewModel>> IndexGetAllPlaysAsync();
+
+        Task<PlayDetailsViewModel> GetPlayDetailsAsync(string id);
     }
 }
