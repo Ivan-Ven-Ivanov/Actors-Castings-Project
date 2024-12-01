@@ -16,6 +16,59 @@
                 <h5 class="card-title">@Model.FirstName @Model.LastName</h5>
                 <p class="card-text"><strong>Age:</strong> @Model.Age</p>
                 <p class="card-text"><strong>Biography:</strong> @Model.Biography</p>
+                <div class="mt-4">
+                    <h3>Movies</h3>
+                    @if (Model.Movies.Any())
+                    {
+                        <div class="d-flex overflow-auto">
+                            @foreach (var movie in Model.Movies)
+                            {
+                                <div class="card m-2" style="min-width: 200px;">
+                                    <div class="card-body">
+                                        <h5 class="card-title">@movie.Title</h5>
+                                        <img src="@movie.ImageUrl" class="card-img-top thumbnail-image" alt="@movie.Title Picture" />
+                                        <p class="card-text">
+                                            <strong>Release Year:</strong> @movie.ReleaseYear <br />
+                                            <strong>Director:</strong> @movie.Director
+                                        </p>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <p>No movies listed yet.</p>
+                    }
+                </div>
+                <hr />
+
+                <div class="mt-4">
+                    <h3>Plays</h3>
+                    @if (Model.Plays.Any())
+                    {
+                        <div class="d-flex overflow-auto">
+                            @foreach (var play in Model.Plays)
+                            {
+                                <div class="card m-2" style="min-width: 200px;">
+                                    <div class="card-body">
+                                        <h5 class="card-title">@play.Title</h5>
+                                        <img src="@play.ImageUrl" class="card-img-top thumbnail-image" alt="@play.Title Picture" />
+                                        <p class="card-text">
+                                            <strong>Release Year:</strong> @play.ReleaseYear <br />
+                                            <strong>Director:</strong> @play.Director
+                                        </p>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <p>No plays listed yet.</p>
+                    }
+                </div>
+            </div>
                 <p class="card-text">
                     <a asp-action="Index" class="btn btn-secondary">Back to Actors</a>
                 </p>

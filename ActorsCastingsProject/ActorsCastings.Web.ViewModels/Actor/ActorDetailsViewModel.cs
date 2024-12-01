@@ -1,4 +1,7 @@
-﻿namespace ActorsCastings.Web.ViewModels.Actor
+﻿using ActorsCastings.Web.ViewModels.Movie;
+using ActorsCastings.Web.ViewModels.Play;
+
+namespace ActorsCastings.Web.ViewModels.Actor
 {
     public class ActorDetailsViewModel
     {
@@ -11,5 +14,11 @@
         public string ProfilePictureUrl { get; set; } = null!;
 
         public string? Biography { get; set; }
+
+        public IList<MovieViewModel> Movies { get; set; }
+            = new List<MovieViewModel>();
+
+        public IList<PlayViewModel> Plays { get; set; }
+            = new List<PlayViewModel>();
     }
 }

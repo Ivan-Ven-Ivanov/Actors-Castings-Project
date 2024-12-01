@@ -2,6 +2,8 @@
 using ActorsCastings.Web.Data;
 using ActorsCastings.Web.ViewModels.Actor;
 using ActorsCastings.Web.ViewModels.ActorProfile;
+using ActorsCastings.Web.ViewModels.Movie;
+using ActorsCastings.Web.ViewModels.Play;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -77,14 +79,19 @@ namespace ActorsCastings.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(string id)
         {
-            bool isGuidValid = Guid.TryParse(id, out Guid castingId);
+            bool isGuidValid = Guid.TryParse(id, out Guid actorId);
 
             if (!isGuidValid)
             {
                 return RedirectToAction("Index");
             }
 
-            Actor? actor = await _context.Actors.FindAsync(castingId);
+            Actor? actor = await _context.Actors
+                .Include(a => a.ActorsMovies)
+                    .ThenInclude(am => am.Movie)
+                .Include(a => a.ActorsPlays)
+                    .ThenInclude(ap => ap.Play)
+                .FirstOrDefaultAsync(a => a.Id == actorId);
 
             if (actor == null)
             {
@@ -97,7 +104,25 @@ namespace ActorsCastings.Web.Controllers
                 LastName = actor.LastName,
                 Age = actor.Age.ToString(),
                 Biography = actor.Biography,
-                ProfilePictureUrl = actor.ProfilePictureUrl
+                ProfilePictureUrl = actor.ProfilePictureUrl,
+                Movies = actor.ActorsMovies.Select(am => new MovieViewModel
+                {
+                    Id = am.Movie.Id.ToString(),
+                    Title = am.Movie.Title,
+                    Director = am.Movie.Director,
+                    ImageUrl = am.Movie.ImageUrl,
+                    ReleaseYear = am.Movie.ReleaseYear.ToString()
+                })
+                .ToList(),
+                Plays = actor.ActorsPlays.Select(ap => new PlayViewModel
+                {
+                    Id = ap.Play.Id.ToString(),
+                    Title = ap.Play.Title,
+                    Director = ap.Play.Director,
+                    ImageUrl = ap.Play.ImageUrl,
+                    ReleaseYear = ap.Play.ReleaseYear.ToString()
+                })
+                .ToList()
             };
 
             return View(model);
