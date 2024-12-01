@@ -1,0 +1,44 @@
+﻿@model IEnumerable<MovieViewModel>
+
+<div class="container mt-5">
+    <h1 class="text-center">All Movies</h1>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-warning text-center" role="alert">
+            No movies available.
+        </div>
+    }
+    else
+    {
+        <div class="row row-cols-1 row-cols-md-4 g-4">
+            @foreach (var movie in Model)
+            {
+                <div class="col">
+                    <a asp-action="Details" asp-route-id="@movie.Id" class="card h-100 d-flex flex-column text-decoration-none text-dark">
+                        <div class="card h-100 d-flex flex-column">
+                            <div class="card-img-top d-flex align-items-center justify-content-center">
+                                @if (!string.IsNullOrEmpty(movie.ImageUrl))
+                                {
+                                    <img src="@movie.ImageUrl" class="img-fluid img-thumbnail" alt="@movie.Title" style="object-fit: contain">
+                                }
+                                else
+                                {
+                                    <img src="https://via.placeholder.com/200x300?text=No+Image" class="card-img-top" alt="No Image">
+                                }
+                            </div>
+                            <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 opacity-0 hover-overlay"></div>
+                            <div class="card-body d-flex flex-column justify-content-between flex-grow-1">
+                                <h5 class="card-title text-center">@movie.Title</h5>
+                                <p class="card-text text-center">
+                                    <strong>Director:</strong> @movie.Director <br />
+                                    <strong>Release Year:</strong> @movie.ReleaseYear
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            }
+        </div>
+    }
+</div>
