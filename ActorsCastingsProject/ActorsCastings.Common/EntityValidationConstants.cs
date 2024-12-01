@@ -17,7 +17,7 @@
             public const int MovieTitleMaxLength = 150;
             public const int MovieGenreMinLength = 3;
             public const int MovieGenreMaxLength = 30;
-            public const int MovieDescriptionMaxLength = 300;
+            public const int MovieDescriptionMaxLength = 500;
             public const int MovieDirectorMinLength = 2;
             public const int MovieDirectorMaxLength = 50;
         }
@@ -26,7 +26,7 @@
         {
             public const int PlayTitleMinLength = 2;
             public const int PlayTitleMaxLength = 150;
-            public const int PlayDescriptionMaxLength = 300;
+            public const int PlayDescriptionMaxLength = 500;
             public const int PlayDirectorMinLength = 2;
             public const int PlayDirectorMaxLength = 50;
         }
