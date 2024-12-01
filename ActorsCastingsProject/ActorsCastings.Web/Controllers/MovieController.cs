@@ -19,5 +19,13 @@ namespace ActorsCastings.Web.Controllers
 
             return View(models);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(string id)
+        {
+            var model = await _movieService.GetMovieDetailsAsync(id);
+
+            return View(model);
+        }
     }
 }

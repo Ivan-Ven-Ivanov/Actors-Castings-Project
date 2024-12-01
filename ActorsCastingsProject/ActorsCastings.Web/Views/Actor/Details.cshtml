@@ -23,16 +23,18 @@
                         <div class="d-flex overflow-auto">
                             @foreach (var movie in Model.Movies)
                             {
-                                <div class="card m-2" style="min-width: 200px;">
-                                    <div class="card-body">
-                                        <h5 class="card-title">@movie.Title</h5>
-                                        <img src="@movie.ImageUrl" class="card-img-top thumbnail-image" alt="@movie.Title Picture" />
-                                        <p class="card-text">
-                                            <strong>Release Year:</strong> @movie.ReleaseYear <br />
-                                            <strong>Director:</strong> @movie.Director
-                                        </p>
+                                <a asp-controller="Movie" asp-action="Details" asp-route-id="@movie.Id" class="text-decoration-none text-dark">
+                                    <div class="card m-2" style="min-width: 200px;">
+                                        <div class="card-body">
+                                            <h5 class="card-title">@movie.Title</h5>
+                                            <img src="@movie.ImageUrl" class="card-img-top thumbnail-image" alt="@movie.Title Picture" />
+                                            <p class="card-text">
+                                                <strong>Release Year:</strong> @movie.ReleaseYear <br />
+                                                <strong>Director:</strong> @movie.Director
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
+                                </a>
                             }
                         </div>
                     }
@@ -69,10 +71,10 @@
                     }
                 </div>
             </div>
-                <p class="card-text">
-                    <a asp-action="Index" class="btn btn-secondary">Back to Actors</a>
-                </p>
-            </div>
+            <p class="card-text">
+                <a asp-action="Index" class="btn btn-secondary">Back to Actors</a>
+            </p>
         </div>
     </div>
+</div>
 </div>
