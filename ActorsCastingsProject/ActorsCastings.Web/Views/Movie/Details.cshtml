@@ -20,24 +20,27 @@
         </div>
     </div>
 
-    <h3 class="mt-4">Actors in this Movie</h3>
-    <div class="row">
-        @foreach (var actor in Model.Actors)
-        {
-            <div class="col-md-3 text-center mb-4">
-                <a asp-controller="Actor" asp-action="Details" asp-route-id="@actor.Id" class="text-decoration-none text-dark">
-                    <div class="card">
-                        <img src="@actor.ProfilePictureUrl" alt="@actor.FirstName @actor.LastName" class="card-img-top" style="max-height: 200px; object-fit: contain">
-                        <div class="card-body">
-                            <h5 class="card-title">@actor.FirstName @actor.LastName</h5>
-                            <p class="card-text"><strong>Role:</strong> @actor.Role</p>
+    @if (Model.Actors.Any())
+    {
+        <h3 class="mt-4">Actors in this Movie</h3>
+        <div class="row">
+            @foreach (var actor in Model.Actors)
+            {
+                <div class="col-md-3 text-center mb-4">
+                    <a asp-controller="Actor" asp-action="Details" asp-route-id="@actor.Id" class="text-decoration-none text-dark">
+                        <div class="card">
+                            <img src="@actor.ProfilePictureUrl" alt="@actor.FirstName @actor.LastName" class="card-img-top" style="max-height: 200px; object-fit: contain">
+                            <div class="card-body">
+                                <h5 class="card-title">@actor.FirstName @actor.LastName</h5>
+                                <p class="card-text"><strong>Role:</strong> @actor.Role</p>
 
+                            </div>
                         </div>
-                    </div>
-                </a>
-            </div>
-        }
-    </div>
+                    </a>
+                </div>
+            }
+        </div>
+    }
 
     <div class="mt-4 text-center">
         <a asp-action="Index" class="btn btn-primary">Back to Movie List</a>

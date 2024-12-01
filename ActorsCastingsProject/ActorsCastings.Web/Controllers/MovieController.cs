@@ -1,4 +1,5 @@
 ﻿using ActorsCastings.Services.Data.Interfaces;
+using ActorsCastings.Web.ViewModels.Movie;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ActorsCastings.Web.Controllers
@@ -15,7 +16,7 @@ namespace ActorsCastings.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var models = await _movieService.IndexGetAllMoviesAsync();
+            IEnumerable<MovieViewModel> models = await _movieService.IndexGetAllMoviesAsync();
 
             return View(models);
         }
@@ -23,7 +24,7 @@ namespace ActorsCastings.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(string id)
         {
-            var model = await _movieService.GetMovieDetailsAsync(id);
+            MovieDetailsViewModel model = await _movieService.GetMovieDetailsAsync(id);
 
             return View(model);
         }

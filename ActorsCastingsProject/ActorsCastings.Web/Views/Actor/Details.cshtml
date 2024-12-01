@@ -52,16 +52,18 @@
                         <div class="d-flex overflow-auto">
                             @foreach (var play in Model.Plays)
                             {
-                                <div class="card m-2" style="min-width: 200px;">
-                                    <div class="card-body">
-                                        <h5 class="card-title">@play.Title</h5>
-                                        <img src="@play.ImageUrl" class="card-img-top thumbnail-image" alt="@play.Title Picture" />
-                                        <p class="card-text">
-                                            <strong>Release Year:</strong> @play.ReleaseYear <br />
-                                            <strong>Director:</strong> @play.Director
-                                        </p>
+                                <a asp-controller="Play" asp-action="Details" asp-route-id="@play.Id" class="text-decoration-none text-dark">
+                                    <div class="card m-2" style="min-width: 200px;">
+                                        <div class="card-body">
+                                            <h5 class="card-title">@play.Title</h5>
+                                            <img src="@play.ImageUrl" class="card-img-top thumbnail-image" alt="@play.Title Picture" />
+                                            <p class="card-text">
+                                                <strong>Release Year:</strong> @play.ReleaseYear <br />
+                                                <strong>Director:</strong> @play.Director
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
+                                </a>
                             }
                         </div>
                     }

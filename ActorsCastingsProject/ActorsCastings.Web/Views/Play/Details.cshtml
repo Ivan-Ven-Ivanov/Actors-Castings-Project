@@ -1,5 +1,45 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model PlayDetailsViewModel
+
 @{
+    ViewData["Title"] = "Play Details";
 }
+
+<div class="container mt-5">
+    <h1 class="text-center">@Model.Title</h1>
+
+    <div class="row mt-4">
+        <div class="col-md-4 text-center">
+            <img src="@Model.ImageUrl" alt="@Model.Title" class="img-fluid rounded" style="max-width: 100%; max-height: 400px;">
+        </div>
+        <div class="col-md-8">
+            <h3><strong>Director:</strong> @Model.Director</h3>
+            <p><strong>Release Year:</strong> @Model.ReleaseYear</p>
+            <p><strong>Description:</strong></p>
+            <p>@Model.Description</p>
+        </div>
+    </div>
+    @if (Model.Actors.Any())
+    {
+        <h3 class="mt-4">Actors in this Play</h3>
+        <div class="row">
+            @foreach (var actor in Model.Actors)
+            {
+                <div class="col-md-3 text-center mb-4">
+                    <a asp-controller="Actor" asp-action="Details" asp-route-id="@actor.Id" class="text-decoration-none text-dark">
+                        <div class="card">
+                            <img src="@actor.ProfilePictureUrl" alt="@actor.FirstName @actor.LastName" class="card-img-top" style="max-height: 200px; object-fit: contain">
+                            <div class="card-body">
+                                <h5 class="card-title">@actor.FirstName @actor.LastName</h5>
+                                <p class="card-text"><strong>Role:</strong> @actor.Role</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            }
+        </div>
+    }
+
+    <div class="mt-4 text-center">
+        <a asp-action="Index" class="btn btn-primary">Back to Play List</a>
+    </div>
+</div>

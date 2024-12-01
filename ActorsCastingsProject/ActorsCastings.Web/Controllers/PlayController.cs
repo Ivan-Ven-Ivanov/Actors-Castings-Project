@@ -1,4 +1,5 @@
 ﻿using ActorsCastings.Services.Data.Interfaces;
+using ActorsCastings.Web.ViewModels.Play;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ActorsCastings.Web.Controllers
@@ -15,9 +16,17 @@ namespace ActorsCastings.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var models = await _playService.IndexGetAllPlaysAsync();
+            IEnumerable<PlayViewModel> models = await _playService.IndexGetAllPlaysAsync();
 
             return View(models);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(string id)
+        {
+            PlayDetailsViewModel model = await _playService.GetPlayDetailsAsync(id);
+
+            return View(model);
         }
     }
 }
