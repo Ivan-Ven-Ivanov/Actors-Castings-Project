@@ -10,10 +10,58 @@ namespace ActorsCastings.Services.Data
     public class MovieService : BaseService, IMovieService
     {
         private readonly IRepository<Movie, Guid> _movieRepository;
+        private readonly IRepository<Actor, Guid> _actorRepository;
+        private readonly IRepository<ActorMovie, Guid> _actorMovieRepository;
 
-        public MovieService(IRepository<Movie, Guid> movieRepository)
+        public MovieService(
+            IRepository<Movie, Guid> movieRepository,
+            IRepository<Actor, Guid> actorRepository,
+            IRepository<ActorMovie, Guid> actorMovieRepository)
         {
             _movieRepository = movieRepository;
+            _actorRepository = actorRepository;
+            _actorMovieRepository = actorMovieRepository;
+        }
+
+        public async Task AddMovieAndRoleInItAsync(AddMovieViewModel model, string userId)
+        {
+            Guid guidUserId = Guid.Empty;
+            bool isGuidValid = IsGuidValid(userId, ref guidUserId);
+
+            if (!isGuidValid)
+            {
+                throw new Exception();
+            }
+
+            Movie movie = new Movie
+            {
+                Title = model.Title,
+                Genre = model.Genre,
+                Description = model.Description,
+                Director = model.Director,
+                ImageUrl = model.ImageUrl,
+                ReleaseYear = model.ReleaseYear,
+                IsApproved = false
+            };
+
+            Actor currentActor = await _actorRepository
+                .FirstOrDefaultAsync(a => a.UserId == guidUserId);
+
+            if (currentActor == null)
+            {
+                throw new Exception();
+            }
+
+            ActorMovie actorMovie = new ActorMovie
+            {
+                ActorId = currentActor.Id,
+                MovieId = movie.Id,
+                Role = model.Role,
+                IsApproved = false
+            };
+
+            await _movieRepository.AddAsync(movie);
+            await _actorMovieRepository.AddAsync(actorMovie);
         }
 
         public async Task<MovieDetailsViewModel> GetMovieDetailsAsync(string id)

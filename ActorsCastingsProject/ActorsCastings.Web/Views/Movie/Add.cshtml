@@ -1,0 +1,62 @@
+﻿@model ActorsCastings.Web.ViewModels.Movie.AddMovieViewModel
+
+@{
+    ViewData["Title"] = "Add Movie";
+}
+
+<div class="container mt-5">
+    <h1 class="text-center">Add a New Movie</h1>
+    <hr />
+
+    <form asp-action="Add" method="post" class="mt-4">
+        <div class="form-group">
+            <label asp-for="Title" class="form-label">Title</label>
+            <input asp-for="Title" class="form-control" placeholder="Enter movie title" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mt-3">
+            <label asp-for="Director" class="form-label">Director</label>
+            <input asp-for="Director" class="form-control" placeholder="Enter director name" />
+            <span asp-validation-for="Director" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mt-3">
+            <label asp-for="Role" class="form-label">Role</label>
+            <input asp-for="Role" class="form-control" placeholder="Enter ypur role in the movie" />
+            <span asp-validation-for="Role" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mt-3">
+            <label asp-for="ReleaseYear" class="form-label">Release Year</label>
+            <input asp-for="ReleaseYear" class="form-control" placeholder="Enter release year" />
+            <span asp-validation-for="ReleaseYear" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mt-3">
+            <label asp-for="ImageUrl" class="form-label">Image URL</label>
+            <input asp-for="ImageUrl" class="form-control" placeholder="Enter image URL (optional)" />
+            <span asp-validation-for="ImageUrl" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mt-3">
+            <label asp-for="Genre" class="form-label">Genre</label>
+            <input asp-for="Genre" class="form-control" placeholder="Enter genre" />
+            <span asp-validation-for="Genre" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mt-3">
+            <label asp-for="Description" class="form-label">Description</label>
+            <textarea asp-for="Description" class="form-control" rows="4" placeholder="Enter movie description (optional)"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-primary btn-lg">
+                <i class="fas fa-save"></i> Add Movie
+            </button>
+        </div>
+    </form>
+</div>
+
+<script src="https://kit.fontawesome.com/2adefc9ae5.js" crossorigin="anonymous"></script>

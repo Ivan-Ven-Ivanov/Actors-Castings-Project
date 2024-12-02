@@ -7,5 +7,7 @@ namespace ActorsCastings.Services.Data.Interfaces
         Task<IEnumerable<MovieViewModel>> IndexGetAllMoviesAsync();
 
         Task<MovieDetailsViewModel> GetMovieDetailsAsync(string id);
+
+        Task AddMovieAndRoleInItAsync(AddMovieViewModel model, string userId);
     }
 }
