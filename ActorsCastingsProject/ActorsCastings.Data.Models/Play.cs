@@ -27,6 +27,11 @@ namespace ActorsCastings.Data.Models
         public string Director { get; set; } = null!;
 
         [Required]
+        [Comment("The theatre where the play is played")]
+        [MaxLength(PlayTheatreMaxLength)]
+        public string Theatre { get; set; } = null!;
+
+        [Required]
         [Comment("Release year of the play")]
         public int ReleaseYear { get; set; }
 

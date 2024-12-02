@@ -2,41 +2,49 @@
   {
     "ActorId": "072212c8-bfb2-4179-802c-3cc46648bbdc",
     "PlayId": "099134cb-ae73-4199-927c-9f84e1064710",
-    "Role": "Andre"
+    "Role": "Andre",
+    "IsApproved": true
   },
   {
     "ActorId": "8141b06f-e8e8-4988-b317-c43665f74e8a",
     "PlayId": "099134cb-ae73-4199-927c-9f84e1064710",
-    "Role": null
+    "Role": null,
+    "IsApproved": true
   },
   {
     "ActorId": "01bd7e28-6449-4efc-9f1f-f70a29caaac3",
     "PlayId": "099134cb-ae73-4199-927c-9f84e1064710",
-    "Role": null
+    "Role": null,
+    "IsApproved": true
   },
   {
     "ActorId": "01bd7e28-6449-4efc-9f1f-f70a29caaac3",
     "PlayId": "9abd46e4-9f75-41a9-8cc3-d142997c04cf",
-    "Role": "She"
+    "Role": "She",
+    "IsApproved": true
   },
   {
     "ActorId": "0f6d3a0c-b710-4e8d-ae81-460396b39a91",
     "PlayId": "9abd46e4-9f75-41a9-8cc3-d142997c04cf",
-    "Role": "He"
+    "Role": "He",
+    "IsApproved": true
   },
   {
     "ActorId": "44c54c7a-b031-404c-afd6-830dd00e7b83",
     "PlayId": "253a0612-1359-4c37-a6b2-75593ea3320e",
-    "Role": "Sergei"
+    "Role": "Sergei",
+    "IsApproved": true
   },
   {
     "ActorId": "44c54c7a-b031-404c-afd6-830dd00e7b83",
     "PlayId": "cef3172a-d9ae-41c7-834f-cd934a506b95",
-    "Role": "Stubb"
+    "Role": "Stubb",
+    "IsApproved": true
   },
   {
     "ActorId": "072212c8-bfb2-4179-802c-3cc46648bbdc",
     "PlayId": "cef3172a-d9ae-41c7-834f-cd934a506b95",
-    "Role": "Ishmael"
+    "Role": "Ishmael",
+    "IsApproved": true
   }
 ]

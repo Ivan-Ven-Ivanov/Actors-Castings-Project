@@ -28,5 +28,9 @@ namespace ActorsCastings.Data.Models
         [Comment("The role of the actor in the play")]
         [MaxLength(ActorPlayRoleMaxLength)]
         public string? Role { get; set; }
+
+        [Required]
+        [Comment("Is the part of the actor in the play approved by Admin")]
+        public bool IsApproved { get; set; }
     }
 }

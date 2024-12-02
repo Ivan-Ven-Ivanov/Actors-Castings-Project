@@ -29,6 +29,8 @@
             public const int PlayDescriptionMaxLength = 500;
             public const int PlayDirectorMinLength = 2;
             public const int PlayDirectorMaxLength = 50;
+            public const int PlayTheatreMinLength = 3;
+            public const int PlayTheatreMaxLength = 50;
         }
 
         public static class Casting
