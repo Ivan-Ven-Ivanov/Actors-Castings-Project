@@ -10,5 +10,7 @@
         public string ReleaseYear { get; set; } = null!;
 
         public string? ImageUrl { get; set; }
+
+        public bool IsRoleInMovieApproved { get; set; }
     }
 }

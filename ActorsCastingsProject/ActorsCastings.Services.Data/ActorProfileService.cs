@@ -99,9 +99,6 @@ namespace ActorsCastings.Services.Data
                 throw new Exception("Actor not found.");
             }
 
-            actor.ActorsMovies = actor.ActorsMovies.Where(am => am.IsApproved == true).ToList();
-            actor.ActorsPlays = actor.ActorsPlays.Where(ap => ap.IsApproved == true).ToList();
-
             ActorProfileViewModel model = new ActorProfileViewModel
             {
                 FirstName = actor.FirstName,
@@ -116,7 +113,8 @@ namespace ActorsCastings.Services.Data
                         Title = am.Movie.Title,
                         ImageUrl = am.Movie.ImageUrl,
                         Director = am.Movie.Director,
-                        ReleaseYear = am.Movie.ReleaseYear.ToString()
+                        ReleaseYear = am.Movie.ReleaseYear.ToString(),
+                        IsRoleInMovieApproved = am.IsApproved
                     }).ToList(),
                 Plays = actor.ActorsPlays
                     .Select(ap => new PlayViewModel
@@ -125,7 +123,8 @@ namespace ActorsCastings.Services.Data
                         Title = ap.Play.Title,
                         ImageUrl = ap.Play.ImageUrl,
                         Director = ap.Play.Director,
-                        ReleaseYear = ap.Play.ReleaseYear.ToString()
+                        ReleaseYear = ap.Play.ReleaseYear.ToString(),
+                        IsRoleInPlayApproved = ap.IsApproved
                     }).ToList()
             };
 
