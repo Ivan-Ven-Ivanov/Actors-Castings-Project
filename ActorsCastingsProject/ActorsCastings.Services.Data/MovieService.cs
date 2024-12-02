@@ -36,6 +36,8 @@ namespace ActorsCastings.Services.Data
                 throw new Exception();
             }
 
+            movie.ActorsMovies = movie.ActorsMovies.Where(am => am.IsApproved == true).ToList();
+
             MovieDetailsViewModel model = new MovieDetailsViewModel
             {
                 Id = movie.Id.ToString(),
