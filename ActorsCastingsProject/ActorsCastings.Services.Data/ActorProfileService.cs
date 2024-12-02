@@ -12,13 +12,54 @@ namespace ActorsCastings.Services.Data
     {
         private readonly IRepository<Actor, Guid> _actorRepository;
         private readonly IRepository<Movie, Guid> _movieRepository;
+        private readonly IRepository<ActorMovie, Guid> _actorMovieRepository;
 
         public ActorProfileService(
             IRepository<Actor, Guid> actorRepository,
-            IRepository<Movie, Guid> movieRepository)
+            IRepository<Movie, Guid> movieRepository,
+            IRepository<ActorMovie, Guid> actorMovieRepository)
         {
             _actorRepository = actorRepository;
             _movieRepository = movieRepository;
+            _actorMovieRepository = actorMovieRepository;
+        }
+
+        public async Task<bool> AddSelectedMovieToProfileAsync(Guid id, string role, string userId)
+        {
+            Movie? movie = await _movieRepository.GetByIdAsync(id);
+
+            if (movie == null)
+            {
+                return false;
+            }
+
+            Guid guidUserId = Guid.Empty;
+            bool isGuidValid = IsGuidValid(userId, ref guidUserId);
+
+            if (!isGuidValid)
+            {
+                return false;
+            }
+
+            Actor? actor = await _actorRepository
+                .FirstOrDefaultAsync(a => a.UserId == guidUserId);
+
+            if (actor == null)
+            {
+                return false;
+            }
+
+            ActorMovie actorMovie = new ActorMovie
+            {
+                ActorId = actor.Id,
+                MovieId = movie.Id,
+                Role = role,
+                IsApproved = false,
+            };
+
+            await _actorMovieRepository.AddAsync(actorMovie);
+
+            return true;
         }
 
         public async Task<IEnumerable<MovieViewModel>> GetAllMoviesAsync()
@@ -48,13 +89,18 @@ namespace ActorsCastings.Services.Data
             Actor? actor = await _actorRepository
                 .GetAllAttached()
                 .Include(a => a.ActorsMovies)
+                    .ThenInclude(am => am.Movie)
                 .Include(a => a.ActorsPlays)
+                    .ThenInclude(ap => ap.Play)
                 .FirstOrDefaultAsync(a => a.UserId == guidId);
 
             if (actor == null)
             {
                 throw new Exception("Actor not found.");
             }
+
+            actor.ActorsMovies = actor.ActorsMovies.Where(am => am.IsApproved == true).ToList();
+            actor.ActorsPlays = actor.ActorsPlays.Where(ap => ap.IsApproved == true).ToList();
 
             ActorProfileViewModel model = new ActorProfileViewModel
             {

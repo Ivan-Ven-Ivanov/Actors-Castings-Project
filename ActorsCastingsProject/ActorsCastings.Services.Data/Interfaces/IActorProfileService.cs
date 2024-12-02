@@ -8,5 +8,7 @@ namespace ActorsCastings.Services.Data.Interfaces
         Task<ActorProfileViewModel> IndexGetMyProfileAsync(string id);
 
         Task<IEnumerable<MovieViewModel>> GetAllMoviesAsync();
+
+        Task<bool> AddSelectedMovieToProfileAsync(Guid id, string role, string userId);
     }
 }

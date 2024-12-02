@@ -9,27 +9,24 @@
         </a>
     </div>
 
-    <form asp-action="AddSelectedMovies" method="post">
-        <div class="row">
+    <form asp-action="AddMovieFromProfile" method="post">
+        <div class="row" id="movies-container">
             @foreach (var movie in Model)
             {
                 <div class="col-md-4 mb-4">
-                    <div class="card h-100">
+                    <div class="card h-100 movie-card" data-movie-id="@movie.Id" onclick="toggleSelection(this)">
                         <div class="card-body">
                             <h5 class="card-title">@movie.Title</h5>
-                            <img src="@movie.ImageUrl" class="card-img-top" alt="@movie.Title Picture" />
+                            <img src="@movie.ImageUrl" class="card-img-top" alt="@movie.Title Picture" style="max-height: 200px; object-fit: contain" />
                             <p class="card-text">
                                 <strong>Release Year:</strong> @movie.ReleaseYear <br />
                                 <strong>Director:</strong> @movie.Director
                             </p>
-                            <div class="form-group">
+                            <div class="form-group role-input d-none">
                                 <label for="role-@movie.Id">Your Role:</label>
-                                <input type="text" class="form-control" id="role-@movie.Id" name="Roles[@movie.Id]" placeholder="Enter your role in this movie">
+                                <input type="text" class="form-control" id="role-@movie.Id" name="Role" placeholder="Enter your role in this movie" disabled>
                             </div>
-                        </div>
-                        <div class="card-footer text-center">
-                            <input type="checkbox" name="SelectedMovies" value="@movie.Id" id="movie-@movie.Id">
-                            <label for="movie-@movie.Id">Select Movie</label>
+                            <input type="hidden" name="Id" value="@movie.Id" disabled>
                         </div>
                     </div>
                 </div>
@@ -37,8 +34,8 @@
         </div>
 
         <div class="text-center mt-4">
-            <button type="submit" class="btn btn-primary btn-lg">
-                <i class="fas fa-save"></i> Add Selected Movies
+            <button type="submit" class="btn btn-primary btn-lg" id="add-selected-button" disabled>
+                <i class="fas fa-save"></i> Add Selected Movie
             </button>
         </div>
     </form>

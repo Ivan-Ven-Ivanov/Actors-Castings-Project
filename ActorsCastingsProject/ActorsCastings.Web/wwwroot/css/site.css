@@ -26,3 +26,28 @@ body {
     height: 200px;
     object-fit: cover;
 }
+
+.movie-card {
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+    .movie-card:hover {
+        border-color: #007bff;
+    }
+
+    .movie-card.selected {
+        background-color: #007bff;
+        color: white;
+        border-color: #0056b3;
+    }
+
+        .movie-card.selected .card-title,
+        .movie-card.selected .card-text {
+            color: white;
+        }
+
+.role-input {
+    margin-top: 15px;
+}

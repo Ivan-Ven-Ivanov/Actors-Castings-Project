@@ -98,6 +98,9 @@ namespace ActorsCastings.Web.Controllers
                 return RedirectToAction("Index");
             }
 
+            actor.ActorsMovies = actor.ActorsMovies.Where(am => am.IsApproved == true).ToList();
+            actor.ActorsPlays = actor.ActorsPlays.Where(ap => ap.IsApproved == true).ToList();
+
             ActorDetailsViewModel model = new ActorDetailsViewModel
             {
                 FirstName = actor.FirstName,

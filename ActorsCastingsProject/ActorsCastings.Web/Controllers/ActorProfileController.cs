@@ -32,11 +32,36 @@ namespace ActorsCastings.Web.Controllers
             return View(model);
         }
 
+        [HttpGet]
         public async Task<IActionResult> AddMovieFromProfile()
         {
             IEnumerable<MovieViewModel> models = await _actorProfileService.GetAllMoviesAsync();
 
             return View(models);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddMovieFromProfile(SelectedMovieViewModel model)
+        {
+            if (model.Id == Guid.Empty)
+            {
+                return View("Error");
+            }
+
+            ApplicationUser? user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return View("Error");
+            }
+
+            bool result = await _actorProfileService.AddSelectedMovieToProfileAsync(model.Id, model.Role, user.Id.ToString());
+
+            if (!result)
+            {
+                return View("Error");
+            }
+
+            return RedirectToAction("Index", "ActorProfile");
         }
     }
 }
