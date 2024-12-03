@@ -10,7 +10,7 @@
     @foreach (var actor in Model)
     {
         <div class="col-md-4 mb-4">
-            <a asp-action="Details" asp-route-id="@actor.Id" class="text-decoration-none text-dark">
+            <a asp-action="Details" asp-route-id="@actor.Id" class="card h-100 d-flex flex-column text-decoration-none text-dark clickable-card shadow-sm hover-shadow">
                 <div class="card">
                     <img src="@actor.ProfilePictureUrl" class="card-img-top img-thumbnail" alt="@actor.FirstName @actor.LastName's Profile Picture" style="max-height: 300px; object-fit: contain" />
                     <div class="card-body">

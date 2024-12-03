@@ -15,7 +15,7 @@
             @foreach (var play in Model)
             {
                 <div class="col">
-                    <a asp-action="Details" asp-route-id="@play.Id" class="card h-100 d-flex flex-column text-decoration-none text-dark">
+                    <a asp-action="Details" asp-route-id="@play.Id" class="card h-100 d-flex flex-column text-decoration-none text-dark clickable-card shadow-sm hover-shadow">
                         <div class="card h-100 d-flex flex-column">
                             <div class="card-img-top d-flex align-items-center justify-content-center">
                                 @if (!string.IsNullOrEmpty(play.ImageUrl))

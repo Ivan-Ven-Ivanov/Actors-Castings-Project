@@ -1,4 +1,11 @@
-﻿@model CastingDetailsViewModel
+﻿@using ActorsCastings.Data.Models
+@using ActorsCastings.Services.Data.Interfaces
+@using Microsoft.AspNetCore.Identity
+
+@inject UserManager<ApplicationUser> userManager
+@inject IActorService actorService
+
+@model CastingDetailsViewModel
 
 @{
     ViewData["Title"] = "Casting Details";
@@ -12,17 +19,28 @@
         <p class="card-text">@Model.Description</p>
         <p class="card-text"><strong>End Date:</strong> @Model.CastingEnd</p>
         <p class="card-text"><strong>Casting Agent:</strong> @Model.CastingAgent</p>
+        @if (Model.CastingAgency != null)
+        {
+            <p class="card-text"><strong>Casting Agency:</strong> @Model.CastingAgency</p>
+        }
     </div>
 </div>
 
 <div class="d-flex mt-3">
     <a asp-action="Index" class="btn btn-secondary">Back to Castings</a>
-    @if (Model.HasActorApplied)
-    {
-        <div class="btn btn-success">Already applied</div>
-    }
-    else
-    {
-        <a asp-action="Apply" asp-route-id="@Model.Id" class="btn btn-primary">Apply for Casting</a>
+    @{
+        string? userId = userManager.GetUserId(User);
+
+        if(await actorService.IsUserActorAsync(userId))
+        {
+            if (Model.HasActorApplied)
+            {
+                <div class="btn btn-success">Already applied</div>
+            }
+            else
+            {
+                <a asp-action="Apply" asp-route-id="@Model.Id" class="btn btn-primary">Apply for Casting</a>
+            }
+        }
     }
 </div>

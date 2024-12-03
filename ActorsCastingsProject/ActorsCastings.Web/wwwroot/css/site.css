@@ -27,27 +27,58 @@ body {
     object-fit: cover;
 }
 
-.movie-card {
+.clickable-card {
     cursor: pointer;
     border: 2px solid transparent;
     transition: background-color 0.3s, border-color 0.3s;
 }
 
-    .movie-card:hover {
-        border-color: #007bff;
-    }
+.clickable-card:hover {
+    border-color: #007bff;
+}
 
-    .movie-card.selected {
-        background-color: #007bff;
-        color: white;
-        border-color: #0056b3;
-    }
+.clickable-card.selected {
+    background-color: #007bff;
+    color: white;
+    border-color: #0056b3;
+}
 
-        .movie-card.selected .card-title,
-        .movie-card.selected .card-text {
-            color: white;
-        }
+.clickable-card.selected .card-title,
+.clickable-card.selected .card-text {
+    color: white;
+}
 
 .role-input {
     margin-top: 15px;
+}
+
+.clickable-card:hover {
+    transform: scale(1.05); /* Slightly enlarge on hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+    text-decoration: none; /* Ensure text doesn't get underlined */
+}
+
+    /* Overlay effect on hover */
+    .clickable-card:hover .hover-overlay {
+        opacity: 1;
+    }
+
+.hover-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Dark transparent overlay */
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.clickable-card .card-img-top {
+    position: relative;
+    overflow: hidden;
+}
+
+.clickable-card:focus{
+    outline: none;
 }
