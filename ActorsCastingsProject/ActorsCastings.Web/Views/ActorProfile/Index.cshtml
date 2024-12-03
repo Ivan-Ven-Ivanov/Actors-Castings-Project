@@ -11,6 +11,8 @@
             <h2>@Model.FirstName @Model.LastName</h2>
             <p><strong>Age:</strong> @(Model.Age.HasValue ? Model.Age.Value.ToString() : "N/A")</p>
             <p><strong>Biography:</strong> @(!string.IsNullOrWhiteSpace(Model.Biography) ? Model.Biography : "No biography available.")</p>
+
+            <partial name="_ProfileActionsPartial" />
         </div>
     </div>
 
