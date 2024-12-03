@@ -12,20 +12,16 @@
     {
         <li class="nav-item">
             @{
-                ApplicationUser? currentUser = await UserManager.GetUserAsync(User);
-                string? userId = currentUser?.Id.ToString();
+                string userId = UserManager.GetUserId(User);
                 if (await ActorService.IsUserActorAsync(userId))
                 {
-                    <a class="nav-link text-dark" asp-controller="ActorProfile" asp-action="Index">My Profile</a>
+                    <a class="nav-link text-dark" asp-area="" asp-controller="ActorProfile" asp-action="Index">My Profile</a>
                 }
                 else if (await CastingAgentService.IsUserCastingAgentAsync(userId))
                 {
-                    <a class="nav-link text-dark" asp-controller="CastingAgentProfile" asp-action="Index">My Profile</a>
+                    <a class="nav-link text-dark" asp-area="" asp-controller="CastingAgentProfile" asp-action="Index">My Profile</a>
                 }
             }
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
         </li>
         <li class="nav-item">
             <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">

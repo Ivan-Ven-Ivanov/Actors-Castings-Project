@@ -1,0 +1,43 @@
+﻿@model CastingAgentProfileViewModel
+
+<div class="container mt-5">
+    <h1 class="text-center">My Profile</h1>
+
+    <div class="row mt-4">
+        <div class="col-md-8">
+            <h2>@Model.Name</h2>
+            <p><strong>Casting Agency:</strong> @Model.CastingAgency</p>
+
+            <partial name="_ProfileActionsPartial" />
+        </div>
+    </div>
+
+    <hr />
+
+    <div class="mt-4">
+        <h3>My Castings</h3>
+        <div class="mb-3">
+            <a asp-controller="Casting" asp-action="Add" class="btn btn-primary btn-lg">
+                <i class="fas fa-plus"></i> Add Casting
+            </a>
+        </div>
+        @if (Model.Castings.Any())
+        {
+            <div class="list-group">
+                @foreach (var casting in Model.Castings)
+                {
+                    <a asp-controller="Casting" asp-action="Details" asp-route-id="@casting.Id" class="list-group-item list-group-item-action">
+                        <h5 class="mb-1">@casting.Title</h5>
+                        <p class="mb-1"><strong>Casting End Date:</strong> @casting.CastingEnd</p>
+                    </a>
+                }
+            </div>
+        }
+        else
+        {
+            <p>No castings listed yet.</p>
+        }
+    </div>
+</div>
+
+<script src="https://kit.fontawesome.com/2adefc9ae5.js" crossorigin="anonymous"></script>

@@ -15,5 +15,9 @@ namespace ActorsCastings.Services.Data.Interfaces
         Task<bool> AddSelectedMovieToProfileAsync(Guid id, string role, string userId);
 
         Task<bool> AddSelectedPlayToProfileAsync(Guid id, string role, string userId);
+
+        Task<UpdateActorProfileViewModel> GetActorProfileDataAsync(string id);
+
+        Task<bool> UpdateActorProfileAsync(UpdateActorProfileViewModel model);
     }
 }

@@ -106,6 +106,37 @@ namespace ActorsCastings.Services.Data
             return true;
         }
 
+        public async Task<UpdateActorProfileViewModel> GetActorProfileDataAsync(string id)
+        {
+            Guid guidId = Guid.Empty;
+
+            bool isGuidValid = IsGuidValid(id, ref guidId);
+
+            if (!isGuidValid)
+            {
+                throw new Exception();
+            }
+
+            Actor actor = await _actorRepository.FirstOrDefaultAsync(a => a.UserId == guidId);
+
+            if (actor == null)
+            {
+                throw new Exception();
+            }
+
+            UpdateActorProfileViewModel model = new UpdateActorProfileViewModel
+            {
+                Id = actor.Id,
+                FirstName = actor.FirstName,
+                LastName = actor.LastName,
+                Age = actor.Age,
+                ProfilePictureUrl = actor.ProfilePictureUrl,
+                Biography = actor.Biography
+            };
+
+            return model;
+        }
+
         public async Task<IEnumerable<MovieViewModel>> GetAllMoviesAsync()
         {
             IEnumerable<MovieViewModel> models = await _movieRepository
@@ -191,6 +222,25 @@ namespace ActorsCastings.Services.Data
             };
 
             return model;
+        }
+
+        public async Task<bool> UpdateActorProfileAsync(UpdateActorProfileViewModel model)
+        {
+            Actor actor = await _actorRepository
+                .FirstOrDefaultAsync(a => a.Id == model.Id);
+
+            if (actor == null)
+            {
+                return false;
+            }
+
+            actor.FirstName = model.FirstName;
+            actor.LastName = model.LastName;
+            actor.Age = model.Age;
+            actor.ProfilePictureUrl = model.ProfilePictureUrl;
+            actor.Biography = model.Biography;
+
+            return await _actorRepository.UpdateAsync(actor);
         }
     }
 }

@@ -1,9 +1,11 @@
 ﻿@using ActorsCastings.Data.Models
 @using ActorsCastings.Data.Repository.Interfaces
+@using ActorsCastings.Services.Data.Interfaces
 @using Microsoft.AspNetCore.Identity
 
 @inject UserManager<ApplicationUser> userManager
 @inject IRepository<CastingAgent, Guid> castingAgentRepository
+@inject ICastingAgentService castingAgentService
 
 @model IEnumerable<CastingViewModel>
 
@@ -11,9 +13,7 @@
 @{
     string? userId = userManager.GetUserId(User);
 
-    bool isGuidValid = Guid.TryParse(userId, out Guid guidId);
-
-    if(castingAgentRepository.GetAllAttached().Any(ca => ca.UserId == guidId))
+    if(await castingAgentService.IsUserCastingAgentAsync(userId))
     {
         <div class="mb-4">
             <a asp-action="Add" class="btn btn-success btn-lg d-inline-flex align-items-center shadow-sm" style="gap: 10px; padding: 10px 20px; border-radius: 8px;">
