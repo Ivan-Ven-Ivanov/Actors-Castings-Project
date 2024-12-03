@@ -157,6 +157,7 @@ namespace ActorsCastings.Services.Data
                 Description = casting.Description,
                 CastingEnd = casting.CastingEnd.ToString(CastingCastingEndDateTimeFormatString),
                 CastingAgent = casting.CastingAgent.Name,
+                CastingAgency = casting.CastingAgent.CastingAgency,
                 HasActorApplied = await _actorCastingRepository.GetAllAttached().AnyAsync(ac => ac.Actor.UserId == guidUserId && ac.CastingId == castingId)
             };
 

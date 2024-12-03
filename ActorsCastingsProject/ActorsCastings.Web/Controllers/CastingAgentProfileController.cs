@@ -32,5 +32,33 @@ namespace ActorsCastings.Web.Controllers
 
             return View(model);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Update()
+        {
+            string? userId = _userManager.GetUserId(User);
+
+            if (userId == null)
+            {
+                return View("Error");
+            }
+
+            UpdateCastingAgentProfileViewModel model = await _castingAgentProfileService.GetCastingAgentProfileDataAsync(userId);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(UpdateCastingAgentProfileViewModel model)
+        {
+            bool hasUpdated = await _castingAgentProfileService.UpdateCastingAgentProfileAsync(model);
+
+            if (!hasUpdated)
+            {
+                return View("Error");
+            }
+
+            return RedirectToAction("Index");
+        }
     }
 }

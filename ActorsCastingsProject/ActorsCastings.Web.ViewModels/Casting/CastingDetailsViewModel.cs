@@ -10,6 +10,8 @@
 
         public string CastingAgent { get; set; } = null!;
 
+        public string? CastingAgency { get; set; }
+
         public bool HasActorApplied { get; set; }
     }
 }
