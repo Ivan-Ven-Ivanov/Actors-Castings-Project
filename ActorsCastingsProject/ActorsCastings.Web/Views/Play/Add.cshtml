@@ -1,17 +1,17 @@
-﻿@model AddMovieViewModel
+﻿@model AddPlayViewModel
 
 @{
-    ViewData["Title"] = "Add Movie";
+    ViewData["Title"] = "Add Play";
 }
 
 <div class="container mt-5">
-    <h1 class="text-center">Add a New Movie</h1>
+    <h1 class="text-center">Add a New Play</h1>
     <hr />
 
     <form asp-action="Add" method="post" class="mt-4">
         <div class="form-group">
             <label asp-for="Title" class="form-label">Title</label>
-            <input asp-for="Title" class="form-control" placeholder="Enter movie title" />
+            <input asp-for="Title" class="form-control" placeholder="Enter play title" />
             <span asp-validation-for="Title" class="text-danger"></span>
         </div>
 
@@ -22,8 +22,14 @@
         </div>
 
         <div class="form-group mt-3">
+            <label asp-for="Theatre" class="form-label">Theatre</label>
+            <input asp-for="Theatre" class="form-control" placeholder="Enter theatre" />
+            <span asp-validation-for="Theatre" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mt-3">
             <label asp-for="Role" class="form-label">Role</label>
-            <input asp-for="Role" class="form-control" placeholder="Enter ypur role in the movie" />
+            <input asp-for="Role" class="form-control" placeholder="Enter ypur role in the play" />
             <span asp-validation-for="Role" class="text-danger"></span>
         </div>
 
@@ -40,20 +46,14 @@
         </div>
 
         <div class="form-group mt-3">
-            <label asp-for="Genre" class="form-label">Genre</label>
-            <input asp-for="Genre" class="form-control" placeholder="Enter genre" />
-            <span asp-validation-for="Genre" class="text-danger"></span>
-        </div>
-
-        <div class="form-group mt-3">
             <label asp-for="Description" class="form-label">Description</label>
-            <textarea asp-for="Description" class="form-control" rows="4" placeholder="Enter movie description (optional)"></textarea>
+            <textarea asp-for="Description" class="form-control" rows="4" placeholder="Enter play description (optional)"></textarea>
             <span asp-validation-for="Description" class="text-danger"></span>
         </div>
 
         <div class="text-center mt-4">
             <button type="submit" class="btn btn-primary btn-lg">
-                <i class="fas fa-save"></i> Add Movie
+                <i class="fas fa-save"></i> Add Play
             </button>
         </div>
     </form>

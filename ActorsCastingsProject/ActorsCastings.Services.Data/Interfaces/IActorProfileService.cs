@@ -1,5 +1,6 @@
 ﻿using ActorsCastings.Web.ViewModels.ActorProfile;
 using ActorsCastings.Web.ViewModels.Movie;
+using ActorsCastings.Web.ViewModels.Play;
 
 namespace ActorsCastings.Services.Data.Interfaces
 {
@@ -9,6 +10,10 @@ namespace ActorsCastings.Services.Data.Interfaces
 
         Task<IEnumerable<MovieViewModel>> GetAllMoviesAsync();
 
+        Task<IEnumerable<PlayViewModel>> GetAllPlaysAsync();
+
         Task<bool> AddSelectedMovieToProfileAsync(Guid id, string role, string userId);
+
+        Task<bool> AddSelectedPlayToProfileAsync(Guid id, string role, string userId);
     }
 }

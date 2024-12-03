@@ -1,0 +1,44 @@
+﻿@model IEnumerable<PlayViewModel>
+
+<div class="container mt-5">
+    <h1 class="text-center">Add Play to Your Profile</h1>
+
+    <div class="text-end mb-3">
+        <a asp-controller="Play" asp-action="Add" class="btn btn-success btn-lg">
+            <i class="fas fa-plus-circle"></i> Add New Play
+        </a>
+    </div>
+
+    <form asp-action="AddPlayFromProfile" method="post">
+        <div class="row" id="movies-container">
+            @foreach (var play in Model)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 movie-card" data-movie-id="@play.Id" onclick="toggleSelection(this)">
+                        <div class="card-body">
+                            <h5 class="card-title">@play.Title</h5>
+                            <img src="@play.ImageUrl" class="card-img-top" alt="@play.Title Picture" style="max-height: 200px; object-fit: contain" />
+                            <p class="card-text">
+                                <strong>Release Year:</strong> @play.ReleaseYear <br />
+                                <strong>Director:</strong> @play.Director
+                            </p>
+                            <div class="form-group role-input d-none">
+                                <label for="role-@play.Id">Your Role:</label>
+                                <input type="text" class="form-control" id="role-@play.Id" name="Role" placeholder="Enter your role in this movie" disabled>
+                            </div>
+                            <input type="hidden" name="Id" value="@play.Id" disabled>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-primary btn-lg" id="add-selected-button" disabled>
+                <i class="fas fa-save"></i> Add Selected Play
+            </button>
+        </div>
+    </form>
+</div>
+
+<script src="https://kit.fontawesome.com/2adefc9ae5.js" crossorigin="anonymous"></script>

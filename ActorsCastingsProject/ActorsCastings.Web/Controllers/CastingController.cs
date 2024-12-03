@@ -59,6 +59,7 @@ namespace ActorsCastings.Web.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> Details(string id)
         {
@@ -75,6 +76,7 @@ namespace ActorsCastings.Web.Controllers
             return View(model);
         }
 
+        [Authorize]
         public async Task<IActionResult> Apply(string id)
         {
             ApplicationUser? user = await _userManager.GetUserAsync(User);

@@ -13,15 +13,21 @@ namespace ActorsCastings.Services.Data
         private readonly IRepository<Actor, Guid> _actorRepository;
         private readonly IRepository<Movie, Guid> _movieRepository;
         private readonly IRepository<ActorMovie, Guid> _actorMovieRepository;
+        private readonly IRepository<Play, Guid> _playRepository;
+        private readonly IRepository<ActorPlay, Guid> _actorPlayRepository;
 
         public ActorProfileService(
             IRepository<Actor, Guid> actorRepository,
             IRepository<Movie, Guid> movieRepository,
-            IRepository<ActorMovie, Guid> actorMovieRepository)
+            IRepository<ActorMovie, Guid> actorMovieRepository,
+            IRepository<Play, Guid> playRepository,
+            IRepository<ActorPlay, Guid> actorPlayRepository)
         {
             _actorRepository = actorRepository;
             _movieRepository = movieRepository;
             _actorMovieRepository = actorMovieRepository;
+            _playRepository = playRepository;
+            _actorPlayRepository = actorPlayRepository;
         }
 
         public async Task<bool> AddSelectedMovieToProfileAsync(Guid id, string role, string userId)
@@ -62,6 +68,44 @@ namespace ActorsCastings.Services.Data
             return true;
         }
 
+        public async Task<bool> AddSelectedPlayToProfileAsync(Guid id, string role, string userId)
+        {
+            Play? play = await _playRepository.GetByIdAsync(id);
+
+            if (play == null)
+            {
+                return false;
+            }
+
+            Guid guidUserId = Guid.Empty;
+            bool isGuidValid = IsGuidValid(userId, ref guidUserId);
+
+            if (!isGuidValid)
+            {
+                return false;
+            }
+
+            Actor? actor = await _actorRepository
+                .FirstOrDefaultAsync(a => a.UserId == guidUserId);
+
+            if (actor == null)
+            {
+                return false;
+            }
+
+            ActorPlay actorPlay = new ActorPlay
+            {
+                ActorId = actor.Id,
+                PlayId = play.Id,
+                Role = role,
+                IsApproved = false,
+            };
+
+            await _actorPlayRepository.AddAsync(actorPlay);
+
+            return true;
+        }
+
         public async Task<IEnumerable<MovieViewModel>> GetAllMoviesAsync()
         {
             IEnumerable<MovieViewModel> models = await _movieRepository
@@ -74,6 +118,24 @@ namespace ActorsCastings.Services.Data
                     Director = m.Director,
                     ImageUrl = m.ImageUrl,
                     ReleaseYear = m.ReleaseYear.ToString()
+                })
+                .ToListAsync();
+
+            return models;
+        }
+
+        public async Task<IEnumerable<PlayViewModel>> GetAllPlaysAsync()
+        {
+            IEnumerable<PlayViewModel> models = await _playRepository
+                .GetAllAttached()
+                .Where(p => p.IsApproved && !p.IsDeleted)
+                .Select(p => new PlayViewModel
+                {
+                    Id = p.Id.ToString(),
+                    Title = p.Title,
+                    Director = p.Director,
+                    ImageUrl = p.ImageUrl,
+                    ReleaseYear = p.ReleaseYear.ToString()
                 })
                 .ToListAsync();
 

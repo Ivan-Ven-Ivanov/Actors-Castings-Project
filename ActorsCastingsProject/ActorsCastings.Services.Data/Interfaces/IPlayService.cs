@@ -7,5 +7,7 @@ namespace ActorsCastings.Services.Data.Interfaces
         Task<IEnumerable<PlayViewModel>> IndexGetAllPlaysAsync();
 
         Task<PlayDetailsViewModel> GetPlayDetailsAsync(string id);
+
+        Task AddPlayAndRoleInItAsync(AddPlayViewModel model, string userId);
     }
 }

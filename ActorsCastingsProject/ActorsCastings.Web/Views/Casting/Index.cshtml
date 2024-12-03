@@ -1,22 +1,40 @@
-﻿@model IEnumerable<CastingViewModel>
+﻿@using ActorsCastings.Data.Models
+@using ActorsCastings.Data.Repository.Interfaces
+@using Microsoft.AspNetCore.Identity
+
+@inject UserManager<ApplicationUser> userManager
+@inject IRepository<CastingAgent, Guid> castingAgentRepository
+
+@model IEnumerable<CastingViewModel>
 
 <h2>Castings</h2>
+@{
+    string? userId = userManager.GetUserId(User);
 
-<a asp-action="Add" class="btn-primary m-1"><strong>Add new casting</strong></a>
+    bool isGuidValid = Guid.TryParse(userId, out Guid guidId);
 
-<div class="row">
+    if(castingAgentRepository.GetAllAttached().Any(ca => ca.UserId == guidId))
+    {
+        <div class="mb-4">
+            <a asp-action="Add" class="btn btn-success btn-lg d-inline-flex align-items-center shadow-sm" style="gap: 10px; padding: 10px 20px; border-radius: 8px;">
+                <i class="fas fa-plus-circle" style="font-size: 1.5rem;"></i>
+                <strong>Add New Casting</strong>
+            </a>
+        </div>
+    }
+ } 
+
+<div class="castings-list">
     @foreach (var casting in Model)
     {
-        <div class="col-md-4">
-            <div class="card mb-4 shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title">@casting.Title</h5>    
-                </div>
-                <div class="card-footer">
-                    <p class="card-text">You can apply until <strong>@casting.CastingEnd</strong></p>
-                    <a asp-action="Details" asp-route-id="@casting.Id" class="btn btn-secondary">View casting details</a>
-                </div>
+        <div class="card mb-4 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">@casting.Title</h5>
+                <p class="card-text">You can apply until <strong>@casting.CastingEnd</strong></p>
+                <a asp-action="Details" asp-route-id="@casting.Id" class="btn btn-secondary">View casting details</a>
             </div>
         </div>
     }
 </div>
+
+<script src="https://kit.fontawesome.com/2adefc9ae5.js" crossorigin="anonymous"></script>

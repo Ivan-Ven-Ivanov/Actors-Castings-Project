@@ -1,6 +1,6 @@
-﻿namespace ActorsCastings.Web.ViewModels.Movie
+﻿namespace ActorsCastings.Web.ViewModels.Play
 {
-    public class AddMovieViewModel
+    public class AddPlayViewModel
     {
         public string Title { get; set; } = null!;
 
@@ -8,9 +8,9 @@
 
         public string Director { get; set; } = null!;
 
-        public string? ImageUrl { get; set; }
+        public string Theatre { get; set; } = null!;
 
-        public string Genre { get; set; } = null!;
+        public string? ImageUrl { get; set; }
 
         public int ReleaseYear { get; set; }
 
