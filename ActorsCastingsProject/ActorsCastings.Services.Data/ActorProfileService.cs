@@ -106,6 +106,37 @@ namespace ActorsCastings.Services.Data
             return true;
         }
 
+        public async Task<bool> CompleteActorProfileAsync(string id, ActorProfileViewModel model)
+        {
+            Guid guidUserId = Guid.Empty;
+            bool isGuidValid = IsGuidValid(id, ref guidUserId);
+
+            if (!isGuidValid)
+            {
+                return false;
+            }
+
+
+            Actor actorProfile = new Actor()
+            {
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Age = model.Age,
+                ProfilePictureUrl = model.ProfilePictureUrl,
+                Biography = model.Biography,
+                UserId = guidUserId
+            };
+
+            if (actorProfile == null)
+            {
+                return false;
+            }
+
+            await _actorRepository.AddAsync(actorProfile);
+
+            return true;
+        }
+
         public async Task<UpdateActorProfileViewModel> GetActorProfileDataAsync(string id)
         {
             Guid guidId = Guid.Empty;

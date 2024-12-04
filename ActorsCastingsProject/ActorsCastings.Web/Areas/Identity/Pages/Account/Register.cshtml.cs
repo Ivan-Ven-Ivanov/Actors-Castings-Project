@@ -149,11 +149,11 @@ namespace ActorsCastings.Web.Areas.Identity.Pages.Account
 
                         if (Input.ProfileType == ProfileTypes.Actor)
                         {
-                            return RedirectToAction("CompleteProfile", "Actor");
+                            return RedirectToAction("CompleteProfile", "ActorProfile", new { area = "" });
                         }
                         else if (Input.ProfileType == ProfileTypes.CastingAgent)
                         {
-                            return RedirectToAction("CompleteProfile", "CastingAgent");
+                            return RedirectToAction("CompleteProfile", "CastingAgentProfile", new { area = "" });
                         }
 
                         return LocalRedirect(returnUrl);

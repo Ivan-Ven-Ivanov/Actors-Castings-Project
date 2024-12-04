@@ -57,7 +57,7 @@ namespace ActorsCastings.Web
             app.UseAuthorization();
 
             app.MapControllerRoute(
-                name: "MyArea",
+                name: "Admin",
                 pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
             app.MapControllerRoute(
                 name: "default",

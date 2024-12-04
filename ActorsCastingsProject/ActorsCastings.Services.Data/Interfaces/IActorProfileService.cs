@@ -8,6 +8,8 @@ namespace ActorsCastings.Services.Data.Interfaces
     {
         Task<ActorProfileViewModel> IndexGetMyProfileAsync(string id);
 
+        Task<bool> CompleteActorProfileAsync(string id, ActorProfileViewModel model);
+
         Task<IEnumerable<MovieViewModel>> GetAllMoviesAsync();
 
         Task<IEnumerable<PlayViewModel>> GetAllPlaysAsync();
