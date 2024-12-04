@@ -115,6 +115,11 @@ namespace ActorsCastings.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(UpdateActorProfileViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
             bool hasUpdated = await _actorProfileService.UpdateActorProfileAsync(model);
 
             if (!hasUpdated)
