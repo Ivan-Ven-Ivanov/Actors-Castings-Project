@@ -9,7 +9,7 @@ namespace ActorsCastings.Web.Infrastructure.Extensions
 {
     public static class ApplicationBuilderExtensions
     {
-        public static IApplicationBuilder SeedAdministrator(this IApplicationBuilder app, string email, string username, string password)
+        public static IApplicationBuilder SeedAdministrator(this IApplicationBuilder app, string email, string password)
         {
             using IServiceScope serviceScope = app.ApplicationServices.CreateAsyncScope();
             IServiceProvider serviceProvider = serviceScope.ServiceProvider;
@@ -62,7 +62,7 @@ namespace ActorsCastings.Web.Infrastructure.Extensions
                 if (adminUser == null)
                 {
                     adminUser = await
-                        CreateAdminUserAsync(email, username, password, userStore, userManager);
+                        CreateAdminUserAsync(email, password, userStore, userManager);
                 }
 
                 if (await userManager.IsInRoleAsync(adminUser, AdminRoleName))
@@ -73,7 +73,7 @@ namespace ActorsCastings.Web.Infrastructure.Extensions
                 IdentityResult userResult = await userManager.AddToRoleAsync(adminUser, AdminRoleName);
                 if (!userResult.Succeeded)
                 {
-                    throw new InvalidOperationException($"Error occurred while adding the user {username} to the {AdminRoleName} role!");
+                    throw new InvalidOperationException($"Error occurred while adding the user {email} to the {AdminRoleName} role!");
                 }
 
                 return app;
@@ -84,7 +84,7 @@ namespace ActorsCastings.Web.Infrastructure.Extensions
             return app;
         }
 
-        private static async Task<ApplicationUser> CreateAdminUserAsync(string email, string username, string password,
+        private static async Task<ApplicationUser> CreateAdminUserAsync(string email, string password,
             IUserStore<ApplicationUser> userStore, UserManager<ApplicationUser> userManager)
         {
             ApplicationUser applicationUser = new ApplicationUser
@@ -92,10 +92,10 @@ namespace ActorsCastings.Web.Infrastructure.Extensions
                 Email = email
             };
 
-            await userStore.SetUserNameAsync(applicationUser, username, CancellationToken.None);
+            await userStore.SetUserNameAsync(applicationUser, email, CancellationToken.None);
             IdentityResult result = await userManager.CreateAsync(applicationUser, password);
 
-            var user = await userStore.FindByNameAsync(username, CancellationToken.None);
+            var user = await userStore.FindByNameAsync(email, CancellationToken.None);
 
             if (user != null)
             {

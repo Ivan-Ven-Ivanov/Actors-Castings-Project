@@ -16,7 +16,7 @@ namespace ActorsCastings.Web
             // Add services to the container.
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             string adminEmail = builder.Configuration.GetValue<string>("Administrator:Email")!;
-            string adminUsername = builder.Configuration.GetValue<string>("Administrator:Username")!;
+            //string adminUsername = builder.Configuration.GetValue<string>("Administrator:Username")!;
             string adminPassword = builder.Configuration.GetValue<string>("Administrator:Password")!;
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connectionString));
@@ -59,7 +59,7 @@ namespace ActorsCastings.Web
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.SeedAdministrator(adminEmail, adminUsername, adminPassword);
+            app.SeedAdministrator(adminEmail, adminPassword);
 
             app.MapControllerRoute(
                 name: "Admin",
