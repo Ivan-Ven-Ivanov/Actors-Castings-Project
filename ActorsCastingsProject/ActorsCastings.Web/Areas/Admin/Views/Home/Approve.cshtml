@@ -1,0 +1,146 @@
+﻿@model DataToApproveViewModel
+
+<div class="container mt-5">
+    <h1 class="text-center">Pending Approvals</h1>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Movies</h2>
+            @if (Model.Movies.Any())
+            {
+                <div class="d-flex flex-column gap-4">
+                    @foreach (var movie in Model.Movies)
+                    {
+                        <div class="card h-100 shadow">
+                            <div class="row g-0 align-items-center">
+                                <div class="col-4">
+                                    <img src="@movie.ImageUrl" alt="@movie.Title" class="img-fluid img-thumbnail" style="max-height: 150px; object-fit: cover;">
+                                </div>
+                                <div class="col-8">
+                                    <div class="card-body">
+                                        <h5 class="card-title">@movie.Title</h5>
+                                        <p class="card-text">@movie.Description</p>
+                                        <form asp-action="Approve" method="post" onsubmit="return confirm('Are you sure you want to approve this movie?');">
+                                            <input asp-for="@movie.Id" name="Id" value="@movie.Id" type="hidden" />
+                                            <button type="submit" class="btn btn-primary btn-sm">Approve</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <p>No movies pending approval.</p>
+            }
+        </div>
+        <div class="col-md-6">
+            <h2>Plays</h2>
+            @if (Model.Plays.Any())
+            {
+                <div class="d-flex flex-column gap-4">
+                    @foreach (var play in Model.Plays)
+                    {
+                        <div class="card h-100 shadow">
+                            <div class="row g-0 align-items-center">
+                                <div class="col-4">
+                                    <img src="@play.ImageUrl" alt="@play.Title" class="img-fluid img-thumbnail" style="max-height: 150px; object-fit: cover;">
+                                </div>
+                                <div class="col-8">
+                                    <div class="card-body">
+                                        <h5 class="card-title">@play.Title</h5>
+                                        <p class="card-text">@play.Description</p>
+                                        <form asp-action="Approve" method="post" onsubmit="return confirm('Are you sure you want to approve this play?');">
+                                            <input asp-for="@play.Id" name="Id" value="@play.Id" type="hidden" />
+                                            <button type="submit" class="btn btn-primary btn-sm">Approve</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <p>No plays pending approval.</p>
+            }
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <h2 class="mt-5">Castings</h2>
+    @if (Model.Castings.Any())
+    {
+        <div class="row g-3">
+            @foreach (var casting in Model.Castings)
+            {
+                <div class="col-12">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <h5 class="card-title">@casting.Title</h5>
+                            <p class="card-text">@casting.Description</p>
+                            <p class="text-muted">Casting Agent: @casting.CastingAgentName</p>
+                            <form asp-action="Approve" method="post" onsubmit="return confirm('Are you sure you want to approve this casting?');">
+                                <input asp-for="@casting.Id" name="Id" value="@casting.Id" type="hidden" />
+                                <button type="submit" class="btn btn-primary">Approve</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <p>No castings pending approval.</p>
+    }
+
+    <h2 class="mt-5">Roles in Movies</h2>
+    @if (Model.RolesInMovies.Any())
+    {
+        <ul class="list-group">
+            @foreach (var role in Model.RolesInMovies)
+            {
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Actor: @role.ActorName | Movie: @role.MovieTitle | Role: @role.Role
+                    <form asp-action="Approve" method="post" class="mb-0" onsubmit="return confirm('Are you sure you want to approve this actor role?');">
+                        <input asp-for="@role.ActorId" name="ActorId" value="@role.ActorId" type="hidden" />
+                        <input asp-for="@role.MovieId" name="MovieId" value="@role.MovieId" type="hidden" />
+                        <button type="submit" class="btn btn-primary btn-sm">Approve</button>
+                    </form>
+                </li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p>No roles in movies pending approval.</p>
+    }
+
+    <h2 class="mt-5">Roles in Plays</h2>
+    @if (Model.RolesInPlays.Any())
+    {
+        <ul class="list-group">
+            @foreach (var role in Model.RolesInPlays)
+            {
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Actor: @role.ActorName | Play: @role.PlayTitle | Role: @role.Role
+                    <form asp-action="Approve" method="post" class="mb-0" onsubmit="return confirm('Are you sure you want to approve this actor role?');">
+                        <input asp-for="@role.ActorId" name="ActorId" value="@role.ActorId" type="hidden" />
+                        <input asp-for="@role.PlayId" name="PlayId" value="@role.PlayId" type="hidden" />
+                        <button type="submit" class="btn btn-primary btn-sm">Approve</button>
+                    </form>
+                </li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p>No roles in plays pending approval.</p>
+    }
+</div>

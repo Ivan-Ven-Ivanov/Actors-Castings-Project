@@ -3,13 +3,12 @@
     <hr />
 
     <div class="row g-4 mt-4 justify-content-center">
-        <!-- Larger and Centered Pending Approvals Card -->
         <div class="col-md-6">
             <div class="card text-center h-100 shadow-lg bg-light">
                 <div class="card-body d-flex flex-column justify-content-center align-items-center">
                     <h5 class="card-title display-5">Pending Approvals</h5>
                     <p class="card-text lead">Approve pending information submitted by users.</p>
-                    <a asp-area="Admin" asp-controller="Approval" asp-action="Index"
+                    <a asp-area="Admin" asp-controller="Home" asp-action="Approve"
                        class="btn btn-primary btn-lg py-3 px-4 mt-auto">
                         <i class="fas fa-check-circle"></i> Approve Information
                     </a>
@@ -17,8 +16,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Four Cards in One Row -->
     <div class="row g-4 mt-4">
         <div class="col-md-3">
             <div class="card text-center h-100 shadow">
