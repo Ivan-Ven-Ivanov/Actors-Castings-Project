@@ -94,6 +94,14 @@ namespace ActorsCastings.Web.Infrastructure.Extensions
 
             await userStore.SetUserNameAsync(applicationUser, username, CancellationToken.None);
             IdentityResult result = await userManager.CreateAsync(applicationUser, password);
+
+            var user = await userStore.FindByNameAsync(username, CancellationToken.None);
+
+            if (user != null)
+            {
+                return user;
+            }
+
             if (!result.Succeeded)
             {
                 throw new InvalidOperationException($"Error occurred while registering {AdminRoleName} user!");
