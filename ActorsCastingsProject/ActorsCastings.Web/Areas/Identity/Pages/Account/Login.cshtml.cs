@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
 
+using static ActorsCastings.Common.ApplicationConstants;
+
 namespace ActorsCastings.Web.Areas.Identity.Pages.Account
 {
     public class LoginModel : PageModel
@@ -87,6 +89,7 @@ namespace ActorsCastings.Web.Areas.Identity.Pages.Account
 
             returnUrl ??= Url.Content("~/");
 
+
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
@@ -108,6 +111,12 @@ namespace ActorsCastings.Web.Areas.Identity.Pages.Account
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
+                    var currentUser = await _signInManager.UserManager.GetUserAsync(User);
+                    if (await _signInManager.UserManager.IsInRoleAsync(currentUser, AdminRoleName))
+                    {
+                        returnUrl = "~/Admin/";
+                    }
+
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
                 }
