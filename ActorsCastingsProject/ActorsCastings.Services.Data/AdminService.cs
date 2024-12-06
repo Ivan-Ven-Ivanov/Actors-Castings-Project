@@ -4,6 +4,8 @@ using ActorsCastings.Services.Data.Interfaces;
 using ActorsCastings.Web.ViewModels.Admin;
 using Microsoft.EntityFrameworkCore;
 
+using static ActorsCastings.Common.EntityValidationConstants.Casting;
+
 namespace ActorsCastings.Services.Data
 {
     public class AdminService : BaseService, IAdminService
@@ -13,19 +15,22 @@ namespace ActorsCastings.Services.Data
         private readonly IRepository<Play, Guid> _playRepository;
         private readonly IRepository<ActorPlay, Guid> _actorPlayRepository;
         private readonly IRepository<ActorMovie, Guid> _actorMovieRepository;
+        private readonly IRepository<ActorCasting, Guid> _actorCastingRepository;
 
         public AdminService(
             IRepository<Movie, Guid> movieRepository,
             IRepository<Casting, Guid> castingRepository,
             IRepository<Play, Guid> playRepository,
             IRepository<ActorPlay, Guid> actorPlayRepository,
-            IRepository<ActorMovie, Guid> actorMovieRepository)
+            IRepository<ActorMovie, Guid> actorMovieRepository,
+            IRepository<ActorCasting, Guid> actorCastingRepository)
         {
             _movieRepository = movieRepository;
             _castingRepository = castingRepository;
             _playRepository = playRepository;
             _actorPlayRepository = actorPlayRepository;
             _actorMovieRepository = actorMovieRepository;
+            _actorCastingRepository = actorCastingRepository;
         }
 
         public async Task<bool> ApproveElement(ApproveSubmitViewModel model)
@@ -121,6 +126,48 @@ namespace ActorsCastings.Services.Data
             {
                 return false;
             }
+        }
+
+        public async Task<bool> DeleteCastingAndItsCastedActorsByIdAsync(string id)
+        {
+            Guid guidId = Guid.Empty;
+            bool isGuidValid = IsGuidValid(id, ref guidId);
+
+            if (!isGuidValid)
+            {
+                return false;
+            }
+
+            Casting? castingToDelete = await _castingRepository.GetByIdAsync(guidId);
+
+            if (castingToDelete == null)
+            {
+                return false;
+            }
+
+            castingToDelete.IsDeleted = true;
+
+            if (!await _castingRepository.SoftDeleteAsync(guidId))
+            {
+                return false;
+            }
+
+            List<ActorCasting> castedActorsToDelete = await _actorCastingRepository
+                .GetAllAttached()
+                .Where(ac => ac.CastingId == guidId)
+                .ToListAsync();
+
+            foreach (ActorCasting castedActor in castedActorsToDelete)
+            {
+                castedActor.IsDeleted = true;
+
+                if (!await _actorCastingRepository.SoftDeleteAsync(castedActor.ActorId, castedActor.CastingId))
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         public async Task<bool> DeleteMovieAndItsRolesByIdAsync(string id)
@@ -277,6 +324,25 @@ namespace ActorsCastings.Services.Data
             };
 
             return viewModel;
+        }
+
+        public async Task<IEnumerable<CastingToEditViewModel>> IndexViewAllCastingsForEditAsync()
+        {
+            var models = await _castingRepository
+                .GetAllAttached()
+                .Where(c => c.IsDeleted == false)
+                .Select(c => new CastingToEditViewModel
+                {
+                    Id = c.Id.ToString(),
+                    Title = c.Title,
+                    CastingAgentName = c.CastingAgent.Name,
+                    Description = c.Description,
+                    CreatedOn = c.CreatedOn.ToString(CastingEndDateTimeFormatString),
+                    CastingEnd = c.CastingEnd.ToString(CastingEndDateTimeFormatString)
+                })
+                .ToListAsync();
+
+            return models;
         }
 
         public async Task<IEnumerable<MovieToEditViewModel>> IndexViewAllMoviesForEditAsync()

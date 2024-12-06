@@ -43,7 +43,7 @@ namespace ActorsCastings.Services.Data
 
             bool isDateCorrect = DateTime.TryParseExact
                 (model.CastingEnd,
-                Common.EntityValidationConstants.Casting.CastingCastingEndDateTimeFormatString,
+                Common.EntityValidationConstants.Casting.CastingEndDateTimeFormatString,
                 CultureInfo.CurrentCulture, DateTimeStyles.None, out DateTime dateTime);
 
             if (!isDateCorrect)
@@ -155,7 +155,7 @@ namespace ActorsCastings.Services.Data
                 Id = id.ToString(),
                 Title = casting.Title,
                 Description = casting.Description,
-                CastingEnd = casting.CastingEnd.ToString(CastingCastingEndDateTimeFormatString),
+                CastingEnd = casting.CastingEnd.ToString(CastingEndDateTimeFormatString),
                 CastingAgent = casting.CastingAgent.Name,
                 CastingAgency = casting.CastingAgent.CastingAgency,
                 HasActorApplied = await _actorCastingRepository.GetAllAttached().AnyAsync(ac => ac.Actor.UserId == guidUserId && ac.CastingId == castingId)
@@ -171,7 +171,7 @@ namespace ActorsCastings.Services.Data
                 {
                     Id = c.Id.ToString(),
                     Title = c.Title,
-                    CastingEnd = c.CastingEnd.ToString(Common.EntityValidationConstants.Casting.CastingCastingEndDateTimeFormatString)
+                    CastingEnd = c.CastingEnd.ToString(Common.EntityValidationConstants.Casting.CastingEndDateTimeFormatString)
                 })
                 .ToListAsync();
 

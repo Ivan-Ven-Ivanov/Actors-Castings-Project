@@ -1,0 +1,38 @@
+﻿@model IEnumerable<CastingToEditViewModel>
+
+<div class="container mt-5">
+    <h1 class="text-center">Edit Castings</h1>
+    <hr />
+
+    @if (Model.Any())
+    {
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            @foreach (var casting in Model)
+            {
+                <div class="col">
+                    <div class="card h-100 shadow">
+                        <div class="card-body">
+                            <h5 class="card-title">@casting.Title</h5>
+                            <p class="card-text">
+                                <strong>Description:</strong> @casting.Description<br />
+                                <strong>Casting Agent:</strong> @casting.CastingAgentName<br />
+                                <strong>Created On:</strong> @casting.CreatedOn<br />
+                                <strong>Casting End:</strong> @casting.CastingEnd
+                            </p>
+                            <form asp-action="Delete" method="post" onsubmit="return confirm('Are you sure you want to delete this casting?');">
+                                <input type="hidden" name="id" value="@casting.Id" />
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <p class="text-center">No castings available for editing.</p>
+    }
+</div>
+
+<partial name="_BackToDashboardPartial" />
