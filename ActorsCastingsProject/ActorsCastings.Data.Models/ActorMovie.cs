@@ -30,6 +30,10 @@ namespace ActorsCastings.Data.Models
         public string? Role { get; set; }
 
         [Required]
+        [Comment("Soft delete")]
+        public bool IsDeleted { get; set; }
+
+        [Required]
         [Comment("Is the part of the actor in the movie approved by Admin")]
         public bool IsApproved { get; set; }
     }

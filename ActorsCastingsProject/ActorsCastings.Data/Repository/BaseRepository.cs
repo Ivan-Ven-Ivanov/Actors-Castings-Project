@@ -74,14 +74,48 @@ namespace ActorsCastings.Data.Repository
             return entity;
         }
 
-        public bool SoftDelete(TId id)
+        public bool SoftDelete(params TId[] id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                TType? entity = _dbSet.Find(id);
+                if (entity == null)
+                {
+                    return false;
+                }
+
+                _dbSet.Attach(entity);
+                _context.Entry(entity).State = EntityState.Modified;
+                _context.SaveChanges();
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
         }
 
-        public Task<bool> SoftDeleteAsync(TId id)
+        public async Task<bool> SoftDeleteAsync(params TId[] id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                TType? entity = await _dbSet.FindAsync(id);
+                if (entity == null)
+                {
+                    return false;
+                }
+
+                _dbSet.Attach(entity);
+                _context.Entry(entity).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
         }
 
         public bool Update(TType entity)

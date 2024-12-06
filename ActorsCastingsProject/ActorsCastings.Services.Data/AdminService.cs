@@ -123,6 +123,48 @@ namespace ActorsCastings.Services.Data
             }
         }
 
+        public async Task<bool> DeleteMovieByIdAsync(string id)
+        {
+            Guid guidId = Guid.Empty;
+            bool isGuidValid = IsGuidValid(id, ref guidId);
+
+            if (!isGuidValid)
+            {
+                return false;
+            }
+
+            Movie movieToDelete = await _movieRepository.GetByIdAsync(guidId);
+
+            if (movieToDelete == null)
+            {
+                return false;
+            }
+
+            movieToDelete.IsDeleted = true;
+
+            if (!await _movieRepository.SoftDeleteAsync(guidId))
+            {
+                return false;
+            }
+
+            List<ActorMovie> rolesToDelete = await _actorMovieRepository
+                .GetAllAttached()
+                .Where(am => am.MovieId == guidId)
+                .ToListAsync();
+
+            foreach (ActorMovie role in rolesToDelete)
+            {
+                role.IsDeleted = true;
+
+                if (await _actorMovieRepository.SoftDeleteAsync(role.ActorId, role.MovieId))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
         public async Task<DataToApproveViewModel> GetAllNotApprovedElements()
         {
             DataToApproveViewModel viewModel = new DataToApproveViewModel
@@ -134,6 +176,7 @@ namespace ActorsCastings.Services.Data
                     {
                         Id = m.Id.ToString(),
                         Title = m.Title,
+                        Director = m.Director,
                         Genre = m.Genre,
                         Description = m.Description,
                         ImageUrl = m.ImageUrl,
@@ -147,6 +190,7 @@ namespace ActorsCastings.Services.Data
                     {
                         Id = p.Id.ToString(),
                         Title = p.Title,
+                        Director = p.Director,
                         Theatre = p.Theatre,
                         Description = p.Description,
                         ImageUrl = p.ImageUrl,
@@ -191,6 +235,24 @@ namespace ActorsCastings.Services.Data
             };
 
             return viewModel;
+        }
+
+        public async Task<IEnumerable<MovieToEditViewModel>> IndexViewAllMoviesForEditAsync()
+        {
+            var models = await _movieRepository
+                .GetAllAttached()
+                .Where(m => m.IsDeleted == false)
+                .Select(m => new MovieToEditViewModel
+                {
+                    Id = m.Id.ToString(),
+                    Title = m.Title,
+                    Director = m.Director,
+                    Description = m.Description,
+                    ReleaseYear = m.ReleaseYear,
+                })
+                .ToListAsync();
+
+            return models;
         }
     }
 }

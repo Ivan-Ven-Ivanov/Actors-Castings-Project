@@ -1,0 +1,35 @@
+﻿@model IEnumerable<MovieToEditViewModel>
+
+<div class="container mt-5">
+    <h1 class="text-center">Edit Movies</h1>
+    <hr />
+
+    @if (Model.Any())
+    {
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            @foreach (var movie in Model)
+            {
+                <div class="col">
+                    <div class="card h-100 shadow">
+                        <div class="card-body">
+                            <h5 class="card-title">@movie.Title</h5>
+                            <p class="card-text">
+                                <strong>Director:</strong> @movie.Director<br />
+                                <strong>Release Year:</strong> @movie.ReleaseYear<br />
+                                <strong>Description:</strong> @movie.Description
+                            </p>
+                            <form asp-action="Delete" method="post" onsubmit="return confirm('Are you sure you want to delete this movie?');">
+                                <input type="hidden" name="id" value="@movie.Id" />
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <p class="text-center">No movies available for editing.</p>
+    }
+</div>

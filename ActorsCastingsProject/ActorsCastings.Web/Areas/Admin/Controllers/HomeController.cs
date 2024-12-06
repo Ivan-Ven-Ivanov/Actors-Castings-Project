@@ -1,5 +1,4 @@
 ﻿using ActorsCastings.Services.Data.Interfaces;
-using ActorsCastings.Web.ViewModels.Admin;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,27 +21,6 @@ namespace ActorsCastings.Web.Areas.Admin.Controllers
         public IActionResult Index()
         {
             return View();
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> Approve()
-        {
-            DataToApproveViewModel model = await _adminService.GetAllNotApprovedElements();
-
-            return View(model);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Approve(ApproveSubmitViewModel model)
-        {
-            bool result = await _adminService.ApproveElement(model);
-
-            if (!result)
-            {
-                return View("Error");
-            }
-
-            return RedirectToAction("Index");
         }
     }
 }

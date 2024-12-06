@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ActorsCastings.Data.Models
@@ -17,5 +18,9 @@ namespace ActorsCastings.Data.Models
         public Guid CastingId { get; set; }
 
         public Casting Casting { get; set; }
+
+        [Required]
+        [Comment("Soft delete")]
+        public bool IsDeleted { get; set; }
     }
 }

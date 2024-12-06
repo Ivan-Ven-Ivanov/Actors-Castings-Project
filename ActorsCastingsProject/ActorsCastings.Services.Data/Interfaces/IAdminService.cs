@@ -7,5 +7,9 @@ namespace ActorsCastings.Services.Data.Interfaces
         Task<DataToApproveViewModel> GetAllNotApprovedElements();
 
         Task<bool> ApproveElement(ApproveSubmitViewModel model);
+
+        Task<IEnumerable<MovieToEditViewModel>> IndexViewAllMoviesForEditAsync();
+
+        Task<bool> DeleteMovieByIdAsync(string id);
     }
 }

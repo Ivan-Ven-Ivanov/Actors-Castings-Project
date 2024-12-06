@@ -20,6 +20,7 @@
                                 <div class="col-8">
                                     <div class="card-body">
                                         <h5 class="card-title">@movie.Title</h5>
+                                        <p class="card-text">Director: @movie.Director</p>
                                         <p class="card-text">@movie.Description</p>
                                         <form asp-action="Approve" method="post" onsubmit="return confirm('Are you sure you want to approve this movie?');">
                                             <input asp-for="@movie.Id" name="Id" value="@movie.Id" type="hidden" />
@@ -52,6 +53,7 @@
                                 <div class="col-8">
                                     <div class="card-body">
                                         <h5 class="card-title">@play.Title</h5>
+                                        <p class="card-text">Director: @play.Director</p>
                                         <p class="card-text">@play.Description</p>
                                         <form asp-action="Approve" method="post" onsubmit="return confirm('Are you sure you want to approve this play?');">
                                             <input asp-for="@play.Id" name="Id" value="@play.Id" type="hidden" />

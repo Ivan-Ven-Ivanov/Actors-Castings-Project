@@ -26,9 +26,9 @@ namespace ActorsCastings.Data.Repository.Interfaces
 
         Task<bool> UpdateAsync(TType entity);
 
-        bool SoftDelete(TId id);
+        bool SoftDelete(params TId[] id);
 
-        Task<bool> SoftDeleteAsync(TId id);
+        Task<bool> SoftDeleteAsync(params TId[] id);
 
     }
 }
