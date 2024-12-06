@@ -21,7 +21,7 @@ namespace ActorsCastings.Web.Controllers
         public async Task<IActionResult> Index()
         {
             IEnumerable<MovieViewModel> models = await _movieService.IndexGetAllMoviesAsync();
-
+            throw new ApplicationException();
             return View(models);
         }
 

@@ -24,23 +24,16 @@ namespace ActorsCastings.Web.Controllers
 
         public IActionResult Error(int? statusCode = null)
         {
-
-
-            ErrorViewModel model = new ErrorViewModel();
-
-            if (!statusCode.HasValue)
-            {
-                return View("Error", model);
-            }
-
             if (statusCode == 404)
             {
                 return View("Error404");
             }
-            else if (statusCode == 500)
+            else if (statusCode == 500 || !statusCode.HasValue)
             {
                 return View("Error500");
             }
+
+            ErrorViewModel model = new ErrorViewModel();
 
             return View("Error", model);
         }

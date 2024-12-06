@@ -16,7 +16,6 @@ namespace ActorsCastings.Web
             // Add services to the container.
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             string adminEmail = builder.Configuration.GetValue<string>("Administrator:Email")!;
-            //string adminUsername = builder.Configuration.GetValue<string>("Administrator:Username")!;
             string adminPassword = builder.Configuration.GetValue<string>("Administrator:Password")!;
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connectionString));
@@ -44,7 +43,6 @@ namespace ActorsCastings.Web
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
@@ -54,6 +52,7 @@ namespace ActorsCastings.Web
 
 
 
+            app.UseExceptionHandler("/Home/Error");
             app.UseRouting();
 
             app.UseAuthentication();
@@ -61,13 +60,15 @@ namespace ActorsCastings.Web
 
             app.UseStatusCodePagesWithReExecute("/Home/Error/{0}");
 
+
+
             app.SeedAdministrator(adminEmail, adminPassword);
 
             app.MapControllerRoute(
                 name: "Admin",
                 pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
             app.MapControllerRoute(
-                name: "default",
+                name: "error",
                 pattern: "{controller=Home}/{action=Index}/{statusCode?}");
             app.MapControllerRoute(
                 name: "default",
