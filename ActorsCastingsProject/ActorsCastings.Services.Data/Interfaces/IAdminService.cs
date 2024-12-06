@@ -9,7 +9,9 @@ namespace ActorsCastings.Services.Data.Interfaces
         Task<bool> ApproveElement(ApproveSubmitViewModel model);
 
         Task<IEnumerable<MovieToEditViewModel>> IndexViewAllMoviesForEditAsync();
+        Task<IEnumerable<PlayToEditViewModel>> IndexViewAllPlaysForEditAsync();
 
-        Task<bool> DeleteMovieByIdAsync(string id);
+        Task<bool> DeleteMovieAndItsRolesByIdAsync(string id);
+        Task<bool> DeletePlayAndItsRolesByIdAsync(string id);
     }
 }

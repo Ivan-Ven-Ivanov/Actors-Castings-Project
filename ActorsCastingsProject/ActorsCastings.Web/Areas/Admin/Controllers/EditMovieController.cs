@@ -28,7 +28,12 @@ namespace ActorsCastings.Web.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(string id)
         {
-            bool result = await _adminService.DeleteMovieByIdAsync(id);
+            bool result = await _adminService.DeleteMovieAndItsRolesByIdAsync(id);
+
+            if (!result)
+            {
+                return View("Error");
+            }
 
             return RedirectToAction("Index");
         }

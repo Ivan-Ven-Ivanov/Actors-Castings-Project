@@ -1,0 +1,36 @@
+﻿@model IEnumerable<PlayToEditViewModel>
+
+<div class="container mt-5">
+    <h1 class="text-center">Edit Plays</h1>
+    <hr />
+
+    @if (Model.Any())
+    {
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            @foreach (var play in Model)
+            {
+                <div class="col">
+                    <div class="card h-100 shadow">
+                        <div class="card-body">
+                            <h5 class="card-title">@play.Title</h5>
+                            <p class="card-text">
+                                <strong>Theatre:</strong> @play.Theatre<br />
+                                <strong>Director:</strong> @play.Director<br />
+                                <strong>Release Year:</strong> @play.ReleaseYear<br />
+                                <strong>Description:</strong> @play.Description
+                            </p>
+                            <form asp-action="Delete" method="post" onsubmit="return confirm('Are you sure you want to delete this play?');">
+                                <input type="hidden" name="id" value="@play.Id" />
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <p class="text-center">No plays available for editing.</p>
+    }
+</div>

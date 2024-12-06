@@ -100,7 +100,22 @@ namespace ActorsCastings.Data.Repository
         {
             try
             {
-                TType? entity = await _dbSet.FindAsync(id);
+                TType? entity = null;
+
+                if (id.Length == 1)
+                {
+                    TId singleId = id[0];
+
+                    entity = await _dbSet.FindAsync(singleId);
+                }
+                else if (id.Length == 2)
+                {
+                    TId firstId = id[0];
+                    TId secondId = id[1];
+
+                    entity = await _dbSet.FindAsync(firstId, secondId);
+                }
+
                 if (entity == null)
                 {
                     return false;

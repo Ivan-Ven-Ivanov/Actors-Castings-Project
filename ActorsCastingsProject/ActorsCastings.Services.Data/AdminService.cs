@@ -123,7 +123,7 @@ namespace ActorsCastings.Services.Data
             }
         }
 
-        public async Task<bool> DeleteMovieByIdAsync(string id)
+        public async Task<bool> DeleteMovieAndItsRolesByIdAsync(string id)
         {
             Guid guidId = Guid.Empty;
             bool isGuidValid = IsGuidValid(id, ref guidId);
@@ -156,7 +156,49 @@ namespace ActorsCastings.Services.Data
             {
                 role.IsDeleted = true;
 
-                if (await _actorMovieRepository.SoftDeleteAsync(role.ActorId, role.MovieId))
+                if (!await _actorMovieRepository.SoftDeleteAsync(role.ActorId, role.MovieId))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        public async Task<bool> DeletePlayAndItsRolesByIdAsync(string id)
+        {
+            Guid guidId = Guid.Empty;
+            bool isGuidValid = IsGuidValid(id, ref guidId);
+
+            if (!isGuidValid)
+            {
+                return false;
+            }
+
+            Play playToDelete = await _playRepository.GetByIdAsync(guidId);
+
+            if (playToDelete == null)
+            {
+                return false;
+            }
+
+            playToDelete.IsDeleted = true;
+
+            if (!await _playRepository.SoftDeleteAsync(guidId))
+            {
+                return false;
+            }
+
+            List<ActorPlay> rolesToDelete = await _actorPlayRepository
+                .GetAllAttached()
+                .Where(ap => ap.PlayId == guidId)
+                .ToListAsync();
+
+            foreach (ActorPlay role in rolesToDelete)
+            {
+                role.IsDeleted = true;
+
+                if (!await _actorPlayRepository.SoftDeleteAsync(role.ActorId, role.PlayId))
                 {
                     return false;
                 }
@@ -249,6 +291,25 @@ namespace ActorsCastings.Services.Data
                     Director = m.Director,
                     Description = m.Description,
                     ReleaseYear = m.ReleaseYear,
+                })
+                .ToListAsync();
+
+            return models;
+        }
+
+        public async Task<IEnumerable<PlayToEditViewModel>> IndexViewAllPlaysForEditAsync()
+        {
+            var models = await _playRepository
+                .GetAllAttached()
+                .Where(p => p.IsDeleted == false)
+                .Select(p => new PlayToEditViewModel
+                {
+                    Id = p.Id.ToString(),
+                    Title = p.Title,
+                    Theatre = p.Theatre,
+                    Director = p.Director,
+                    Description = p.Description,
+                    ReleaseYear = p.ReleaseYear
                 })
                 .ToListAsync();
 
