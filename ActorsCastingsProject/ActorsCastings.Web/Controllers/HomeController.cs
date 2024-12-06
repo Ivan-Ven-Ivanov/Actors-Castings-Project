@@ -1,6 +1,5 @@
 using ActorsCastings.Web.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 
 namespace ActorsCastings.Web.Controllers
 {
@@ -23,10 +22,27 @@ namespace ActorsCastings.Web.Controllers
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        public IActionResult Error(int? statusCode = null)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+
+
+            ErrorViewModel model = new ErrorViewModel();
+
+            if (!statusCode.HasValue)
+            {
+                return View("Error", model);
+            }
+
+            if (statusCode == 404)
+            {
+                return View("Error404");
+            }
+            else if (statusCode == 500)
+            {
+                return View("Error500");
+            }
+
+            return View("Error", model);
         }
     }
 }

@@ -2,8 +2,9 @@
 using ActorsCastings.Data.Repository.Interfaces;
 using ActorsCastings.Services.Data.Interfaces;
 using ActorsCastings.Web.ViewModels.Admin;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-
+using static ActorsCastings.Common.ApplicationConstants;
 using static ActorsCastings.Common.EntityValidationConstants.Casting;
 
 namespace ActorsCastings.Services.Data
@@ -16,6 +17,9 @@ namespace ActorsCastings.Services.Data
         private readonly IRepository<ActorPlay, Guid> _actorPlayRepository;
         private readonly IRepository<ActorMovie, Guid> _actorMovieRepository;
         private readonly IRepository<ActorCasting, Guid> _actorCastingRepository;
+        private readonly IRepository<Actor, Guid> _actorRepository;
+        private readonly IRepository<CastingAgent, Guid> _castingAgentRepository;
+        private readonly UserManager<ApplicationUser> _userManager;
 
         public AdminService(
             IRepository<Movie, Guid> movieRepository,
@@ -23,7 +27,10 @@ namespace ActorsCastings.Services.Data
             IRepository<Play, Guid> playRepository,
             IRepository<ActorPlay, Guid> actorPlayRepository,
             IRepository<ActorMovie, Guid> actorMovieRepository,
-            IRepository<ActorCasting, Guid> actorCastingRepository)
+            IRepository<ActorCasting, Guid> actorCastingRepository,
+            IRepository<Actor, Guid> actorRepository,
+            IRepository<CastingAgent, Guid> castingAgentRepository,
+            UserManager<ApplicationUser> userManager)
         {
             _movieRepository = movieRepository;
             _castingRepository = castingRepository;
@@ -31,6 +38,9 @@ namespace ActorsCastings.Services.Data
             _actorPlayRepository = actorPlayRepository;
             _actorMovieRepository = actorMovieRepository;
             _actorCastingRepository = actorCastingRepository;
+            _actorRepository = actorRepository;
+            _castingAgentRepository = castingAgentRepository;
+            _userManager = userManager;
         }
 
         public async Task<bool> ApproveElement(ApproveSubmitViewModel model)
@@ -254,6 +264,100 @@ namespace ActorsCastings.Services.Data
             return true;
         }
 
+        public async Task<bool> DeleteUserAndItsConnectedEntitiesByIdAsync(string id)
+        {
+            Guid guidId = Guid.Empty;
+            bool isGuidValid = IsGuidValid(id, ref guidId);
+
+            if (!isGuidValid)
+            {
+                return false;
+            }
+
+            ApplicationUser? userToDelete = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == guidId);
+
+            if (userToDelete == null)
+            {
+                return false;
+            }
+
+            userToDelete.IsDeleted = true;
+            await _userManager.UpdateAsync(userToDelete);
+
+            Actor? actor = await _actorRepository.FirstOrDefaultAsync(a => a.UserId == guidId);
+            CastingAgent? castingAgent = await _castingAgentRepository.FirstOrDefaultAsync(ca => ca.UserId == guidId);
+
+            if (actor != null)
+            {
+                actor.IsDeleted = true;
+
+                if (!await _actorRepository.SoftDeleteAsync(actor.Id))
+                {
+                    return false;
+                }
+
+                List<ActorPlay> rolesInPlaysToDelete = await _actorPlayRepository
+                    .GetAllAttached()
+                    .Where(ap => ap.ActorId == actor.Id)
+                    .ToListAsync();
+
+                List<ActorMovie> rolesInMoviesToDelete = await _actorMovieRepository
+                    .GetAllAttached()
+                    .Where(am => am.ActorId == actor.Id)
+                    .ToListAsync();
+
+                List<ActorCasting> castingsOfActorToDelete = await _actorCastingRepository
+                    .GetAllAttached()
+                    .Where(ac => ac.ActorId == actor.Id)
+                    .ToListAsync();
+
+                foreach (ActorPlay role in rolesInPlaysToDelete)
+                {
+                    role.IsDeleted = true;
+
+                    if (!await _actorPlayRepository.SoftDeleteAsync(role.ActorId, role.PlayId))
+                    {
+                        return false;
+                    }
+                }
+
+                foreach (ActorMovie role in rolesInMoviesToDelete)
+                {
+                    role.IsDeleted = true;
+
+                    if (!await _actorMovieRepository.SoftDeleteAsync(role.ActorId, role.MovieId))
+                    {
+                        return false;
+                    }
+                }
+
+                foreach (ActorCasting casting in castingsOfActorToDelete)
+                {
+                    casting.IsDeleted = true;
+
+                    if (!await _actorCastingRepository.SoftDeleteAsync(casting.ActorId, casting.CastingId))
+                    {
+                        return false;
+                    }
+                }
+            }
+            else if (castingAgent != null)
+            {
+                castingAgent.IsDeleted = true;
+
+                if (!await _castingAgentRepository.SoftDeleteAsync(castingAgent.Id))
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         public async Task<DataToApproveViewModel> GetAllNotApprovedElements()
         {
             DataToApproveViewModel viewModel = new DataToApproveViewModel
@@ -378,6 +482,48 @@ namespace ActorsCastings.Services.Data
                     ReleaseYear = p.ReleaseYear
                 })
                 .ToListAsync();
+
+            return models;
+        }
+
+        public async Task<IEnumerable<UserToEditViewModel>> IndexViewAllUsersForEditAsync()
+        {
+            var models = await _userManager
+                .Users
+                .Where(u => u.IsDeleted == false)
+                .Select(u => new UserToEditViewModel
+                {
+                    Id = u.Id.ToString()
+                })
+                .ToListAsync();
+
+            var admins = await _userManager.GetUsersInRoleAsync(AdminRoleName);
+            var adminIds = admins.Select(a => a.Id).ToList();
+
+            models = models.Where(u => !adminIds.Contains(Guid.Parse(u.Id))).ToList();
+
+            foreach (var user in models)
+            {
+                Guid guiId = Guid.Parse(user.Id);
+
+                Actor actor = await _actorRepository.FirstOrDefaultAsync(a => a.UserId == guiId);
+                CastingAgent castingAgent = await _castingAgentRepository.FirstOrDefaultAsync(ca => ca.UserId == guiId);
+
+                if (actor != null)
+                {
+                    user.UserType = actor.GetType().Name;
+                    user.FullName = $"{actor.FirstName} {actor.LastName}";
+                }
+                else if (castingAgent != null)
+                {
+                    user.UserType = castingAgent.GetType().Name;
+                    user.FullName = castingAgent.Name;
+                }
+                else
+                {
+                    throw new Exception();
+                }
+            }
 
             return models;
         }

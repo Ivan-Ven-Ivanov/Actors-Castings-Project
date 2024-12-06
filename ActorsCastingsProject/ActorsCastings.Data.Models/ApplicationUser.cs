@@ -8,5 +8,7 @@ namespace ActorsCastings.Data.Models
         {
             Id = Guid.NewGuid();
         }
+
+        public bool IsDeleted { get; set; }
     }
 }
