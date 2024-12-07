@@ -14,7 +14,7 @@
             @foreach (var movie in Model)
             {
                 <div class="col-md-4 mb-4">
-                    <div class="card h-100 movie-card" data-movie-id="@movie.Id" onclick="toggleSelection(this)">
+                    <div class="card h-100 clickable-card" data-movie-id="@movie.Id" onclick="toggleSelection(this)">
                         <div class="card-body">
                             <h5 class="card-title">@movie.Title</h5>
                             <img src="@movie.ImageUrl" class="card-img-top" alt="@movie.Title Picture" style="max-height: 200px; object-fit: contain" />
@@ -40,5 +40,3 @@
         </div>
     </form>
 </div>
-
-<script src="https://kit.fontawesome.com/2adefc9ae5.js" crossorigin="anonymous"></script>

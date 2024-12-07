@@ -1,5 +1,5 @@
 ﻿function toggleSelection(card) {
-    const selectedCard = document.querySelector(".movie-card.selected");
+    const selectedCard = document.querySelector(".clickable-card.selected");
     const addButton = document.getElementById("add-selected-button");
 
     // Deselect the previously selected card
@@ -32,7 +32,7 @@
     }
 
     // Enable or disable the Add button
-    const anySelected = document.querySelectorAll(".movie-card.selected").length > 0;
+    const anySelected = document.querySelectorAll(".clickable-card.selected").length > 0;
     addButton.disabled = !anySelected;
 }
 

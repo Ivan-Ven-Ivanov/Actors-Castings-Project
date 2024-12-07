@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<PlayViewModel>
 
+
 <div class="container mt-5">
     <h1 class="text-center">Add Play to Your Profile</h1>
 
@@ -14,7 +15,7 @@
             @foreach (var play in Model)
             {
                 <div class="col-md-4 mb-4">
-                    <div class="card h-100 movie-card" data-movie-id="@play.Id" onclick="toggleSelection(this)">
+                    <div class="card h-100 clickable-card" data-movie-id="@play.Id" onclick="toggleSelection(this)">
                         <div class="card-body">
                             <h5 class="card-title">@play.Title</h5>
                             <img src="@play.ImageUrl" class="card-img-top" alt="@play.Title Picture" style="max-height: 200px; object-fit: contain" />
@@ -40,5 +41,3 @@
         </div>
     </form>
 </div>
-
-<script src="https://kit.fontawesome.com/2adefc9ae5.js" crossorigin="anonymous"></script>

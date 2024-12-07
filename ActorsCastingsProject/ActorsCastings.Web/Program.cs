@@ -3,6 +3,7 @@ using ActorsCastings.Services.Data;
 using ActorsCastings.Web.Data;
 using ActorsCastings.Web.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace ActorsCastings.Web
@@ -30,7 +31,10 @@ namespace ActorsCastings.Web
 
             builder.Services.RegisterUserDefinedServices(typeof(CastingService).Assembly);
 
-            builder.Services.AddControllersWithViews();
+            builder.Services.AddControllersWithViews(cfg =>
+            {
+                cfg.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+            });
 
             var app = builder.Build();
 
@@ -43,6 +47,7 @@ namespace ActorsCastings.Web
             }
             else
             {
+                app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
@@ -51,7 +56,7 @@ namespace ActorsCastings.Web
             app.UseStaticFiles();
 
 
-
+            //?
             app.UseExceptionHandler("/Home/Error");
             app.UseRouting();
 
