@@ -11,6 +11,8 @@
 
         public string? ImageUrl { get; set; }
 
+        public bool IsSelected { get; set; }
+
         public bool IsRoleInMovieApproved { get; set; }
     }
 }

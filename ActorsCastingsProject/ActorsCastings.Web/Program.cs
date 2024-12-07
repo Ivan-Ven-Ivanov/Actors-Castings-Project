@@ -15,7 +15,7 @@ namespace ActorsCastings.Web
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'ApplicationDbContextConnection' not found.");
             string adminEmail = builder.Configuration.GetValue<string>("Administrator:Email")!;
             string adminPassword = builder.Configuration.GetValue<string>("Administrator:Password")!;
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -23,7 +23,7 @@ namespace ActorsCastings.Web
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
             builder.Services
-                .AddDefaultIdentity<ApplicationUser>(/*options => options.SignIn.RequireConfirmedAccount = true*/)
+                .AddDefaultIdentity<ApplicationUser>()
                 .AddRoles<IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 

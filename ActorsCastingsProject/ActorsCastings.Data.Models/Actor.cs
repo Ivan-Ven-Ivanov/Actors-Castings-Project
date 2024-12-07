@@ -36,7 +36,7 @@ namespace ActorsCastings.Data.Models
         public int? Age { get; set; }
 
         [Comment("Portfolio of the actor")]
-        [MaxLength(ActorPortfolioMaxLength)]
+        [MaxLength(ActorBiographyMaxLength)]
         public string? Biography { get; set; }
 
         [Required]

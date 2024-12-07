@@ -1,5 +1,4 @@
-﻿using ActorsCastings.Common;
-using ActorsCastings.Data.Models;
+﻿using ActorsCastings.Data.Models;
 using ActorsCastings.Services.Data.Interfaces;
 using ActorsCastings.Web.ViewModels.Casting;
 using Microsoft.AspNetCore.Authorization;
@@ -28,14 +27,12 @@ namespace ActorsCastings.Web.Controllers
             return View(models);
         }
 
-        [Authorize(Roles = "CastingAgent")]
         [HttpGet]
         public IActionResult Add()
         {
             return View(new AddCastingViewModel());
         }
 
-        [Authorize(Roles = ProfileTypes.CastingAgent)]
         [HttpPost]
         public async Task<IActionResult> Add(AddCastingViewModel model)
         {

@@ -168,9 +168,9 @@ namespace ActorsCastings.Services.Data
             return model;
         }
 
-        public async Task<IEnumerable<MovieViewModel>> GetAllMoviesAsync()
+        public async Task<SelectedMovieViewModel> GetAllMoviesForSelectAsync(SelectedMovieViewModel model)
         {
-            IEnumerable<MovieViewModel> models = await _movieRepository
+            model.Movies = await _movieRepository
                 .GetAllAttached()
                 .Where(m => m.IsApproved && !m.IsDeleted)
                 .Select(m => new MovieViewModel
@@ -183,7 +183,7 @@ namespace ActorsCastings.Services.Data
                 })
                 .ToListAsync();
 
-            return models;
+            return model;
         }
 
         public async Task<IEnumerable<PlayViewModel>> GetAllPlaysAsync()
@@ -251,6 +251,19 @@ namespace ActorsCastings.Services.Data
                         IsRoleInPlayApproved = ap.IsApproved
                     }).ToList()
             };
+
+            return model;
+        }
+
+        public SelectedMovieViewModel SelectAMovieForValidation(SelectedMovieViewModel model)
+        {
+            foreach (var movie in model.Movies)
+            {
+                if (movie.Id == model.Id)
+                {
+                    movie.IsSelected = true;
+                }
+            }
 
             return model;
         }

@@ -17,11 +17,6 @@ namespace ActorsCastings.Web.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
         public IActionResult Error(int? statusCode = null)
         {
             if (statusCode == 404)

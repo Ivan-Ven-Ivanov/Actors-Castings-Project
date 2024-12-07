@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MovieViewModel>
+﻿@model SelectedMovieViewModel
 
 <div class="container mt-5">
     <h1 class="text-center">Add Movie to Your Profile</h1>
@@ -11,10 +11,10 @@
 
     <form asp-action="AddMovieFromProfile" method="post">
         <div class="row" id="movies-container">
-            @foreach (var movie in Model)
+            @foreach (var movie in Model.Movies)
             {
                 <div class="col-md-4 mb-4">
-                    <div class="card h-100 clickable-card" data-movie-id="@movie.Id" onclick="toggleSelection(this)">
+                    <div class="card h-100 clickable-card @((movie.IsSelected ? "selected" : ""))" data-movie-id="@movie.Id" onclick="toggleSelection(this)">
                         <div class="card-body">
                             <h5 class="card-title">@movie.Title</h5>
                             <img src="@movie.ImageUrl" class="card-img-top" alt="@movie.Title Picture" style="max-height: 200px; object-fit: contain" />
@@ -22,11 +22,12 @@
                                 <strong>Release Year:</strong> @movie.ReleaseYear <br />
                                 <strong>Director:</strong> @movie.Director
                             </p>
-                            <div class="form-group role-input d-none">
-                                <label for="role-@movie.Id">Your Role:</label>
-                                <input type="text" class="form-control" id="role-@movie.Id" name="Role" placeholder="Enter your role in this movie" disabled>
+                            <div class="form-group role-input @(movie.IsSelected ? "" : "d-none")">
+                                <label asp-for="Role">Your Role:</label>
+                                <input name="Role" class="form-control" placeholder="Enter your role in this movie" value="@Model.Role" @(movie.IsSelected ? "" : "disabled='disabled'")>
+                                <span asp-validation-for= "Role" class="text-danger"></span>
                             </div>
-                            <input type="hidden" name="Id" value="@movie.Id" disabled>
+                            <input name="Id" type="hidden" value="@movie.Id" @(movie.IsSelected ? "" : "disabled='disabled'")>
                         </div>
                     </div>
                 </div>

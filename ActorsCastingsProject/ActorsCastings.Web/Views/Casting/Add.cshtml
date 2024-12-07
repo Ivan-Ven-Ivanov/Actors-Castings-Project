@@ -3,22 +3,22 @@
 <h2>Add a New Casting</h2>
 
 <form asp-action="Add" method="post">
-    <div>
-        <label for="Title">Casting Title</label>
-        <input asp-for="Title" class="form-control" />
+    <div class="mt-2">
+        <label asp-for="Title" class="fw-bold">Casting Title</label>
+        <input asp-for="Title" class="form-control" placeholder="Write casting title..."/>
         <span asp-validation-for="Title" class="text-danger"></span>
     </div>
-    <div>
-        <label for="Description">Description</label>
-        <input asp-for="Description" class="form-control" />
+    <div class="mt-2">
+        <label asp-for="Description" class="fw-bold">Description</label>
+        <input asp-for="Description" class="form-control" placeholder="Write casting details..."/>
         <span asp-validation-for="Description" class="text-danger"></span>
     </div>
-    <div>
-        <label for="CastingEnd">Casting End</label>
-        <input asp-for="CastingEnd" type="datetime" class="form-control" />
+    <div class="mt-2">
+        <label asp-for="CastingEnd" class="fw-bold">Casting End</label>
+        <input asp-for="CastingEnd" class="form-control datetime-picker" placeholder="Select the end of the casting..." />
         <span asp-validation-for="CastingEnd" class="text-danger"></span>
     </div>
-    <button type="submit" class="btn btn-primary mt-2">Create Casting</button>
+    <button type="submit" class="btn btn-primary mt-5">Create Casting</button>
 </form>
 
-<a asp-action="Index">Back to Casting List</a>
+<a asp-action="Index" class="btn btn-secondary mt-2">Back to Casting List</a>

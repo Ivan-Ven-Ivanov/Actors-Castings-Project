@@ -8,7 +8,9 @@
             public const int ActorFirstNameMaxLength = 20;
             public const int ActorLastNameMinLength = 2;
             public const int ActorLastNameMaxLength = 20;
-            public const int ActorPortfolioMaxLength = 1000;
+            public const int ActorBiographyMaxLength = 1000;
+            public const int ActorAgeMinValue = 3;
+            public const int ActorAgeMaxValue = 100;
         }
 
         public static class Movie

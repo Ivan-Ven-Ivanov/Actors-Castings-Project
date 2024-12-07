@@ -10,7 +10,9 @@ namespace ActorsCastings.Services.Data.Interfaces
 
         Task<bool> CompleteActorProfileAsync(string id, ActorProfileViewModel model);
 
-        Task<IEnumerable<MovieViewModel>> GetAllMoviesAsync();
+        Task<SelectedMovieViewModel> GetAllMoviesForSelectAsync(SelectedMovieViewModel model);
+
+        SelectedMovieViewModel SelectAMovieForValidation(SelectedMovieViewModel model);
 
         Task<IEnumerable<PlayViewModel>> GetAllPlaysAsync();
 
