@@ -23,15 +23,23 @@
         </div>
         @if (Model.Castings.Any())
         {
-            <div class="list-group">
+            <div class="d-flex overflow-auto">
                 @foreach (var casting in Model.Castings)
                 {
-                    <a asp-controller="Casting" asp-action="Details" asp-route-id="@casting.Id" class="list-group-item list-group-item-action">
-                        <h5 class="mb-1">@casting.Title</h5>
-                        <p class="mb-1"><strong>Casting End Date:</strong> @casting.CastingEnd</p>
+                    <a asp-controller="Casting" asp-action="Details" asp-route-id="@casting.Id" class="text-decoration-none text-dark list-group-item-action">
+                        <div class="card m-2" style="min-width: 200px;">
+                            <div class="card-body">
+                                <h5 class="card-title">@casting.Title</h5>
+                                <p class="card-text">
+                                    <strong>Casting End Date:</strong> @casting.CastingEnd <br />
+                                    <strong>Actors Applied:</strong> @casting.ActorsApplied
+                                </p>
+                            </div>
+                        </div>
                     </a>
                 }
             </div>
+            
         }
         else
         {

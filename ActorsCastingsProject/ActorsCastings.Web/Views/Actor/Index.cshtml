@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ActorIndexViewModel>
+﻿@model PaginationViewModel<ActorIndexViewModel>
 
 @{
     ViewData["Title"] = "Actors";
@@ -7,7 +7,7 @@
 <h1>Actors</h1>
 
 <div class="row">
-    @foreach (var actor in Model)
+    @foreach (var actor in Model.Items)
     {
         <div class="col-md-4 mb-4">
             <a asp-action="Details" asp-route-id="@actor.Id" class="card h-100 d-flex flex-column text-decoration-none text-dark clickable-card shadow-sm hover-shadow">
@@ -21,3 +21,13 @@
         </div>
     }
 </div>
+
+@{
+    ViewData["HasPreviousPage"] = Model.HasPreviousPage;
+    ViewData["HasNextPage"] = Model.HasNextPage;
+    ViewData["CurrentPage"] = Model.CurrentPage;
+    ViewData["TotalPages"] = Model.TotalPages;
+    ViewData["PageSize"] = Model.PageSize;
+}
+
+<partial name="_PaginationPartial"/>

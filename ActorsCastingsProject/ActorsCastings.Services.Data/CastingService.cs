@@ -167,10 +167,12 @@ namespace ActorsCastings.Services.Data
         public async Task<IEnumerable<CastingViewModel>> IndexGetAllAsync()
         {
             IEnumerable<CastingViewModel> models = await _castingRepository.GetAllAttached()
+                .Include(c => c.ActorsCastings)
                 .Select(c => new CastingViewModel
                 {
                     Id = c.Id.ToString(),
                     Title = c.Title,
+                    ActorsApplied = c.ActorsCastings.Count,
                     CastingEnd = c.CastingEnd.ToString(Common.EntityValidationConstants.Casting.CastingEndDateTimeFormatString)
                 })
                 .ToListAsync();

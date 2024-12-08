@@ -80,6 +80,7 @@ namespace ActorsCastings.Services.Data
             CastingAgent? castingAgent = await _castingAgentRepository
                 .GetAllAttached()
                 .Include(ca => ca.Castings)
+                    .ThenInclude(c => c.ActorsCastings)
                 .FirstOrDefaultAsync(ca => ca.UserId == guidId);
 
             if (castingAgent == null)
@@ -96,7 +97,8 @@ namespace ActorsCastings.Services.Data
                 {
                     Id = c.Id.ToString(),
                     Title = c.Title,
-                    CastingEnd = c.CastingEnd.ToString()
+                    CastingEnd = c.CastingEnd.ToString(),
+                    ActorsApplied = c.ActorsCastings.Count
                 }).ToList()
             };
 

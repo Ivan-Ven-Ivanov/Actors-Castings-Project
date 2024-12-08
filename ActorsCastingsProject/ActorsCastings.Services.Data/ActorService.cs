@@ -17,6 +17,11 @@ namespace ActorsCastings.Services.Data
             _actorRepository = actorRepository;
         }
 
+        public async Task<int> GetActorCountAsync()
+        {
+            return await _actorRepository.GetAllAttached().CountAsync();
+        }
+
         public async Task<ActorDetailsViewModel> GetActorDetailsByIdAsync(string id)
         {
             Guid guidId = Guid.Empty;
@@ -73,10 +78,12 @@ namespace ActorsCastings.Services.Data
             return model;
         }
 
-        public async Task<IEnumerable<ActorIndexViewModel>> IndexGetAllActorsAsync()
+        public async Task<IList<ActorIndexViewModel>> IndexGetPaginatedActorsAsync(int page, int pageSize)
         {
             List<ActorIndexViewModel> models = await _actorRepository
                 .GetAllAttached()
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
                 .Select(a => new ActorIndexViewModel
                 {
                     Id = a.Id.ToString(),

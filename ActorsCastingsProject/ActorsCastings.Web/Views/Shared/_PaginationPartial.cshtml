@@ -1,0 +1,18 @@
+﻿<div class="pagination">
+    @if (ViewData["HasPreviousPage"].ToString() == "True")
+    {
+        <a asp-action="Index" asp-route-page="@(int.Parse(ViewData["CurrentPage"].ToString()) - 1)" asp-route-pageSize="@ViewData["PageSize"].ToString()" class="btn page-link">
+            Previous
+        </a>
+    }
+
+    <span class="align-content-center m-2">Page @ViewData["CurrentPage"].ToString() of @ViewData["TotalPages"].ToString()</span>
+
+    @if (ViewData["HasNextPage"].ToString() == "True")
+    {
+        <a asp-action="Index" asp-route-page="@(int.Parse(ViewData["CurrentPage"].ToString()) + 1)" asp-route-pageSize="@ViewData["PageSize"].ToString()" class="btn page-link">
+            Next
+        </a>
+    }
+</div>
+
