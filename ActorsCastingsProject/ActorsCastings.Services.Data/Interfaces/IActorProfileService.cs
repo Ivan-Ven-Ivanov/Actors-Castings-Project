@@ -23,7 +23,7 @@ namespace ActorsCastings.Services.Data.Interfaces
 
         Task<bool> AddSelectedPlayToProfileAsync(string id, string role, string userId);
 
-        Task<UpdateActorProfileViewModel> GetActorProfileDataAsync(string id);
+        Task<UpdateActorProfileViewModel> GetActorProfileDataForUpdateAsync(string id);
 
         Task<bool> UpdateActorProfileAsync(UpdateActorProfileViewModel model);
     }

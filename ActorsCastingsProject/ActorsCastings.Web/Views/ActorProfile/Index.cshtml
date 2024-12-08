@@ -76,13 +76,15 @@
                     @foreach (var play in Model.Plays.Where(p => p.IsRoleInPlayApproved))
                     {
                         <div class="card m-2" style="min-width: 200px;">
-                            <div class="card-body">
-                                <h5 class="card-title">@play.Title</h5>
-                                <p class="card-text">
-                                    <strong>Release Year:</strong> @play.ReleaseYear <br />
-                                    <strong>Director:</strong> @play.Director
-                                </p>
-                            </div>
+                            <a asp-controller="Play" asp-action="Details" asp-route-id="@play.Id" class="text-decoration-none text-dark">
+                                <div class="card-body">
+                                    <h5 class="card-title">@play.Title</h5>
+                                    <p class="card-text">
+                                        <strong>Release Year:</strong> @play.ReleaseYear <br />
+                                        <strong>Director:</strong> @play.Director
+                                    </p>
+                                </div>
+                            </a>
                         </div>
                     }
                 </div>
@@ -97,6 +99,34 @@
                 <div class="alert alert-warning" role="alert">
                     Plays awaiting approval.
                 </div>
+            }
+        }
+    </div>
+
+    <hr />
+
+    <div class="mt-4">
+        <h3>Castings I Applied for</h3>
+        @{
+            if (Model.Castings.Any())
+            {
+                <div class="d-flex overflow-auto">
+                    @foreach (var casting in Model.Castings)
+                    {
+                        <div class="card m-2" style="min-width: 200px;">
+                            <a asp-controller="Casting" asp-action="Details" asp-route-id="@casting.Id" class="text-decoration-none text-dark">
+                                <div class="card-body">
+                                    <h5 class="card-title">@casting.Title</h5>
+                                    <p class="card-text"><strong>Casting End:</strong> @casting.CastingEnd</p>
+                                </div>
+                            </a>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <p>No castings yet.</p>
             }
         }
     </div>

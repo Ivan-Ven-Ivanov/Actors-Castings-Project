@@ -1,4 +1,6 @@
-﻿namespace ActorsCastings.Web.ViewModels.Casting
+﻿using ActorsCastings.Web.ViewModels.Actor;
+
+namespace ActorsCastings.Web.ViewModels.Casting
 {
     public class CastingDetailsViewModel
     {
@@ -13,5 +15,8 @@
         public string? CastingAgency { get; set; }
 
         public bool HasActorApplied { get; set; }
+
+        public IList<ActorInCastingViewModel> CastedActors { get; set; }
+            = new List<ActorInCastingViewModel>();
     }
 }

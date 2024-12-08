@@ -2,9 +2,12 @@
 using ActorsCastings.Data.Repository.Interfaces;
 using ActorsCastings.Services.Data.Interfaces;
 using ActorsCastings.Web.ViewModels.ActorProfile;
+using ActorsCastings.Web.ViewModels.Casting;
 using ActorsCastings.Web.ViewModels.Movie;
 using ActorsCastings.Web.ViewModels.Play;
 using Microsoft.EntityFrameworkCore;
+
+using static ActorsCastings.Common.EntityValidationConstants.Casting;
 
 namespace ActorsCastings.Services.Data
 {
@@ -153,7 +156,7 @@ namespace ActorsCastings.Services.Data
             return true;
         }
 
-        public async Task<UpdateActorProfileViewModel> GetActorProfileDataAsync(string id)
+        public async Task<UpdateActorProfileViewModel> GetActorProfileDataForUpdateAsync(string id)
         {
             Guid guidId = Guid.Empty;
 
@@ -232,6 +235,8 @@ namespace ActorsCastings.Services.Data
                     .ThenInclude(am => am.Movie)
                 .Include(a => a.ActorsPlays)
                     .ThenInclude(ap => ap.Play)
+                .Include(a => a.ActorsCastings)
+                    .ThenInclude(ac => ac.Casting)
                 .FirstOrDefaultAsync(a => a.UserId == guidId);
 
             if (actor == null)
@@ -265,6 +270,13 @@ namespace ActorsCastings.Services.Data
                         Director = ap.Play.Director,
                         ReleaseYear = ap.Play.ReleaseYear.ToString(),
                         IsRoleInPlayApproved = ap.IsApproved
+                    }).ToList(),
+                Castings = actor.ActorsCastings
+                    .Select(ac => new CastingViewModel
+                    {
+                        Id = ac.CastingId.ToString(),
+                        Title = ac.Casting.Title,
+                        CastingEnd = ac.Casting.CastingEnd.ToString(CastingEndDateTimeFormatString)
                     }).ToList()
             };
 

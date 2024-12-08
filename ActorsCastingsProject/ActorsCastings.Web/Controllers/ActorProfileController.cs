@@ -145,7 +145,7 @@ namespace ActorsCastings.Web.Controllers
                 return View("Error");
             }
 
-            UpdateActorProfileViewModel model = await _actorProfileService.GetActorProfileDataAsync(userId);
+            UpdateActorProfileViewModel model = await _actorProfileService.GetActorProfileDataForUpdateAsync(userId);
 
             return View(model);
         }

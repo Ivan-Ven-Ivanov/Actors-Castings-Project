@@ -1,6 +1,7 @@
 ﻿using ActorsCastings.Data.Models;
 using ActorsCastings.Data.Repository.Interfaces;
 using ActorsCastings.Services.Data.Interfaces;
+using ActorsCastings.Web.ViewModels.Actor;
 using ActorsCastings.Web.ViewModels.Casting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -132,6 +133,8 @@ namespace ActorsCastings.Services.Data
 
             Casting? casting = await _castingRepository.GetAllAttached()
                 .Include(c => c.CastingAgent)
+                .Include(c => c.ActorsCastings)
+                    .ThenInclude(ac => ac.Actor)
                 .FirstOrDefaultAsync(c => c.Id == castingId);
 
             //TODO: Error message
@@ -148,7 +151,14 @@ namespace ActorsCastings.Services.Data
                 throw new Exception();
             }
 
-
+            List<ActorInCastingViewModel> castedActors = casting.ActorsCastings.
+                Select(ac => new ActorInCastingViewModel
+                {
+                    Id = ac.Actor.Id.ToString(),
+                    FirstName = ac.Actor.FirstName,
+                    LastName = ac.Actor.LastName,
+                    ProfilePictureUrl = ac.Actor.ProfilePictureUrl
+                }).ToList();
 
             CastingDetailsViewModel model = new CastingDetailsViewModel
             {
@@ -158,6 +168,7 @@ namespace ActorsCastings.Services.Data
                 CastingEnd = casting.CastingEnd.ToString(CastingEndDateTimeFormatString),
                 CastingAgent = casting.CastingAgent.Name,
                 CastingAgency = casting.CastingAgent.CastingAgency,
+                CastedActors = castedActors,
                 HasActorApplied = await _actorCastingRepository.GetAllAttached().AnyAsync(ac => ac.Actor.UserId == guidUserId && ac.CastingId == castingId)
             };
 

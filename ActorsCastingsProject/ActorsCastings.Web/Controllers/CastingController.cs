@@ -76,7 +76,7 @@ namespace ActorsCastings.Web.Controllers
         }
 
         [Authorize]
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> Apply(string id)
         {
             ApplicationUser? user = await _userManager.GetUserAsync(User);

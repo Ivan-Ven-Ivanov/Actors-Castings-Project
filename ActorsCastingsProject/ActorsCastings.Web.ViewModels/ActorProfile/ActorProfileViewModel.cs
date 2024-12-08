@@ -1,4 +1,5 @@
-﻿using ActorsCastings.Web.ViewModels.Movie;
+﻿using ActorsCastings.Web.ViewModels.Casting;
+using ActorsCastings.Web.ViewModels.Movie;
 using ActorsCastings.Web.ViewModels.Play;
 using System.ComponentModel.DataAnnotations;
 
@@ -32,5 +33,8 @@ namespace ActorsCastings.Web.ViewModels.ActorProfile
 
         public IList<PlayViewModel> Plays { get; set; }
             = new List<PlayViewModel>();
+
+        public IList<CastingViewModel> Castings { get; set; }
+            = new List<CastingViewModel>();
     }
 }

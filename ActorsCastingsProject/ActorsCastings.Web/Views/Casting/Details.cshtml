@@ -27,20 +27,40 @@
 </div>
 
 <div class="d-flex mt-3">
-    <a asp-action="Index" class="btn btn-secondary">Back to Castings</a>
+    <a asp-action="Index" class="btn btn-secondary m-2">Back to Castings</a>
     @{
         string? userId = userManager.GetUserId(User);
 
-        if(await actorService.IsUserActorAsync(userId))
+        if (await actorService.IsUserActorAsync(userId))
         {
             if (Model.HasActorApplied)
             {
-                <div class="btn btn-success">Already applied</div>
+                <div class="btn btn-success m-2">Already applied</div>
             }
             else
             {
-                <a asp-action="Apply" asp-route-id="@Model.Id" class="btn btn-primary">Apply for Casting</a>
+                <a asp-action="Apply" asp-route-id="@Model.Id" class="btn btn-primary m-2">Apply for Casting</a>
             }
         }
     }
 </div>
+
+@if (Model.CastedActors.Any())
+{
+    <h3 class="mt-4">Actors in this Casting</h3>
+    <div class="row">
+        @foreach (var actor in Model.CastedActors)
+        {
+            <div class="col-md-3 text-center mb-4">
+                <a asp-controller="Actor" asp-action="Details" asp-route-id="@actor.Id" class="text-decoration-none text-dark">
+                    <div class="card">
+                        <img src="@actor.ProfilePictureUrl" alt="@actor.FirstName @actor.LastName" class="card-img-top" style="max-height: 200px; object-fit: contain">
+                        <div class="card-body">
+                            <h5 class="card-title">@actor.FirstName @actor.LastName</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        }
+    </div>
+}

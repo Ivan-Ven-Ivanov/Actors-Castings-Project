@@ -26,7 +26,7 @@
             <div class="d-flex overflow-auto">
                 @foreach (var casting in Model.Castings)
                 {
-                    <a asp-controller="Casting" asp-action="Details" asp-route-id="@casting.Id" class="text-decoration-none text-dark list-group-item-action">
+                    <a asp-controller="Casting" asp-action="Details" asp-route-id="@casting.Id" class="text-decoration-none text-dark">
                         <div class="card m-2" style="min-width: 200px;">
                             <div class="card-body">
                                 <h5 class="card-title">@casting.Title</h5>
