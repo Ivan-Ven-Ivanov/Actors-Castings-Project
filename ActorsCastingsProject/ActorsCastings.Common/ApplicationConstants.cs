@@ -3,6 +3,8 @@
     public static class ApplicationConstants
     {
         public const string AdminRoleName = "Admin";
+        public const string UserRoleName = "User";
+
         public const int FirstPageValue = 1;
         public const int ActorsPerPage = 6;
         public const int PlaysPerPage = 8;

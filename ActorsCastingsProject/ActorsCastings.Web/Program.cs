@@ -31,6 +31,13 @@ namespace ActorsCastings.Web
 
             builder.Services.RegisterUserDefinedServices(typeof(CastingService).Assembly);
 
+            builder.Services.AddCookiePolicy(options =>
+            {
+                options.Secure = CookieSecurePolicy.Always;
+                options.HttpOnly = Microsoft.AspNetCore.CookiePolicy.HttpOnlyPolicy.Always;
+                options.MinimumSameSitePolicy = SameSiteMode.Strict;
+            });
+
             builder.Services.AddControllersWithViews(cfg =>
             {
                 cfg.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
@@ -54,7 +61,6 @@ namespace ActorsCastings.Web
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
 
             //?
             app.UseExceptionHandler("/Home/Error");
