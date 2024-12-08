@@ -4,7 +4,9 @@ namespace ActorsCastings.Services.Data.Interfaces
 {
     public interface ICastingService
     {
-        Task<IEnumerable<CastingViewModel>> IndexGetAllAsync();
+        Task<IList<CastingViewModel>> IndexGetPaginatedCastingsAsync(int page, int pageSize);
+
+        Task<int> GetCastingsCountAsync();
 
         Task<bool> AddCastingAsync(AddCastingViewModel model, string userId);
 

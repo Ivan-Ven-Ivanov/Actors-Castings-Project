@@ -4,7 +4,9 @@ namespace ActorsCastings.Services.Data.Interfaces
 {
     public interface IMovieService
     {
-        Task<IEnumerable<MovieViewModel>> IndexGetAllMoviesAsync();
+        Task<IList<MovieViewModel>> IndexGetPaginatedMoviesAsync(int page, int pageSize);
+
+        Task<int> GetMoviesCountAsync();
 
         Task<MovieDetailsViewModel> GetMovieDetailsAsync(string id);
 

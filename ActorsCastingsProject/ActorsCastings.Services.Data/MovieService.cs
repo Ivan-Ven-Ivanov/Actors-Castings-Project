@@ -109,9 +109,18 @@ namespace ActorsCastings.Services.Data
             return model;
         }
 
-        public async Task<IEnumerable<MovieViewModel>> IndexGetAllMoviesAsync()
+        public async Task<int> GetMoviesCountAsync()
         {
-            List<MovieViewModel> models = await _movieRepository.GetAllAttached()
+            return await _movieRepository.GetAllAttached().CountAsync();
+        }
+
+        public async Task<IList<MovieViewModel>> IndexGetPaginatedMoviesAsync(int page, int pageSize)
+        {
+            List<MovieViewModel> models = await _movieRepository
+                .GetAllAttached()
+                .OrderBy(m => m.Title)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
                 .Where(m => !m.IsDeleted && m.IsApproved)
                 .Select(m => new MovieViewModel
                 {

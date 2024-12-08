@@ -109,9 +109,18 @@ namespace ActorsCastings.Services.Data
             return model;
         }
 
-        public async Task<IEnumerable<PlayViewModel>> IndexGetAllPlaysAsync()
+        public async Task<int> GetPlaysCountAsync()
         {
-            List<PlayViewModel> models = await _playRepository.GetAllAttached()
+            return await _playRepository.GetAllAttached().CountAsync();
+        }
+
+        public async Task<IList<PlayViewModel>> IndexGetPaginatedPlaysAsync(int page, int pageSize)
+        {
+            List<PlayViewModel> models = await _playRepository
+                .GetAllAttached()
+                .OrderBy(p => p.Title)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
                 .Where(m => !m.IsDeleted && m.IsApproved)
                 .Select(m => new PlayViewModel
                 {

@@ -24,10 +24,10 @@ namespace ActorsCastings.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(int page = FirstPageValue, int pageSize = EntitiesPerPage)
+        public async Task<IActionResult> Index(int page = FirstPageValue, int pageSize = ActorsPerPage)
         {
             var models = await _actorService.IndexGetPaginatedActorsAsync(page, pageSize);
-            int actorsCount = await _actorService.GetActorCountAsync();
+            int actorsCount = await _actorService.GetActorsCountAsync();
 
             var pagedModel = new PaginationViewModel<ActorIndexViewModel>
             {

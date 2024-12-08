@@ -1,9 +1,12 @@
 ﻿using ActorsCastings.Data.Models;
 using ActorsCastings.Services.Data.Interfaces;
+using ActorsCastings.Web.ViewModels;
 using ActorsCastings.Web.ViewModels.Movie;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+
+using static ActorsCastings.Common.ApplicationConstants;
 
 namespace ActorsCastings.Web.Controllers
 {
@@ -19,11 +22,21 @@ namespace ActorsCastings.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page = FirstPageValue, int pageSize = MoviesPerPage)
         {
-            IEnumerable<MovieViewModel> models = await _movieService.IndexGetAllMoviesAsync();
+            var models = await _movieService.IndexGetPaginatedMoviesAsync(page, pageSize);
+            int moviesCount = await _movieService.GetMoviesCountAsync();
 
-            return View(models);
+            var pagedModel = new PaginationViewModel<MovieViewModel>
+            {
+                Items = models,
+                TotalItems = moviesCount,
+                CurrentPage = page,
+                PageSize = pageSize
+            };
+
+
+            return View(pagedModel);
         }
 
         [HttpGet]

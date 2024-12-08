@@ -1,9 +1,9 @@
-﻿@model IEnumerable<MovieViewModel>
+﻿@model PaginationViewModel<MovieViewModel>
 
 <div class="container mt-5">
     <h1 class="text-center">All Movies</h1>
 
-    @if (!Model.Any())
+    @if (!Model.Items.Any())
     {
         <div class="alert alert-warning text-center" role="alert">
             No movies available.
@@ -12,7 +12,7 @@
     else
     {
         <div class="row row-cols-1 row-cols-md-4 g-4">
-            @foreach (var movie in Model)
+            @foreach (var movie in Model.Items)
             {
                 <div class="col">
                     <a asp-action="Details" asp-route-id="@movie.Id" class="card h-100 d-flex flex-column text-decoration-none text-dark clickable-card shadow-sm hover-shadow">
@@ -42,3 +42,13 @@
         </div>
     }
 </div>
+
+@{
+    ViewData["HasPreviousPage"] = Model.HasPreviousPage;
+    ViewData["HasNextPage"] = Model.HasNextPage;
+    ViewData["CurrentPage"] = Model.CurrentPage;
+    ViewData["TotalPages"] = Model.TotalPages;
+    ViewData["PageSize"] = Model.PageSize;
+}
+
+<partial name="_PaginationPartial" />

@@ -175,10 +175,19 @@ namespace ActorsCastings.Services.Data
             return model;
         }
 
-        public async Task<IEnumerable<CastingViewModel>> IndexGetAllAsync()
+        public async Task<int> GetCastingsCountAsync()
         {
-            IEnumerable<CastingViewModel> models = await _castingRepository.GetAllAttached()
+            return await _castingRepository.GetAllAttached().CountAsync();
+        }
+
+        public async Task<IList<CastingViewModel>> IndexGetPaginatedCastingsAsync(int page, int pageSize)
+        {
+            List<CastingViewModel> models = await _castingRepository
+                .GetAllAttached()
                 .Include(c => c.ActorsCastings)
+                .OrderByDescending(c => c.CreatedOn)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
                 .Select(c => new CastingViewModel
                 {
                     Id = c.Id.ToString(),

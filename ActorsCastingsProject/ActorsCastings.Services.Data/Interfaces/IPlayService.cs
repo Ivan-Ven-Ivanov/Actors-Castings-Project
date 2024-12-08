@@ -4,7 +4,9 @@ namespace ActorsCastings.Services.Data.Interfaces
 {
     public interface IPlayService
     {
-        Task<IEnumerable<PlayViewModel>> IndexGetAllPlaysAsync();
+        Task<IList<PlayViewModel>> IndexGetPaginatedPlaysAsync(int page, int pageSize);
+
+        Task<int> GetPlaysCountAsync();
 
         Task<PlayDetailsViewModel> GetPlayDetailsAsync(string id);
 

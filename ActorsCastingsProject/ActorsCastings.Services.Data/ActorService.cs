@@ -17,7 +17,7 @@ namespace ActorsCastings.Services.Data
             _actorRepository = actorRepository;
         }
 
-        public async Task<int> GetActorCountAsync()
+        public async Task<int> GetActorsCountAsync()
         {
             return await _actorRepository.GetAllAttached().CountAsync();
         }
@@ -82,6 +82,8 @@ namespace ActorsCastings.Services.Data
         {
             List<ActorIndexViewModel> models = await _actorRepository
                 .GetAllAttached()
+                .OrderBy(a => a.FirstName)
+                .ThenBy(a => a.LastName)
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
                 .Select(a => new ActorIndexViewModel

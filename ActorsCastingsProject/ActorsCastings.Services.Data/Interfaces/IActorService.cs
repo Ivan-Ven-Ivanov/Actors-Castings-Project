@@ -6,7 +6,7 @@ namespace ActorsCastings.Services.Data.Interfaces
     {
         Task<bool> IsUserActorAsync(string userId);
 
-        Task<int> GetActorCountAsync();
+        Task<int> GetActorsCountAsync();
 
         Task<IList<ActorIndexViewModel>> IndexGetPaginatedActorsAsync(int page, int pageSize);
 
