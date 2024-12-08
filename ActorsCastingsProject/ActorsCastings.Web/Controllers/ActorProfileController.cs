@@ -81,23 +81,18 @@ namespace ActorsCastings.Web.Controllers
                 return View(model);
             }
 
-            //if (model.Id == Guid.Empty)
-            //{
-            //    return View("Error");
-            //}
-
             ApplicationUser? user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
                 return View("Error");
             }
 
-            //bool result = await _actorProfileService.AddSelectedMovieToProfileAsync(model.RoleInMovie.Id, model.RoleInMovie.Role, user.Id.ToString());
+            bool result = await _actorProfileService.AddSelectedMovieToProfileAsync(model.Id, model.Role, user.Id.ToString());
 
-            //if (!result)
-            //{
-            //    return View("Error");
-            //}
+            if (!result)
+            {
+                return View("Error");
+            }
 
             return RedirectToAction("Index", "ActorProfile");
         }
@@ -105,17 +100,21 @@ namespace ActorsCastings.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> AddPlayFromProfile()
         {
-            IEnumerable<PlayViewModel> models = await _actorProfileService.GetAllPlaysAsync();
+            SelectedPlayViewModel model = new SelectedPlayViewModel();
+            model = await _actorProfileService.GetAllPlaysForSelectAsync(model);
 
-            return View(models);
+            return View(model);
         }
 
         [HttpPost]
         public async Task<IActionResult> AddPlayFromProfile(SelectedPlayViewModel model)
         {
-            if (model.Id == Guid.Empty)
+            if (!ModelState.IsValid)
             {
-                return View("Error");
+                model = await _actorProfileService.GetAllPlaysForSelectAsync(model);
+                model = _actorProfileService.SelectAPlayForValidation(model);
+
+                return View(model);
             }
 
             ApplicationUser? user = await _userManager.GetUserAsync(User);

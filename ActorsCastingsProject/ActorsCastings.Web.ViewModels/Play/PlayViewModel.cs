@@ -13,5 +13,7 @@
         public string? ImageUrl { get; set; }
 
         public bool IsRoleInPlayApproved { get; set; }
+
+        public bool IsSelected { get; set; }
     }
 }

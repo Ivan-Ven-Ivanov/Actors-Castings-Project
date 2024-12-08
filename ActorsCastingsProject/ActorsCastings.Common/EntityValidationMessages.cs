@@ -33,5 +33,10 @@
         {
             public const string RoleLengthMessage = "Role must be between 2 and 50 symbols.";
         }
+
+        public static class ActorPlay
+        {
+            public const string RoleLengthMessage = "Role must be between 2 and 50 symbols.";
+        }
     }
 }

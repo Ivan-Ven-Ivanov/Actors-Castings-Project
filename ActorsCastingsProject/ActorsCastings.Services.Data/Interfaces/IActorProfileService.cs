@@ -14,11 +14,14 @@ namespace ActorsCastings.Services.Data.Interfaces
 
         SelectedMovieViewModel SelectAMovieForValidation(SelectedMovieViewModel model);
 
-        Task<IEnumerable<PlayViewModel>> GetAllPlaysAsync();
+        Task<SelectedPlayViewModel> GetAllPlaysForSelectAsync(SelectedPlayViewModel model);
 
-        Task<bool> AddSelectedMovieToProfileAsync(Guid id, string role, string userId);
+        SelectedPlayViewModel SelectAPlayForValidation(SelectedPlayViewModel model);
 
-        Task<bool> AddSelectedPlayToProfileAsync(Guid id, string role, string userId);
+
+        Task<bool> AddSelectedMovieToProfileAsync(string id, string role, string userId);
+
+        Task<bool> AddSelectedPlayToProfileAsync(string id, string role, string userId);
 
         Task<UpdateActorProfileViewModel> GetActorProfileDataAsync(string id);
 

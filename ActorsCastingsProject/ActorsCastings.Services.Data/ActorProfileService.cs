@@ -30,9 +30,17 @@ namespace ActorsCastings.Services.Data
             _actorPlayRepository = actorPlayRepository;
         }
 
-        public async Task<bool> AddSelectedMovieToProfileAsync(Guid id, string role, string userId)
+        public async Task<bool> AddSelectedMovieToProfileAsync(string id, string role, string userId)
         {
-            Movie? movie = await _movieRepository.GetByIdAsync(id);
+            Guid guidMovieId = Guid.Empty;
+            bool isMovieGuidValid = IsGuidValid(id, ref guidMovieId);
+
+            if (!isMovieGuidValid)
+            {
+                return false;
+            }
+
+            Movie? movie = await _movieRepository.GetByIdAsync(guidMovieId);
 
             if (movie == null)
             {
@@ -40,9 +48,9 @@ namespace ActorsCastings.Services.Data
             }
 
             Guid guidUserId = Guid.Empty;
-            bool isGuidValid = IsGuidValid(userId, ref guidUserId);
+            bool isUserGuidValid = IsGuidValid(userId, ref guidUserId);
 
-            if (!isGuidValid)
+            if (!isUserGuidValid)
             {
                 return false;
             }
@@ -68,9 +76,17 @@ namespace ActorsCastings.Services.Data
             return true;
         }
 
-        public async Task<bool> AddSelectedPlayToProfileAsync(Guid id, string role, string userId)
+        public async Task<bool> AddSelectedPlayToProfileAsync(string id, string role, string userId)
         {
-            Play? play = await _playRepository.GetByIdAsync(id);
+            Guid guidPlayId = Guid.Empty;
+            bool isPlayGuidValid = IsGuidValid(id, ref guidPlayId);
+
+            if (!isPlayGuidValid)
+            {
+                return false;
+            }
+
+            Play? play = await _playRepository.GetByIdAsync(guidPlayId);
 
             if (play == null)
             {
@@ -78,9 +94,9 @@ namespace ActorsCastings.Services.Data
             }
 
             Guid guidUserId = Guid.Empty;
-            bool isGuidValid = IsGuidValid(userId, ref guidUserId);
+            bool isUserGuidValid = IsGuidValid(userId, ref guidUserId);
 
-            if (!isGuidValid)
+            if (!isUserGuidValid)
             {
                 return false;
             }
@@ -186,9 +202,9 @@ namespace ActorsCastings.Services.Data
             return model;
         }
 
-        public async Task<IEnumerable<PlayViewModel>> GetAllPlaysAsync()
+        public async Task<SelectedPlayViewModel> GetAllPlaysForSelectAsync(SelectedPlayViewModel model)
         {
-            IEnumerable<PlayViewModel> models = await _playRepository
+            model.Plays = await _playRepository
                 .GetAllAttached()
                 .Where(p => p.IsApproved && !p.IsDeleted)
                 .Select(p => new PlayViewModel
@@ -201,7 +217,7 @@ namespace ActorsCastings.Services.Data
                 })
                 .ToListAsync();
 
-            return models;
+            return model;
         }
 
         public async Task<ActorProfileViewModel> IndexGetMyProfileAsync(string id)
@@ -262,6 +278,19 @@ namespace ActorsCastings.Services.Data
                 if (movie.Id == model.Id)
                 {
                     movie.IsSelected = true;
+                }
+            }
+
+            return model;
+        }
+
+        public SelectedPlayViewModel SelectAPlayForValidation(SelectedPlayViewModel model)
+        {
+            foreach (var play in model.Plays)
+            {
+                if (play.Id == model.Id)
+                {
+                    play.IsSelected = true;
                 }
             }
 

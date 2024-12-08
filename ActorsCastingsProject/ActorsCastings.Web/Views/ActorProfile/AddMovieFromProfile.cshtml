@@ -25,7 +25,7 @@
                             <div class="form-group role-input @(movie.IsSelected ? "" : "d-none")">
                                 <label asp-for="Role">Your Role:</label>
                                 <input name="Role" class="form-control" placeholder="Enter your role in this movie" value="@Model.Role" @(movie.IsSelected ? "" : "disabled='disabled'")>
-                                <span asp-validation-for= "Role" class="text-danger"></span>
+                                <span asp-validation-for= "Role" class="text-light"></span>
                             </div>
                             <input name="Id" type="hidden" value="@movie.Id" @(movie.IsSelected ? "" : "disabled='disabled'")>
                         </div>
