@@ -78,6 +78,7 @@
                         <div class="card m-2" style="min-width: 200px;">
                             <a asp-controller="Play" asp-action="Details" asp-route-id="@play.Id" class="text-decoration-none text-dark">
                                 <div class="card-body">
+                                    <img src="@play.ImageUrl" class="card-img-top thumbnail-image" alt="@play.Title Image" style="object-fit:contain" />
                                     <h5 class="card-title">@play.Title</h5>
                                     <p class="card-text">
                                         <strong>Release Year:</strong> @play.ReleaseYear <br />

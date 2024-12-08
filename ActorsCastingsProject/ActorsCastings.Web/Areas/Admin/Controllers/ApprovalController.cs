@@ -36,7 +36,7 @@ namespace ActorsCastings.Web.Areas.Admin.Controllers
                 return View("Error");
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Approve");
         }
     }
 }
