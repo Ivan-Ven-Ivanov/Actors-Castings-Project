@@ -22,6 +22,8 @@
             public const int MovieDescriptionMaxLength = 500;
             public const int MovieDirectorMinLength = 2;
             public const int MovieDirectorMaxLength = 50;
+            public const int MovieReleaseYearMinValue = 1900;
+            public const int MovieReleaseYearMaxValue = 2025;
         }
 
         public static class Play
@@ -33,6 +35,8 @@
             public const int PlayDirectorMaxLength = 50;
             public const int PlayTheatreMinLength = 3;
             public const int PlayTheatreMaxLength = 50;
+            public const int PlayReleaseYearMinValue = 1900;
+            public const int PlayReleaseYearMaxValue = 2025;
         }
 
         public static class Casting

@@ -38,5 +38,31 @@
         {
             public const string RoleLengthMessage = "Role must be between 2 and 50 symbols.";
         }
+
+        public static class Movie
+        {
+            public const string TitleRequiredMessage = "Title is required.";
+            public const string TitleLengthMessage = "Title must be between 2 and 150 symbols.";
+            public const string DirectorRequiredMessage = "Director is required.";
+            public const string DirectorLengthMessage = "Director must be between 2 and 50 letters.";
+            public const string GenreRequiredMessage = "Genre is required.";
+            public const string GenreLengthMessage = "Genre must be between 3 and 30 letters.";
+            public const string ReleaseYearRequiredMessage = "Release year is required.";
+            public const string ReleaseYearRangeMessage = "Release year must be between 1900 and 2025.";
+            public const string DescriptionLengthMessage = "Description must be less than 500 symbols.";
+        }
+
+        public static class Play
+        {
+            public const string TitleRequiredMessage = "Title is required.";
+            public const string TitleLengthMessage = "Title must be between 2 and 150 symbols.";
+            public const string DirectorRequiredMessage = "Director is required.";
+            public const string DirectorLengthMessage = "Director must be between 2 and 50 letters.";
+            public const string TheatreRequiredMessage = "Theatre is required.";
+            public const string TheatreLengthMessage = "Theatre must be between 3 and 50 letters.";
+            public const string ReleaseYearRequiredMessage = "Release year is required.";
+            public const string ReleaseYearRangeMessage = "Release year must be between 1900 and 2025.";
+            public const string DescriptionLengthMessage = "Description must be less than 500 symbols.";
+        }
     }
 }
