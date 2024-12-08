@@ -3,6 +3,60 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Welcome to <strong>The Casting Place</strong></h1>
 </div>
+
+@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="container mt-5">
+    <h3 class="text-center">Explore actors, castings, movies, and plays</h3>
+
+    <div class="row mt-5">
+        <div class="col-md-6 mb-4">
+            <a asp-area="" asp-controller="Actor" asp-action="Index" class="text-decoration-none">
+                <div class="card border-0 shadow-sm">
+                    <img src="https://www.shutterstock.com/image-vector/illustration-comedy-tragedy-theatrical-masks-600nw-1421636216.jpg" class="card-img-top rounded " alt="Actors" style="max-height: 300px; object-fit: contain">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Actors</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-6 mb-4">
+            <a asp-area="" asp-controller="Casting" asp-action="Index" class="text-decoration-none">
+                <div class="card border-0 shadow-sm">
+                    <img src="https://www.shutterstock.com/image-photo/emotional-actor-performing-while-second-600nw-2251951031.jpg" class="card-img-top rounded" alt="Castings" style="max-height: 300px; object-fit: contain">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Castings</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <a asp-area="" asp-controller="Movie" asp-action="Index" class="text-decoration-none">
+                <div class="card border-0 shadow-sm">
+                    <img src="https://plus.unsplash.com/premium_photo-1710409625244-e9ed7e98f67b?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8bW92aWV8ZW58MHx8MHx8fDA%3D" class="card-img-top rounded" alt="Movies" style="max-height: 300px; object-fit: contain">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Movies</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-6 mb-4">
+            <a asp-area="" asp-controller="Play" asp-action="Index" class="text-decoration-none">
+                <div class="card border-0 shadow-sm">
+                    <img src="https://worldoftheatreandart.com/wp-content/uploads/2014/06/Theatre-paly.jpg" class="card-img-top rounded" alt="Plays" style="max-height: 300px; object-fit: contain">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Plays</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
