@@ -92,6 +92,7 @@ namespace ActorsCastings.Services.Data
                 Title = play.Title,
                 Description = play.Description,
                 Director = play.Director,
+                Theatre = play.Theatre,
                 ImageUrl = play.ImageUrl,
                 ReleaseYear = play.ReleaseYear.ToString(),
                 Actors = play.ActorsPlays

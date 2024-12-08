@@ -82,3 +82,8 @@ body {
 .clickable-card:focus{
     outline: none;
 }
+
+.highlight {
+    background-color: yellow;
+    font-weight: bold;
+}

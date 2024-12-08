@@ -1,0 +1,110 @@
+﻿@model SearchViewModel
+
+<div class="container mt-5">
+    <h1 class="text-center">Search Results</h1>
+    @if (!Model.Movies.Any() && !Model.Plays.Any() && !Model.Castings.Any() && !Model.Actors.Any())
+    {
+        <p class="text-center text-muted">No results found for your query.</p>
+    }
+    else
+    {
+        @if (Model.Movies.Any())
+        {
+            <h2>Movies</h2>
+            <ul class="list-group mb-4">
+                @foreach (var movie in Model.Movies)
+                {
+                    <li class="list-group-item">
+                        <a asp-controller="Movie" asp-action="Details" asp-route-id="@movie.Id">
+                            @Html.HighlightMatch(@movie.Title, ViewData["query"].ToString())
+                        </a>
+                        <p class="text-muted">
+                            @Html.HighlightMatch($"Director: {@movie.Director}", ViewData["query"].ToString())
+                        </p>
+                        <p class="text-muted">
+                            @Html.HighlightMatch($"Genre: {@movie.Genre}", ViewData["query"].ToString())
+                        </p>
+                        <p class="text-muted">
+                            @Html.HighlightMatch($"Release year: {@movie.ReleaseYear}", ViewData["query"].ToString())
+                        </p>
+                        <p class="text-muted">
+                            @Html.HighlightMatch(@movie.Description, ViewData["query"].ToString())
+                        </p>
+                    </li>
+                }
+            </ul>
+        }
+
+        @if (Model.Plays.Any())
+        {
+            <h2>Plays</h2>
+            <ul class="list-group mb-4">
+                @foreach (var play in Model.Plays)
+                {
+                    <li class="list-group-item">
+                        <a asp-controller="Play" asp-action="Details" asp-route-id="@play.Id">
+                            @Html.HighlightMatch(@play.Title, ViewData["query"].ToString())
+                        </a>
+                        <p class="text-muted">
+                            @Html.HighlightMatch($"Director: {@play.Director}", ViewData["query"].ToString())
+                        </p>
+                        <p class="text-muted">
+                            @Html.HighlightMatch($"Theatre: {@play.Theatre}", ViewData["query"].ToString())
+                        </p>
+                        <p class="text-muted">
+                            @Html.HighlightMatch($"Release year: {@play.ReleaseYear}", ViewData["query"].ToString())
+                        </p>
+                        <p class="text-muted">
+                            @Html.HighlightMatch(@play.Description, ViewData["query"].ToString())
+                        </p>
+                    </li>
+                }
+            </ul>
+        }
+
+        @if (Model.Castings.Any())
+        {
+            <h2>Castings</h2>
+            <ul class="list-group mb-4">
+                @foreach (var casting in Model.Castings)
+                {
+                    <li class="list-group-item">
+                        <a asp-controller="Casting" asp-action="Details" asp-route-id="@casting.Id">
+                            @Html.HighlightMatch(casting.Title, ViewData["query"].ToString())
+                        </a>
+                        <p class="text-muted">
+                            @Html.HighlightMatch($"Casting agent: {@casting.CastingAgentName}", ViewData["query"].ToString())
+                        </p>
+                        <p class="text-muted">
+                            @Html.HighlightMatch($"Casting agency: {casting.CastingAgency}", ViewData["query"].ToString())
+                        </p>
+                        <p class="text-muted">
+                            @Html.HighlightMatch(@casting.Description, ViewData["query"].ToString())
+                        </p>
+                    </li>
+                }
+            </ul>
+        }
+
+        @if (Model.Actors.Any())
+        {
+            <h2>Actors</h2>
+            <ul class="list-group mb-4">
+                @foreach (var actor in Model.Actors)
+                {
+                    <li class="list-group-item">
+                        <a asp-controller="Actor" asp-action="Details" asp-route-id="@actor.Id">
+                            @Html.HighlightMatch($"{actor.FirstName} {actor.LastName}", ViewData["query"].ToString())
+                        </a>
+                        <p class="text-muted">
+                            @Html.HighlightMatch($"Age: {@actor.Age}", ViewData["query"].ToString())
+                        </p>
+                        <p class="text-muted">
+                            @Html.HighlightMatch(actor.Biography, ViewData["query"].ToString())
+                        </p>
+                    </li>
+                }
+            </ul>
+        }
+    }
+</div>

@@ -5,27 +5,27 @@
 <form asp-action="CompleteProfile" method="post">
     <div class="form-group">
         <label asp-for="FirstName"></label>
-        <input asp-for="FirstName" class="form-control" />
+        <input asp-for="FirstName" class="form-control" placeholder="Enter your first name"/>
         <span asp-validation-for="FirstName" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="LastName"></label>
-        <input asp-for="LastName" class="form-control" />
+        <input asp-for="LastName" class="form-control" placeholder="Enter your last name"/>
         <span asp-validation-for="LastName" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="Age"></label>
-        <input asp-for="Age" class="form-control" />
+        <input asp-for="Age" class="form-control" placeholder="Enter your age (optional)"/>
         <span asp-validation-for="Age" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="ProfilePictureUrl"></label>
-        <input asp-for="ProfilePictureUrl" class="form-control" />
+        <input asp-for="ProfilePictureUrl" class="form-control" placeholder="Enter URL for your profile picture"/>
         <span asp-validation-for="ProfilePictureUrl" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="Biography"></label>
-        <input asp-for="Biography" class="form-control" />
+        <input asp-for="Biography" class="form-control" placeholder="Enter your biography (optional)"/>
         <span asp-validation-for="Biography" class="text-danger"></span>
     </div>
     <button type="submit" class="btn btn-primary">Save</button>

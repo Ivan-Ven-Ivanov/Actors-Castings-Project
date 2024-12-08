@@ -5,12 +5,12 @@
 <form asp-action="CompleteProfile" method="post">
     <div class="form-group">
         <label asp-for="Name"></label>
-        <input asp-for="Name" class="form-control" />
+        <input asp-for="Name" class="form-control" placeholder="Enter your name"/>
         <span asp-validation-for="Name" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="CastingAgency"></label>
-        <input asp-for="CastingAgency" class="form-control" />
+        <input asp-for="CastingAgency" class="form-control" placeholder="Enter the name of the agency that you work for (optional)"/>
         <span asp-validation-for="CastingAgency" class="text-danger"></span>
     </div>
     <button type="submit" class="btn btn-primary">Save</button>
