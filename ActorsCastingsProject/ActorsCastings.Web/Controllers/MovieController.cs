@@ -1,6 +1,7 @@
 ﻿using ActorsCastings.Data.Models;
 using ActorsCastings.Services.Data.Interfaces;
 using ActorsCastings.Web.ViewModels.Movie;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,6 +27,7 @@ namespace ActorsCastings.Web.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Details(string id)
         {
             MovieDetailsViewModel model = await _movieService.GetMovieDetailsAsync(id);
@@ -34,6 +36,7 @@ namespace ActorsCastings.Web.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult Add()
         {
             AddMovieViewModel model = new AddMovieViewModel();
@@ -42,6 +45,7 @@ namespace ActorsCastings.Web.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Add(AddMovieViewModel model)
         {
             if (!ModelState.IsValid)

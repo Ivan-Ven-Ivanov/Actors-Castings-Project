@@ -1,6 +1,7 @@
 using ActorsCastings.Services.Data.Interfaces;
 using ActorsCastings.Web.Models;
 using ActorsCastings.Web.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ActorsCastings.Web.Controllers
@@ -39,6 +40,7 @@ namespace ActorsCastings.Web.Controllers
             return View("Error", model);
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> Search(string query)
         {

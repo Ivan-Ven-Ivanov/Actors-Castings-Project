@@ -1,6 +1,7 @@
 ﻿using ActorsCastings.Data.Models;
 using ActorsCastings.Services.Data.Interfaces;
 using ActorsCastings.Web.ViewModels.Play;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,6 +27,7 @@ namespace ActorsCastings.Web.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Details(string id)
         {
             PlayDetailsViewModel model = await _playService.GetPlayDetailsAsync(id);
@@ -34,6 +36,7 @@ namespace ActorsCastings.Web.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult Add()
         {
             AddPlayViewModel model = new AddPlayViewModel();
@@ -42,6 +45,7 @@ namespace ActorsCastings.Web.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Add(AddPlayViewModel model)
         {
             if (!ModelState.IsValid)

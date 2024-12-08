@@ -13,7 +13,7 @@
     @if (SignInManager.IsSignedIn(User))
     {
         <li class="nav-item">
-            <form asp-action="Search" asp-controller="Home" method="get" class="d-flex ms-auto me-2">
+            <form asp-area="" asp-controller="Home" asp-action="Search" method="get" class="d-flex ms-auto me-2">
                 <input type="text" name="query" class="form-control me-2" placeholder="Search..." aria-label="Search" value="@ViewData["query"]">
                 <button class="btn btn-outline-primary" type="submit">
                     <i class="fas fa-search"></i>

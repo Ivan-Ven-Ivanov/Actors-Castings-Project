@@ -27,12 +27,14 @@ namespace ActorsCastings.Web.Controllers
             return View(models);
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult Add()
         {
             return View(new AddCastingViewModel());
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Add(AddCastingViewModel model)
         {
@@ -74,6 +76,7 @@ namespace ActorsCastings.Web.Controllers
         }
 
         [Authorize]
+        [HttpPost]
         public async Task<IActionResult> Apply(string id)
         {
             ApplicationUser? user = await _userManager.GetUserAsync(User);

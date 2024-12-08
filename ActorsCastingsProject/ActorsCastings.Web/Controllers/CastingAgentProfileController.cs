@@ -1,11 +1,13 @@
 ﻿using ActorsCastings.Data.Models;
 using ActorsCastings.Services.Data.Interfaces;
 using ActorsCastings.Web.ViewModels.CastingAgentProfile;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ActorsCastings.Web.Controllers
 {
+    [Authorize]
     public class CastingAgentProfileController : BaseController
     {
         private readonly UserManager<ApplicationUser> _userManager;

@@ -1,5 +1,6 @@
 ﻿using ActorsCastings.Data.Models;
 using ActorsCastings.Services.Data.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,6 +27,7 @@ namespace ActorsCastings.Web.Controllers
             return View(models);
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> Details(string id)
         {

@@ -3,11 +3,13 @@ using ActorsCastings.Services.Data.Interfaces;
 using ActorsCastings.Web.ViewModels.ActorProfile;
 using ActorsCastings.Web.ViewModels.Movie;
 using ActorsCastings.Web.ViewModels.Play;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ActorsCastings.Web.Controllers
 {
+    [Authorize]
     public class ActorProfileController : BaseController
     {
         private readonly IActorProfileService _actorProfileService;
