@@ -36,12 +36,7 @@ namespace ActorsCastings.Services.Data
         public async Task<bool> AddSelectedMovieToProfileAsync(string id, string role, string userId)
         {
             Guid guidMovieId = Guid.Empty;
-            bool isMovieGuidValid = IsGuidValid(id, ref guidMovieId);
-
-            if (!isMovieGuidValid)
-            {
-                return false;
-            }
+            GuidValidation(id, ref guidMovieId);
 
             Movie? movie = await _movieRepository.GetByIdAsync(guidMovieId);
 
@@ -51,12 +46,7 @@ namespace ActorsCastings.Services.Data
             }
 
             Guid guidUserId = Guid.Empty;
-            bool isUserGuidValid = IsGuidValid(userId, ref guidUserId);
-
-            if (!isUserGuidValid)
-            {
-                return false;
-            }
+            GuidValidation(userId, ref guidUserId);
 
             Actor? actor = await _actorRepository
                 .FirstOrDefaultAsync(a => a.UserId == guidUserId);
@@ -82,12 +72,7 @@ namespace ActorsCastings.Services.Data
         public async Task<bool> AddSelectedPlayToProfileAsync(string id, string role, string userId)
         {
             Guid guidPlayId = Guid.Empty;
-            bool isPlayGuidValid = IsGuidValid(id, ref guidPlayId);
-
-            if (!isPlayGuidValid)
-            {
-                return false;
-            }
+            GuidValidation(id, ref guidPlayId);
 
             Play? play = await _playRepository.GetByIdAsync(guidPlayId);
 
@@ -97,12 +82,7 @@ namespace ActorsCastings.Services.Data
             }
 
             Guid guidUserId = Guid.Empty;
-            bool isUserGuidValid = IsGuidValid(userId, ref guidUserId);
-
-            if (!isUserGuidValid)
-            {
-                return false;
-            }
+            GuidValidation(userId, ref guidUserId);
 
             Actor? actor = await _actorRepository
                 .FirstOrDefaultAsync(a => a.UserId == guidUserId);
@@ -128,13 +108,7 @@ namespace ActorsCastings.Services.Data
         public async Task<bool> CompleteActorProfileAsync(string id, ActorProfileViewModel model)
         {
             Guid guidUserId = Guid.Empty;
-            bool isGuidValid = IsGuidValid(id, ref guidUserId);
-
-            if (!isGuidValid)
-            {
-                return false;
-            }
-
+            GuidValidation(id, ref guidUserId);
 
             Actor actorProfile = new Actor()
             {
@@ -160,12 +134,7 @@ namespace ActorsCastings.Services.Data
         {
             Guid guidId = Guid.Empty;
 
-            bool isGuidValid = IsGuidValid(id, ref guidId);
-
-            if (!isGuidValid)
-            {
-                throw new Exception();
-            }
+            GuidValidation(id, ref guidId);
 
             Actor actor = await _actorRepository.FirstOrDefaultAsync(a => a.UserId == guidId);
 
@@ -227,7 +196,7 @@ namespace ActorsCastings.Services.Data
         {
             Guid guidId = Guid.Empty;
 
-            bool isGuidValid = IsGuidValid(id, ref guidId);
+            GuidValidation(id, ref guidId);
 
             Actor? actor = await _actorRepository
                 .GetAllAttached()

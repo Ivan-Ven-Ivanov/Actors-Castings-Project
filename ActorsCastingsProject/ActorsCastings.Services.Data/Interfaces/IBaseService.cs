@@ -2,6 +2,8 @@
 {
     public interface IBaseService
     {
-        bool IsGuidValid(string? id, ref Guid guid);
+        void GuidValidation(string? id, ref Guid guid);
+
+        void PagesValidation(int page, int pageSize);
     }
 }

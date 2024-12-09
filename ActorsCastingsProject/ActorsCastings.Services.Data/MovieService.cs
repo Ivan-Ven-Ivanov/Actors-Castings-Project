@@ -5,6 +5,8 @@ using ActorsCastings.Web.ViewModels.Actor;
 using ActorsCastings.Web.ViewModels.Movie;
 using Microsoft.EntityFrameworkCore;
 
+using static ActorsCastings.Common.ExceptionMessages;
+
 namespace ActorsCastings.Services.Data
 {
     public class MovieService : BaseService, IMovieService
@@ -26,12 +28,7 @@ namespace ActorsCastings.Services.Data
         public async Task AddMovieAndRoleInItAsync(AddMovieViewModel model, string userId)
         {
             Guid guidUserId = Guid.Empty;
-            bool isGuidValid = IsGuidValid(userId, ref guidUserId);
-
-            if (!isGuidValid)
-            {
-                throw new Exception();
-            }
+            GuidValidation(userId, ref guidUserId);
 
             Movie movie = new Movie
             {
@@ -49,7 +46,7 @@ namespace ActorsCastings.Services.Data
 
             if (currentActor == null)
             {
-                throw new Exception();
+                throw new Exception(ServerError);
             }
 
             ActorMovie actorMovie = new ActorMovie
@@ -67,12 +64,7 @@ namespace ActorsCastings.Services.Data
         public async Task<MovieDetailsViewModel> GetMovieDetailsAsync(string id)
         {
             Guid guidId = Guid.Empty;
-            bool isGuidValid = IsGuidValid(id, ref guidId);
-
-            if (!isGuidValid)
-            {
-                throw new Exception();
-            }
+            GuidValidation(id, ref guidId);
 
             Movie? movie = await _movieRepository.GetAllAttached()
                 .Include(m => m.ActorsMovies)
@@ -81,7 +73,7 @@ namespace ActorsCastings.Services.Data
 
             if (movie == null)
             {
-                throw new Exception();
+                throw new KeyNotFoundException(string.Format(EntityNotFoundById, nameof(Movie), id));
             }
 
             movie.ActorsMovies = movie.ActorsMovies.Where(am => am.IsApproved == true).ToList();
@@ -116,6 +108,8 @@ namespace ActorsCastings.Services.Data
 
         public async Task<IList<MovieViewModel>> IndexGetPaginatedMoviesAsync(int page, int pageSize)
         {
+            PagesValidation(page, pageSize);
+
             List<MovieViewModel> models = await _movieRepository
                 .GetAllAttached()
                 .OrderBy(m => m.Title)
@@ -131,6 +125,11 @@ namespace ActorsCastings.Services.Data
                     ReleaseYear = m.ReleaseYear.ToString()
                 })
                 .ToListAsync();
+
+            if (!models.Any())
+            {
+                throw new Exception(ServerError);
+            }
 
             return models;
         }

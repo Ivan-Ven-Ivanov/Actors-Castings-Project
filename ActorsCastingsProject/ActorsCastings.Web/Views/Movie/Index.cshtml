@@ -1,5 +1,16 @@
 ﻿@model PaginationViewModel<MovieViewModel>
 
+@{
+    ViewData["Title"] = "Movies";
+
+    if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["Error"]
+        </div>
+    }
+}
+
 <div class="container mt-5">
     <h1 class="text-center">All Movies</h1>
 

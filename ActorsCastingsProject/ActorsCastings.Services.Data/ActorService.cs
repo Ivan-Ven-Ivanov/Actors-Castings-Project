@@ -26,18 +26,8 @@ namespace ActorsCastings.Services.Data
 
         public async Task<ActorDetailsViewModel> GetActorDetailsByIdAsync(string id)
         {
-            if (string.IsNullOrWhiteSpace(id))
-            {
-                throw new ArgumentException(IdEmpty);
-            }
-
             Guid guidId = Guid.Empty;
-            bool isGuidValid = IsGuidValid(id, ref guidId);
-
-            if (!isGuidValid)
-            {
-                throw new ArgumentException(InvalidIdFormat);
-            }
+            GuidValidation(id, ref guidId);
 
             Actor? actor = await _actorRepository
                 .GetAllAttached()
@@ -87,15 +77,7 @@ namespace ActorsCastings.Services.Data
 
         public async Task<IList<ActorIndexViewModel>> IndexGetPaginatedActorsAsync(int page, int pageSize)
         {
-            if (page < 1)
-            {
-                throw new ArgumentOutOfRangeException(InvalidPageNumber);
-            }
-
-            if (pageSize < 1)
-            {
-                throw new ArgumentOutOfRangeException(InvalidPageSize);
-            }
+            PagesValidation(page, pageSize);
 
             List<ActorIndexViewModel> models = await _actorRepository
                 .GetAllAttached()
@@ -122,18 +104,8 @@ namespace ActorsCastings.Services.Data
 
         public async Task<bool> IsUserActorAsync(string userId)
         {
-            if (string.IsNullOrWhiteSpace(userId))
-            {
-                return false;
-            }
-
             Guid guidId = Guid.Empty;
-            bool isGuidValid = IsGuidValid(userId, ref guidId);
-
-            if (!isGuidValid)
-            {
-                return false;
-            }
+            GuidValidation(userId, ref guidId);
 
             bool result = await _actorRepository
                 .GetAllAttached()

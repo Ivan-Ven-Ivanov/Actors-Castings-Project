@@ -19,12 +19,7 @@ namespace ActorsCastings.Services.Data
         public async Task<bool> CompleteCastingAgentProfileAsync(string id, CastingAgentProfileViewModel model)
         {
             Guid guidUserId = Guid.Empty;
-            bool isGuidValid = IsGuidValid(id, ref guidUserId);
-
-            if (!isGuidValid)
-            {
-                return false;
-            }
+            GuidValidation(id, ref guidUserId);
 
             CastingAgent castingAgentProfile = new CastingAgent()
             {
@@ -47,12 +42,7 @@ namespace ActorsCastings.Services.Data
         {
             Guid guidId = Guid.Empty;
 
-            bool isGuidValid = IsGuidValid(id, ref guidId);
-
-            if (!isGuidValid)
-            {
-                throw new Exception();
-            }
+            GuidValidation(id, ref guidId);
 
             CastingAgent castingAgent = await _castingAgentRepository.FirstOrDefaultAsync(ca => ca.UserId == guidId);
 
@@ -75,7 +65,7 @@ namespace ActorsCastings.Services.Data
         {
             Guid guidId = Guid.Empty;
 
-            bool isGuidValid = IsGuidValid(id, ref guidId);
+            GuidValidation(id, ref guidId);
 
             CastingAgent? castingAgent = await _castingAgentRepository
                 .GetAllAttached()

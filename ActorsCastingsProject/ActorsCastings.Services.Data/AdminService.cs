@@ -48,12 +48,7 @@ namespace ActorsCastings.Services.Data
             if (model.Id != null)
             {
                 Guid guidId = Guid.Empty;
-                bool isGuidValid = IsGuidValid(model.Id.ToString(), ref guidId);
-
-                if (!isGuidValid)
-                {
-                    return false;
-                }
+                GuidValidation(model.Id.ToString(), ref guidId);
 
                 Movie? movie = await _movieRepository.GetByIdAsync(guidId);
                 Play? play = await _playRepository.GetByIdAsync(guidId);
@@ -86,12 +81,8 @@ namespace ActorsCastings.Services.Data
             {
                 Guid guidActorId = Guid.Empty;
                 Guid guidMovieId = Guid.Empty;
-                bool isActorGuidValid = IsGuidValid(model.ActorId.ToString(), ref guidActorId);
-                bool isMovieGuidValid = IsGuidValid(model.MovieId.ToString(), ref guidMovieId);
-                if (!isActorGuidValid || !isMovieGuidValid)
-                {
-                    return false;
-                }
+                GuidValidation(model.ActorId.ToString(), ref guidActorId);
+                GuidValidation(model.MovieId.ToString(), ref guidMovieId);
 
                 ActorMovie? actorMovie = await _actorMovieRepository
                     .GetAllAttached()
@@ -111,12 +102,8 @@ namespace ActorsCastings.Services.Data
             {
                 Guid guidActorId = Guid.Empty;
                 Guid guidPlayId = Guid.Empty;
-                bool isActorGuidValid = IsGuidValid(model.ActorId.ToString(), ref guidActorId);
-                bool isPlayGuidValid = IsGuidValid(model.PlayId.ToString(), ref guidPlayId);
-                if (!isActorGuidValid || !isPlayGuidValid)
-                {
-                    return false;
-                }
+                GuidValidation(model.ActorId.ToString(), ref guidActorId);
+                GuidValidation(model.PlayId.ToString(), ref guidPlayId);
 
                 ActorPlay? actorPlay = await _actorPlayRepository
                     .GetAllAttached()
@@ -141,12 +128,7 @@ namespace ActorsCastings.Services.Data
         public async Task<bool> DeleteCastingAndItsCastedActorsByIdAsync(string id)
         {
             Guid guidId = Guid.Empty;
-            bool isGuidValid = IsGuidValid(id, ref guidId);
-
-            if (!isGuidValid)
-            {
-                return false;
-            }
+            GuidValidation(id, ref guidId);
 
             Casting? castingToDelete = await _castingRepository.GetByIdAsync(guidId);
 
@@ -183,12 +165,7 @@ namespace ActorsCastings.Services.Data
         public async Task<bool> DeleteMovieAndItsRolesByIdAsync(string id)
         {
             Guid guidId = Guid.Empty;
-            bool isGuidValid = IsGuidValid(id, ref guidId);
-
-            if (!isGuidValid)
-            {
-                return false;
-            }
+            GuidValidation(id, ref guidId);
 
             Movie movieToDelete = await _movieRepository.GetByIdAsync(guidId);
 
@@ -225,12 +202,7 @@ namespace ActorsCastings.Services.Data
         public async Task<bool> DeletePlayAndItsRolesByIdAsync(string id)
         {
             Guid guidId = Guid.Empty;
-            bool isGuidValid = IsGuidValid(id, ref guidId);
-
-            if (!isGuidValid)
-            {
-                return false;
-            }
+            GuidValidation(id, ref guidId);
 
             Play playToDelete = await _playRepository.GetByIdAsync(guidId);
 
@@ -267,12 +239,7 @@ namespace ActorsCastings.Services.Data
         public async Task<bool> DeleteUserAndItsConnectedEntitiesByIdAsync(string id)
         {
             Guid guidId = Guid.Empty;
-            bool isGuidValid = IsGuidValid(id, ref guidId);
-
-            if (!isGuidValid)
-            {
-                return false;
-            }
+            GuidValidation(id, ref guidId);
 
             ApplicationUser? userToDelete = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == guidId);
 

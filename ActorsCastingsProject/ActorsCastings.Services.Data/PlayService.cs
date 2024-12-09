@@ -26,12 +26,7 @@ namespace ActorsCastings.Services.Data
         public async Task AddPlayAndRoleInItAsync(AddPlayViewModel model, string userId)
         {
             Guid guidUserId = Guid.Empty;
-            bool isGuidValid = IsGuidValid(userId, ref guidUserId);
-
-            if (!isGuidValid)
-            {
-                throw new Exception();
-            }
+            GuidValidation(userId, ref guidUserId);
 
             Play play = new Play
             {
@@ -67,12 +62,7 @@ namespace ActorsCastings.Services.Data
         public async Task<PlayDetailsViewModel> GetPlayDetailsAsync(string id)
         {
             Guid guidId = Guid.Empty;
-            bool isGuidValid = IsGuidValid(id, ref guidId);
-
-            if (!isGuidValid)
-            {
-                throw new Exception();
-            }
+            GuidValidation(id, ref guidId);
 
             Play? play = await _playRepository.GetAllAttached()
                 .Include(p => p.ActorsPlays)

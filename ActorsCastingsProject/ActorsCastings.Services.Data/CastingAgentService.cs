@@ -16,18 +16,8 @@ namespace ActorsCastings.Services.Data
 
         public async Task<bool> IsUserCastingAgentAsync(string userId)
         {
-            if (string.IsNullOrWhiteSpace(userId))
-            {
-                return false;
-            }
-
             Guid guidId = Guid.Empty;
-            bool isGuidValid = IsGuidValid(userId, ref guidId);
-
-            if (!isGuidValid)
-            {
-                return false;
-            }
+            GuidValidation(userId, ref guidId);
 
             bool result = await _castingAgentRepository
                 .GetAllAttached()
