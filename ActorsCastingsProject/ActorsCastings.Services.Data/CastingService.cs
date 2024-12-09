@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Globalization;
 
 using static ActorsCastings.Common.EntityValidationConstants.Casting;
+using static ActorsCastings.Common.ExceptionMessages;
+
 
 namespace ActorsCastings.Services.Data
 {
@@ -32,14 +34,14 @@ namespace ActorsCastings.Services.Data
             _actorCastingRepository = actorCastingRepository;
             _userManager = userManager;
         }
-        public async Task<bool> AddCastingAsync(AddCastingViewModel model, string userId)
+        public async Task AddCastingAsync(AddCastingViewModel model, string userId)
         {
             Guid guidUserId = Guid.Empty;
             bool isGuidValid = IsGuidValid(userId, ref guidUserId);
 
             if (!isGuidValid)
             {
-                return false;
+                throw new ArgumentException(InvalidIdFormat);
             }
 
             bool isDateCorrect = DateTime.TryParseExact
@@ -49,7 +51,7 @@ namespace ActorsCastings.Services.Data
 
             if (!isDateCorrect)
             {
-                return false;
+                throw new ArgumentException(InvalidDateFormat);
             }
 
             CastingAgent? current = await _castingAgentRepository
@@ -57,7 +59,7 @@ namespace ActorsCastings.Services.Data
 
             if (current == null)
             {
-                return false;
+                throw new Exception(ServerError);
             }
 
             Casting casting = new Casting()
@@ -69,24 +71,28 @@ namespace ActorsCastings.Services.Data
             };
 
             await _castingRepository.AddAsync(casting);
-            return true;
         }
 
-        public async Task<bool> ApplyForCastingAsync(string id, string userId)
+        public async Task ApplyForCastingAsync(string id, string userId)
         {
-            Guid castingId = Guid.Empty;
-            bool isGuidValid = IsGuidValid(id, ref castingId);
-
-            if (!isGuidValid)
+            if (string.IsNullOrWhiteSpace(id))
             {
-                return false;
+                throw new ArgumentException(IdEmpty);
+            }
+
+            Guid castingId = Guid.Empty;
+            bool isCastingGuidValid = IsGuidValid(id, ref castingId);
+
+            if (!isCastingGuidValid)
+            {
+                throw new ArgumentException(InvalidIdFormat);
             }
 
             Casting casting = await _castingRepository.GetByIdAsync(castingId);
 
             if (casting == null)
             {
-                return false;
+                throw new KeyNotFoundException(string.Format(EntityNotFoundById, nameof(Casting), id));
             }
 
             Guid guidUserId = Guid.Empty;
@@ -94,41 +100,41 @@ namespace ActorsCastings.Services.Data
 
             if (!isUserGuidValid)
             {
-                return false;
+                throw new ArgumentException(InvalidIdFormat);
             }
 
-            //TODO: Fix
-            if (await _actorCastingRepository.GetAllAttached().AnyAsync(ac => ac.Actor.UserId == guidUserId && ac.CastingId == castingId))
+            if (!await _actorCastingRepository.GetAllAttached().AnyAsync(ac => ac.Actor.UserId == guidUserId && ac.CastingId == castingId))
             {
-                return false;
+                Actor currentActor = await _actorRepository.FirstOrDefaultAsync(a => a.UserId == guidUserId);
+
+                if (currentActor == null)
+                {
+                    throw new Exception(ServerError);
+                }
+
+                ActorCasting actorCasting = new ActorCasting
+                {
+                    ActorId = currentActor.Id,
+                    CastingId = castingId
+                };
+
+                await _actorCastingRepository.AddAsync(actorCasting);
             }
-
-            Actor currentActor = await _actorRepository.FirstOrDefaultAsync(a => a.UserId == guidUserId);
-
-            if (currentActor == null)
-            {
-                return false;
-            }
-
-            ActorCasting actorCasting = new ActorCasting
-            {
-                ActorId = currentActor.Id,
-                CastingId = castingId
-            };
-
-            await _actorCastingRepository.AddAsync(actorCasting);
-            return true;
         }
 
         public async Task<CastingDetailsViewModel> GetCastingDetailsByIdAsync(string id, string userId)
         {
-            Guid castingId = Guid.Empty;
-            bool result = IsGuidValid(id, ref castingId);
-
-            //TODO: 
-            if (!result)
+            if (string.IsNullOrWhiteSpace(id))
             {
-                throw new Exception();
+                throw new ArgumentException(IdEmpty);
+            }
+
+            Guid castingId = Guid.Empty;
+            bool isCastingGuidValid = IsGuidValid(id, ref castingId);
+
+            if (!isCastingGuidValid)
+            {
+                throw new ArgumentException(InvalidIdFormat);
             }
 
             Casting? casting = await _castingRepository.GetAllAttached()
@@ -137,18 +143,17 @@ namespace ActorsCastings.Services.Data
                     .ThenInclude(ac => ac.Actor)
                 .FirstOrDefaultAsync(c => c.Id == castingId);
 
-            //TODO: Error message
             if (casting == null)
             {
-                throw new Exception();
+                throw new KeyNotFoundException(string.Format(EntityNotFoundById, nameof(Casting), id));
             }
 
             Guid guidUserId = Guid.Empty;
-            bool isGuidValid = IsGuidValid(userId, ref guidUserId);
+            bool isUserGuidValid = IsGuidValid(userId, ref guidUserId);
 
-            if (!isGuidValid)
+            if (!isUserGuidValid)
             {
-                throw new Exception();
+                throw new ArgumentException(InvalidIdFormat);
             }
 
             List<ActorInCastingViewModel> castedActors = casting.ActorsCastings.
@@ -182,6 +187,16 @@ namespace ActorsCastings.Services.Data
 
         public async Task<IList<CastingViewModel>> IndexGetPaginatedCastingsAsync(int page, int pageSize)
         {
+            if (page < 1)
+            {
+                throw new ArgumentOutOfRangeException(InvalidPageNumber);
+            }
+
+            if (pageSize < 1)
+            {
+                throw new ArgumentOutOfRangeException(InvalidPageSize);
+            }
+
             List<CastingViewModel> models = await _castingRepository
                 .GetAllAttached()
                 .Include(c => c.ActorsCastings)
@@ -196,6 +211,11 @@ namespace ActorsCastings.Services.Data
                     CastingEnd = c.CastingEnd.ToString(Common.EntityValidationConstants.Casting.CastingEndDateTimeFormatString)
                 })
                 .ToListAsync();
+
+            if (!models.Any())
+            {
+                throw new Exception(ServerError);
+            }
 
             return models;
         }

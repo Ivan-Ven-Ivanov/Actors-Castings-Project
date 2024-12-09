@@ -6,6 +6,8 @@ using ActorsCastings.Web.ViewModels.Movie;
 using ActorsCastings.Web.ViewModels.Play;
 using Microsoft.EntityFrameworkCore;
 
+using static ActorsCastings.Common.ExceptionMessages;
+
 namespace ActorsCastings.Services.Data
 {
     public class ActorService : BaseService, IActorService
@@ -26,7 +28,7 @@ namespace ActorsCastings.Services.Data
         {
             if (string.IsNullOrWhiteSpace(id))
             {
-                throw new ArgumentException("ID cannot be empty.");
+                throw new ArgumentException(IdEmpty);
             }
 
             Guid guidId = Guid.Empty;
@@ -34,7 +36,7 @@ namespace ActorsCastings.Services.Data
 
             if (!isGuidValid)
             {
-                throw new ArgumentException("Ivalid ID Format.");
+                throw new ArgumentException(InvalidIdFormat);
             }
 
             Actor? actor = await _actorRepository
@@ -47,7 +49,7 @@ namespace ActorsCastings.Services.Data
 
             if (actor == null)
             {
-                throw new KeyNotFoundException($"Actor with ID {id} not found");
+                throw new KeyNotFoundException(string.Format(EntityNotFoundById, nameof(Actor), id));
             }
 
             actor.ActorsMovies = actor.ActorsMovies.Where(am => am.IsApproved == true).ToList();
@@ -87,12 +89,12 @@ namespace ActorsCastings.Services.Data
         {
             if (page < 1)
             {
-                throw new ArgumentOutOfRangeException("Page number should be above 0");
+                throw new ArgumentOutOfRangeException(InvalidPageNumber);
             }
 
             if (pageSize < 1)
             {
-                throw new ArgumentOutOfRangeException("There should be at least 1 on the page");
+                throw new ArgumentOutOfRangeException(InvalidPageSize);
             }
 
             List<ActorIndexViewModel> models = await _actorRepository
@@ -112,7 +114,7 @@ namespace ActorsCastings.Services.Data
 
             if (!models.Any())
             {
-                throw new Exception("Server error!");
+                throw new Exception(ServerError);
             }
 
             return models;

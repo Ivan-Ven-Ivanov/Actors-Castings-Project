@@ -8,6 +8,17 @@
 
 @model PaginationViewModel<CastingViewModel>
 
+@{
+    ViewData["Title"] = "Castings";
+
+    if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["Error"]
+        </div>
+    }
+}
+
 <h2>Castings</h2>
 @{
     string? userId = userManager.GetUserId(User);

@@ -44,13 +44,8 @@ namespace ActorsCastings.Web.Controllers
             catch (ArgumentOutOfRangeException ex)
             {
                 TempData["Error"] = ex.ParamName;
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index");
             }
-            catch (Exception)
-            {
-                return RedirectToAction("Error", "Home");
-            }
-
         }
 
         [Authorize]
@@ -66,10 +61,11 @@ namespace ActorsCastings.Web.Controllers
             catch (ArgumentException aEx)
             {
                 TempData["Error"] = aEx.Message;
-                return RedirectToAction("Index", "Actor");
+                return RedirectToAction("Index");
             }
             catch (KeyNotFoundException)
             {
+                //TODO: Logging
                 return RedirectToAction("Error", "Home", new { statusCode = 404 });
             }
         }

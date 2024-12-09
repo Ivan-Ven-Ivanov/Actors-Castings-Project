@@ -8,10 +8,10 @@ namespace ActorsCastings.Services.Data.Interfaces
 
         Task<int> GetCastingsCountAsync();
 
-        Task<bool> AddCastingAsync(AddCastingViewModel model, string userId);
+        Task AddCastingAsync(AddCastingViewModel model, string userId);
 
         Task<CastingDetailsViewModel> GetCastingDetailsByIdAsync(string id, string userId);
 
-        Task<bool> ApplyForCastingAsync(string id, string userId);
+        Task ApplyForCastingAsync(string id, string userId);
     }
 }
