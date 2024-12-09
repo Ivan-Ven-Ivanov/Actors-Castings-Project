@@ -74,6 +74,7 @@ namespace ActorsCastings.Web
 
 
             app.SeedAdministrator(adminEmail, adminPassword);
+            app.SeedUserRole();
 
             app.MapControllerRoute(
                 name: "Admin",

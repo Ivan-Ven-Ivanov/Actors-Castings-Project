@@ -84,6 +84,74 @@ namespace ActorsCastings.Web.Infrastructure.Extensions
             return app;
         }
 
+        public static IApplicationBuilder SeedUserRole(this IApplicationBuilder app)
+        {
+            using IServiceScope serviceScope = app.ApplicationServices.CreateAsyncScope();
+            IServiceProvider serviceProvider = serviceScope.ServiceProvider;
+
+            RoleManager<IdentityRole<Guid>>? roleManager = serviceProvider
+                .GetService<RoleManager<IdentityRole<Guid>>>();
+            UserManager<ApplicationUser>? userManager = serviceProvider
+                .GetService<UserManager<ApplicationUser>>();
+
+            if (roleManager == null)
+            {
+                throw new ArgumentNullException(nameof(roleManager),
+                    $"Service for {typeof(RoleManager<IdentityRole<Guid>>)} cannot be obtained!");
+            }
+
+            if (userManager == null)
+            {
+                throw new ArgumentNullException(nameof(userManager),
+                    $"Service for {typeof(UserManager<ApplicationUser>)} cannot be obtained!");
+            }
+
+            Task.Run(async () =>
+            {
+                bool roleExists = await roleManager.RoleExistsAsync(UserRoleName);
+                IdentityRole<Guid>? userRole = null;
+                if (!roleExists)
+                {
+                    userRole = new IdentityRole<Guid>(UserRoleName);
+
+                    IdentityResult result = await roleManager.CreateAsync(userRole);
+                    if (!result.Succeeded)
+                    {
+                        throw new InvalidOperationException($"Error occurred while creating the {UserRoleName} role!");
+                    }
+                }
+                else
+                {
+                    userRole = await roleManager.FindByNameAsync(UserRoleName);
+                }
+
+                var users = userManager.Users.ToList();
+
+                foreach (var user in users)
+                {
+                    bool isAdmin = await userManager.IsInRoleAsync(user, AdminRoleName);
+
+                    if (!isAdmin)
+                    {
+                        bool isUser = await userManager.IsInRoleAsync(user, UserRoleName);
+
+                        if (!isUser)
+                        {
+                            IdentityResult userResult = await userManager.AddToRoleAsync(user, UserRoleName);
+                            if (!userResult.Succeeded)
+                            {
+                                throw new InvalidOperationException($"Error occurred while adding the user {user} to the {UserRoleName} role!");
+                            }
+                        }
+                    }
+                }
+            })
+                .GetAwaiter()
+                .GetResult();
+
+            return app;
+        }
+
         private static async Task<ApplicationUser> CreateAdminUserAsync(string email, string password,
             IUserStore<ApplicationUser> userStore, UserManager<ApplicationUser> userManager)
         {
