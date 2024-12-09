@@ -5,6 +5,8 @@ using ActorsCastings.Web.ViewModels.Casting;
 using ActorsCastings.Web.ViewModels.CastingAgentProfile;
 using Microsoft.EntityFrameworkCore;
 
+using static ActorsCastings.Common.ExceptionMessages;
+
 namespace ActorsCastings.Services.Data
 {
     public class CastingAgentProfileService : BaseService, ICastingAgentProfileService
@@ -16,7 +18,7 @@ namespace ActorsCastings.Services.Data
             _castingAgentRepository = castingAgentRepository;
         }
 
-        public async Task<bool> CompleteCastingAgentProfileAsync(string id, CastingAgentProfileViewModel model)
+        public async Task CompleteCastingAgentProfileAsync(string id, CastingAgentProfileViewModel model)
         {
             Guid guidUserId = Guid.Empty;
             GuidValidation(id, ref guidUserId);
@@ -28,14 +30,7 @@ namespace ActorsCastings.Services.Data
                 UserId = guidUserId
             };
 
-            if (castingAgentProfile == null)
-            {
-                return false;
-            }
-
             await _castingAgentRepository.AddAsync(castingAgentProfile);
-
-            return true;
         }
 
         public async Task<UpdateCastingAgentProfileViewModel> GetCastingAgentProfileDataAsync(string id)
@@ -48,7 +43,7 @@ namespace ActorsCastings.Services.Data
 
             if (castingAgent == null)
             {
-                throw new Exception();
+                throw new Exception(ServerError);
             }
 
             UpdateCastingAgentProfileViewModel model = new UpdateCastingAgentProfileViewModel
@@ -75,7 +70,7 @@ namespace ActorsCastings.Services.Data
 
             if (castingAgent == null)
             {
-                throw new Exception("Casting agent not found.");
+                throw new Exception(ServerError);
             }
 
             CastingAgentProfileViewModel model = new CastingAgentProfileViewModel
@@ -95,20 +90,20 @@ namespace ActorsCastings.Services.Data
             return model;
         }
 
-        public async Task<bool> UpdateCastingAgentProfileAsync(UpdateCastingAgentProfileViewModel model)
+        public async Task UpdateCastingAgentProfileAsync(UpdateCastingAgentProfileViewModel model)
         {
             CastingAgent castingAgent = await _castingAgentRepository
                 .FirstOrDefaultAsync(ca => ca.Id == model.Id);
 
             if (castingAgent == null)
             {
-                return false;
+                throw new Exception(ServerError);
             }
 
             castingAgent.Name = model.Name;
             castingAgent.CastingAgency = model.CastingAgency;
 
-            return await _castingAgentRepository.UpdateAsync(castingAgent);
+            await _castingAgentRepository.UpdateAsync(castingAgent);
         }
     }
 }
