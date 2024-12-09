@@ -29,14 +29,17 @@ namespace ActorsCastings.Web.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Approve(ApproveSubmitViewModel model)
         {
-            bool result = await _adminService.ApproveElement(model);
-
-            if (!result)
+            try
             {
-                return View("Error");
-            }
+                await _adminService.ApproveElement(model);
 
-            return RedirectToAction("Approve");
+                return RedirectToAction("Approve");
+            }
+            catch (ArgumentException aEx)
+            {
+                TempData["Error"] = aEx.Message;
+                return RedirectToAction("Approve");
+            }
         }
     }
 }

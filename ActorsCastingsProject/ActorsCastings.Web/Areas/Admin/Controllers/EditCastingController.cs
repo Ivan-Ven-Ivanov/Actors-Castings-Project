@@ -28,14 +28,17 @@ namespace ActorsCastings.Web.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(string id)
         {
-            bool result = await _adminService.DeleteCastingAndItsCastedActorsByIdAsync(id);
-
-            if (!result)
+            try
             {
-                return View("Error");
-            }
+                await _adminService.DeleteCastingAndItsCastedActorsByIdAsync(id);
 
-            return RedirectToAction("Index");
+                return RedirectToAction("Index");
+            }
+            catch (ArgumentException aEx)
+            {
+                TempData["Error"] = aEx.Message;
+                return RedirectToAction("Index");
+            }
         }
     }
 }

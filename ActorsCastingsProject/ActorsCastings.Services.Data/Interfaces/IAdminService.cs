@@ -6,16 +6,16 @@ namespace ActorsCastings.Services.Data.Interfaces
     {
         Task<DataToApproveViewModel> GetAllNotApprovedElements();
 
-        Task<bool> ApproveElement(ApproveSubmitViewModel model);
+        Task ApproveElement(ApproveSubmitViewModel model);
 
         Task<IEnumerable<MovieToEditViewModel>> IndexViewAllMoviesForEditAsync();
         Task<IEnumerable<PlayToEditViewModel>> IndexViewAllPlaysForEditAsync();
         Task<IEnumerable<CastingToEditViewModel>> IndexViewAllCastingsForEditAsync();
         Task<IEnumerable<UserToEditViewModel>> IndexViewAllUsersForEditAsync();
 
-        Task<bool> DeleteMovieAndItsRolesByIdAsync(string id);
-        Task<bool> DeletePlayAndItsRolesByIdAsync(string id);
-        Task<bool> DeleteCastingAndItsCastedActorsByIdAsync(string id);
-        Task<bool> DeleteUserAndItsConnectedEntitiesByIdAsync(string id);
+        Task DeleteMovieAndItsRolesByIdAsync(string id);
+        Task DeletePlayAndItsRolesByIdAsync(string id);
+        Task DeleteCastingAndItsCastedActorsByIdAsync(string id);
+        Task DeleteUserAndItsConnectedEntitiesByIdAsync(string id);
     }
 }

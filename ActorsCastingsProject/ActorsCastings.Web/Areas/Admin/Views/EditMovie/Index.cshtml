@@ -1,5 +1,16 @@
 ﻿@model IEnumerable<MovieToEditViewModel>
 
+@{
+    ViewData["Title"] = "Edit Movies";
+
+    if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["Error"]
+        </div>
+    }
+}
+
 <div class="container mt-5">
     <h1 class="text-center">Edit Movies</h1>
     <hr />

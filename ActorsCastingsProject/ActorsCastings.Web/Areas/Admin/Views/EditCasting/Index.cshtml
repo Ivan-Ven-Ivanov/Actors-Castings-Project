@@ -1,5 +1,16 @@
 ﻿@model IEnumerable<CastingToEditViewModel>
 
+@{
+    ViewData["Title"] = "Edit Castings";
+
+    if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["Error"]
+        </div>
+    }
+}
+
 <div class="container mt-5">
     <h1 class="text-center">Edit Castings</h1>
     <hr />

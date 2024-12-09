@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using static ActorsCastings.Common.ApplicationConstants;
 using static ActorsCastings.Common.EntityValidationConstants.Casting;
+using static ActorsCastings.Common.ExceptionMessages;
 
 namespace ActorsCastings.Services.Data
 {
@@ -43,7 +44,7 @@ namespace ActorsCastings.Services.Data
             _userManager = userManager;
         }
 
-        public async Task<bool> ApproveElement(ApproveSubmitViewModel model)
+        public async Task ApproveElement(ApproveSubmitViewModel model)
         {
             if (model.Id != null)
             {
@@ -57,24 +58,30 @@ namespace ActorsCastings.Services.Data
                 if (movie != null)
                 {
                     movie.IsApproved = true;
-                    await _movieRepository.UpdateAsync(movie);
-                    return true;
+                    if (!await _movieRepository.UpdateAsync(movie))
+                    {
+                        throw new Exception(ServerError);
+                    }
                 }
                 else if (play != null)
                 {
                     play.IsApproved = true;
-                    await _playRepository.UpdateAsync(play);
-                    return true;
+                    if (!await _playRepository.UpdateAsync(play))
+                    {
+                        throw new Exception(ServerError);
+                    }
                 }
                 else if (casting != null)
                 {
                     casting.IsApproved = true;
-                    await _castingRepository.UpdateAsync(casting);
-                    return true;
+                    if (!await _castingRepository.UpdateAsync(casting))
+                    {
+                        throw new Exception(ServerError);
+                    }
                 }
                 else
                 {
-                    return false;
+                    throw new Exception(ServerError);
                 }
             }
             else if (model.ActorId != null && model.MovieId != null)
@@ -90,13 +97,14 @@ namespace ActorsCastings.Services.Data
 
                 if (actorMovie == null)
                 {
-                    return false;
+                    throw new Exception(ServerError);
                 }
 
                 actorMovie.IsApproved = true;
-                await _actorMovieRepository.UpdateAsync(actorMovie);
-
-                return true;
+                if (!await _actorMovieRepository.UpdateAsync(actorMovie))
+                {
+                    throw new Exception(ServerError);
+                }
             }
             else if (model.ActorId != null && model.PlayId != null)
             {
@@ -111,21 +119,22 @@ namespace ActorsCastings.Services.Data
 
                 if (actorPlay == null)
                 {
-                    return false;
+                    throw new Exception(ServerError);
                 }
 
                 actorPlay.IsApproved = true;
-                await _actorPlayRepository.UpdateAsync(actorPlay);
-
-                return true;
+                if (!await _actorPlayRepository.UpdateAsync(actorPlay))
+                {
+                    throw new Exception(ServerError);
+                }
             }
             else
             {
-                return false;
+                throw new Exception(ServerError);
             }
         }
 
-        public async Task<bool> DeleteCastingAndItsCastedActorsByIdAsync(string id)
+        public async Task DeleteCastingAndItsCastedActorsByIdAsync(string id)
         {
             Guid guidId = Guid.Empty;
             GuidValidation(id, ref guidId);
@@ -134,14 +143,14 @@ namespace ActorsCastings.Services.Data
 
             if (castingToDelete == null)
             {
-                return false;
+                throw new Exception(ServerError);
             }
 
             castingToDelete.IsDeleted = true;
 
             if (!await _castingRepository.SoftDeleteAsync(guidId))
             {
-                return false;
+                throw new Exception(ServerError);
             }
 
             List<ActorCasting> castedActorsToDelete = await _actorCastingRepository
@@ -155,14 +164,12 @@ namespace ActorsCastings.Services.Data
 
                 if (!await _actorCastingRepository.SoftDeleteAsync(castedActor.ActorId, castedActor.CastingId))
                 {
-                    return false;
+                    throw new Exception(ServerError);
                 }
             }
-
-            return true;
         }
 
-        public async Task<bool> DeleteMovieAndItsRolesByIdAsync(string id)
+        public async Task DeleteMovieAndItsRolesByIdAsync(string id)
         {
             Guid guidId = Guid.Empty;
             GuidValidation(id, ref guidId);
@@ -171,14 +178,14 @@ namespace ActorsCastings.Services.Data
 
             if (movieToDelete == null)
             {
-                return false;
+                throw new Exception(ServerError);
             }
 
             movieToDelete.IsDeleted = true;
 
             if (!await _movieRepository.SoftDeleteAsync(guidId))
             {
-                return false;
+                throw new Exception(ServerError);
             }
 
             List<ActorMovie> rolesToDelete = await _actorMovieRepository
@@ -192,14 +199,12 @@ namespace ActorsCastings.Services.Data
 
                 if (!await _actorMovieRepository.SoftDeleteAsync(role.ActorId, role.MovieId))
                 {
-                    return false;
+                    throw new Exception(ServerError);
                 }
             }
-
-            return true;
         }
 
-        public async Task<bool> DeletePlayAndItsRolesByIdAsync(string id)
+        public async Task DeletePlayAndItsRolesByIdAsync(string id)
         {
             Guid guidId = Guid.Empty;
             GuidValidation(id, ref guidId);
@@ -208,14 +213,14 @@ namespace ActorsCastings.Services.Data
 
             if (playToDelete == null)
             {
-                return false;
+                throw new Exception(ServerError);
             }
 
             playToDelete.IsDeleted = true;
 
             if (!await _playRepository.SoftDeleteAsync(guidId))
             {
-                return false;
+                throw new Exception(ServerError);
             }
 
             List<ActorPlay> rolesToDelete = await _actorPlayRepository
@@ -229,14 +234,12 @@ namespace ActorsCastings.Services.Data
 
                 if (!await _actorPlayRepository.SoftDeleteAsync(role.ActorId, role.PlayId))
                 {
-                    return false;
+                    throw new Exception(ServerError);
                 }
             }
-
-            return true;
         }
 
-        public async Task<bool> DeleteUserAndItsConnectedEntitiesByIdAsync(string id)
+        public async Task DeleteUserAndItsConnectedEntitiesByIdAsync(string id)
         {
             Guid guidId = Guid.Empty;
             GuidValidation(id, ref guidId);
@@ -245,7 +248,7 @@ namespace ActorsCastings.Services.Data
 
             if (userToDelete == null)
             {
-                return false;
+                throw new Exception(ServerError);
             }
 
             userToDelete.IsDeleted = true;
@@ -260,7 +263,7 @@ namespace ActorsCastings.Services.Data
 
                 if (!await _actorRepository.SoftDeleteAsync(actor.Id))
                 {
-                    return false;
+                    throw new Exception(ServerError);
                 }
 
                 List<ActorPlay> rolesInPlaysToDelete = await _actorPlayRepository
@@ -284,7 +287,7 @@ namespace ActorsCastings.Services.Data
 
                     if (!await _actorPlayRepository.SoftDeleteAsync(role.ActorId, role.PlayId))
                     {
-                        return false;
+                        throw new Exception(ServerError);
                     }
                 }
 
@@ -294,7 +297,7 @@ namespace ActorsCastings.Services.Data
 
                     if (!await _actorMovieRepository.SoftDeleteAsync(role.ActorId, role.MovieId))
                     {
-                        return false;
+                        throw new Exception(ServerError);
                     }
                 }
 
@@ -304,7 +307,7 @@ namespace ActorsCastings.Services.Data
 
                     if (!await _actorCastingRepository.SoftDeleteAsync(casting.ActorId, casting.CastingId))
                     {
-                        return false;
+                        throw new Exception(ServerError);
                     }
                 }
             }
@@ -314,15 +317,13 @@ namespace ActorsCastings.Services.Data
 
                 if (!await _castingAgentRepository.SoftDeleteAsync(castingAgent.Id))
                 {
-                    return false;
+                    throw new Exception(ServerError);
                 }
             }
             else
             {
-                return false;
+                throw new Exception(ServerError);
             }
-
-            return true;
         }
 
         public async Task<DataToApproveViewModel> GetAllNotApprovedElements()
@@ -488,7 +489,7 @@ namespace ActorsCastings.Services.Data
                 }
                 else
                 {
-                    throw new Exception();
+                    throw new Exception(ServerError);
                 }
             }
 
