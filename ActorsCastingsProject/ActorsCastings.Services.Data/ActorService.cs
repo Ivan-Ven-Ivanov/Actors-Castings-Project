@@ -24,12 +24,17 @@ namespace ActorsCastings.Services.Data
 
         public async Task<ActorDetailsViewModel> GetActorDetailsByIdAsync(string id)
         {
+            if (string.IsNullOrWhiteSpace(id))
+            {
+                throw new ArgumentException("ID cannot be empty.");
+            }
+
             Guid guidId = Guid.Empty;
             bool isGuidValid = IsGuidValid(id, ref guidId);
 
             if (!isGuidValid)
             {
-                throw new Exception();
+                throw new ArgumentException("Ivalid ID Format.");
             }
 
             Actor? actor = await _actorRepository
@@ -42,7 +47,7 @@ namespace ActorsCastings.Services.Data
 
             if (actor == null)
             {
-                throw new Exception();
+                throw new KeyNotFoundException($"Actor with ID {id} not found");
             }
 
             actor.ActorsMovies = actor.ActorsMovies.Where(am => am.IsApproved == true).ToList();
@@ -80,6 +85,16 @@ namespace ActorsCastings.Services.Data
 
         public async Task<IList<ActorIndexViewModel>> IndexGetPaginatedActorsAsync(int page, int pageSize)
         {
+            if (page < 1)
+            {
+                throw new ArgumentOutOfRangeException("Page number should be above 0");
+            }
+
+            if (pageSize < 1)
+            {
+                throw new ArgumentOutOfRangeException("There should be at least 1 on the page");
+            }
+
             List<ActorIndexViewModel> models = await _actorRepository
                 .GetAllAttached()
                 .OrderBy(a => a.FirstName)
@@ -94,6 +109,11 @@ namespace ActorsCastings.Services.Data
                     ProfilePictureUrl = a.ProfilePictureUrl
                 })
                 .ToListAsync();
+
+            if (!models.Any())
+            {
+                throw new Exception("Server error!");
+            }
 
             return models;
         }

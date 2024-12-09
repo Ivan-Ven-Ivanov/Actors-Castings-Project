@@ -26,28 +26,52 @@ namespace ActorsCastings.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(int page = FirstPageValue, int pageSize = ActorsPerPage)
         {
-            var models = await _actorService.IndexGetPaginatedActorsAsync(page, pageSize);
-            int actorsCount = await _actorService.GetActorsCountAsync();
-
-            var pagedModel = new PaginationViewModel<ActorIndexViewModel>
+            try
             {
-                Items = models,
-                TotalItems = actorsCount,
-                CurrentPage = page,
-                PageSize = pageSize
-            };
+                var models = await _actorService.IndexGetPaginatedActorsAsync(page, pageSize);
+                int actorsCount = await _actorService.GetActorsCountAsync();
 
+                var pagedModel = new PaginationViewModel<ActorIndexViewModel>
+                {
+                    Items = models,
+                    TotalItems = actorsCount,
+                    CurrentPage = page,
+                    PageSize = pageSize
+                };
 
-            return View(pagedModel);
+                return View(pagedModel);
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                TempData["Error"] = ex.ParamName;
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+
         }
 
         [Authorize]
         [HttpGet]
         public async Task<IActionResult> Details(string id)
         {
-            var model = await _actorService.GetActorDetailsByIdAsync(id);
+            try
+            {
+                var model = await _actorService.GetActorDetailsByIdAsync(id);
 
-            return View(model);
+                return View(model);
+            }
+            catch (ArgumentException aEx)
+            {
+                TempData["Error"] = aEx.Message;
+                return RedirectToAction("Index", "Actor");
+            }
+            catch (KeyNotFoundException)
+            {
+                return RedirectToAction("Error", "Home", new { statusCode = 404 });
+            }
         }
     }
 }

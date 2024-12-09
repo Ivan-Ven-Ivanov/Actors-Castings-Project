@@ -1,14 +1,17 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home";
+
+    if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["Error"]
+        </div>
+    }
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome to <strong>The Casting Place</strong></h1>
 </div>
-
-@{
-    ViewData["Title"] = "Home";
-}
 
 <div class="container mt-5">
     <h3 class="text-center">Explore actors, castings, movies, and plays</h3>

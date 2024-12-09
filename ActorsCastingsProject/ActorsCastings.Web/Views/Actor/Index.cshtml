@@ -2,6 +2,13 @@
 
 @{
     ViewData["Title"] = "Actors";
+
+    if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["Error"]
+        </div>
+    }
 }
 
 <h1>Actors</h1>
