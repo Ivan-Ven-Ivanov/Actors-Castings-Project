@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 using static ActorsCastings.Common.ApplicationConstants;
 
+
 namespace ActorsCastings.Web.Controllers
 {
     public class PlayController : Controller
@@ -24,28 +25,47 @@ namespace ActorsCastings.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(int page = FirstPageValue, int pageSize = PlaysPerPage)
         {
-            var models = await _playService.IndexGetPaginatedPlaysAsync(page, pageSize);
-            int playsCount = await _playService.GetPlaysCountAsync();
-
-            var pagedModel = new PaginationViewModel<PlayViewModel>
+            try
             {
-                Items = models,
-                TotalItems = playsCount,
-                CurrentPage = page,
-                PageSize = pageSize
-            };
+                var models = await _playService.IndexGetPaginatedPlaysAsync(page, pageSize);
+                int playsCount = await _playService.GetPlaysCountAsync();
 
+                var pagedModel = new PaginationViewModel<PlayViewModel>
+                {
+                    Items = models,
+                    TotalItems = playsCount,
+                    CurrentPage = page,
+                    PageSize = pageSize
+                };
 
-            return View(pagedModel);
+                return View(pagedModel);
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                TempData["Error"] = ex.ParamName;
+                return RedirectToAction("Index");
+            }
         }
 
         [HttpGet]
         [Authorize]
         public async Task<IActionResult> Details(string id)
         {
-            PlayDetailsViewModel model = await _playService.GetPlayDetailsAsync(id);
+            try
+            {
+                PlayDetailsViewModel model = await _playService.GetPlayDetailsAsync(id);
 
-            return View(model);
+                return View(model);
+            }
+            catch (ArgumentException aEx)
+            {
+                TempData["Error"] = aEx.Message;
+                return RedirectToAction("Index");
+            }
+            catch (KeyNotFoundException)
+            {
+                return RedirectToAction("Error", "Home", new { statusCode = 404 });
+            }
         }
 
         [HttpGet]
@@ -66,15 +86,23 @@ namespace ActorsCastings.Web.Controllers
                 return View(model);
             }
 
-            ApplicationUser? user = await _userManager.GetUserAsync(User);
-            if (user == null)
+            try
             {
-                return View("Error");
+                ApplicationUser? user = await _userManager.GetUserAsync(User);
+                if (user == null)
+                {
+                    return View("Error");
+                }
+
+                await _playService.AddPlayAndRoleInItAsync(model, user.Id.ToString());
+
+                return RedirectToAction("Index", "ActorProfile");
             }
-
-            await _playService.AddPlayAndRoleInItAsync(model, user.Id.ToString());
-
-            return RedirectToAction("Index", "ActorProfile");
+            catch (ArgumentException aEx)
+            {
+                TempData["Error"] = aEx.Message;
+                return RedirectToAction("Index");
+            }
         }
     }
 }

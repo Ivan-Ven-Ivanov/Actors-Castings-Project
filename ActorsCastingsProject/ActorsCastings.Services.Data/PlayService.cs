@@ -5,6 +5,8 @@ using ActorsCastings.Web.ViewModels.Actor;
 using ActorsCastings.Web.ViewModels.Play;
 using Microsoft.EntityFrameworkCore;
 
+using static ActorsCastings.Common.ExceptionMessages;
+
 namespace ActorsCastings.Services.Data
 {
     public class PlayService : BaseService, IPlayService
@@ -44,7 +46,7 @@ namespace ActorsCastings.Services.Data
 
             if (currentActor == null)
             {
-                throw new Exception();
+                throw new Exception(ServerError);
             }
 
             ActorPlay actorPlay = new ActorPlay
@@ -71,7 +73,7 @@ namespace ActorsCastings.Services.Data
 
             if (play == null)
             {
-                throw new Exception();
+                throw new KeyNotFoundException(string.Format(EntityNotFoundById, nameof(Play), id));
             }
 
             play.ActorsPlays = play.ActorsPlays.Where(ap => ap.IsApproved == true).ToList();
@@ -106,6 +108,8 @@ namespace ActorsCastings.Services.Data
 
         public async Task<IList<PlayViewModel>> IndexGetPaginatedPlaysAsync(int page, int pageSize)
         {
+            PagesValidation(page, pageSize);
+
             List<PlayViewModel> models = await _playRepository
                 .GetAllAttached()
                 .OrderBy(p => p.Title)
@@ -121,6 +125,11 @@ namespace ActorsCastings.Services.Data
                     ReleaseYear = m.ReleaseYear.ToString()
                 })
                 .ToListAsync();
+
+            if (!models.Any())
+            {
+                throw new Exception(ServerError);
+            }
 
             return models;
         }
