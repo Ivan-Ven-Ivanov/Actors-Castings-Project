@@ -169,11 +169,6 @@ namespace ActorsCastings.Services.Data
                 })
                 .ToListAsync();
 
-            if (!models.Any())
-            {
-                throw new Exception(ServerError);
-            }
-
             return models;
         }
     }

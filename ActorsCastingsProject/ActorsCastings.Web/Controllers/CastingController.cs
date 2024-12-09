@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using static ActorsCastings.Common.ApplicationConstants;
-using static ActorsCastings.Common.ExceptionMessages;
 
 
 namespace ActorsCastings.Web.Controllers
@@ -66,13 +65,8 @@ namespace ActorsCastings.Web.Controllers
 
             try
             {
-                ApplicationUser? user = await _userManager.GetUserAsync(User);
-                if (user == null)
-                {
-                    throw new Exception(ServerError);
-                }
-
-                await _castingService.AddCastingAsync(model, user.Id.ToString());
+                string? userId = _userManager.GetUserId(User);
+                await _castingService.AddCastingAsync(model, userId);
 
                 return RedirectToAction("Index");
             }
@@ -89,15 +83,10 @@ namespace ActorsCastings.Web.Controllers
         {
             try
             {
-                ApplicationUser? user = await _userManager.GetUserAsync(User);
-
-                if (user == null)
-                {
-                    throw new Exception(ServerError);
-                }
+                string? userId = _userManager.GetUserId(User);
 
                 CastingDetailsViewModel model
-                    = await _castingService.GetCastingDetailsByIdAsync(id, user.Id.ToString());
+                    = await _castingService.GetCastingDetailsByIdAsync(id, userId);
 
                 return View(model);
             }
@@ -118,14 +107,8 @@ namespace ActorsCastings.Web.Controllers
         {
             try
             {
-                ApplicationUser? user = await _userManager.GetUserAsync(User);
-
-                if (user == null)
-                {
-                    throw new Exception(ServerError);
-                }
-
-                await _castingService.ApplyForCastingAsync(id, user.Id.ToString());
+                string? userId = _userManager.GetUserId(User);
+                await _castingService.ApplyForCastingAsync(id, userId);
 
                 return RedirectToAction("Index");
             }

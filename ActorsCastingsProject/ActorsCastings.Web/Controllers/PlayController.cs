@@ -88,13 +88,8 @@ namespace ActorsCastings.Web.Controllers
 
             try
             {
-                ApplicationUser? user = await _userManager.GetUserAsync(User);
-                if (user == null)
-                {
-                    return View("Error");
-                }
-
-                await _playService.AddPlayAndRoleInItAsync(model, user.Id.ToString());
+                string? userId = _userManager.GetUserId(User);
+                await _playService.AddPlayAndRoleInItAsync(model, userId);
 
                 return RedirectToAction("Index", "ActorProfile");
             }

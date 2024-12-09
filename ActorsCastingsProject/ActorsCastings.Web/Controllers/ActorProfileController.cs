@@ -24,15 +24,18 @@ namespace ActorsCastings.Web.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            ApplicationUser? user = await _userManager.GetUserAsync(User);
-            if (user == null)
+            try
             {
-                return View("Error");
+                string? userId = _userManager.GetUserId(User);
+                ActorProfileViewModel model = await _actorProfileService.IndexGetMyProfileAsync(userId);
+
+                return View(model);
             }
-
-            ActorProfileViewModel model = await _actorProfileService.IndexGetMyProfileAsync(user.Id.ToString());
-
-            return View(model);
+            catch (ArgumentException aEx)
+            {
+                TempData["Error"] = aEx.Message;
+                return RedirectToAction("Index");
+            }
         }
 
         [HttpGet]
@@ -51,16 +54,18 @@ namespace ActorsCastings.Web.Controllers
                 return View(model);
             }
 
-            string? userId = _userManager.GetUserId(User);
-
-            bool result = await _actorProfileService.CompleteActorProfileAsync(userId, model);
-
-            if (!result)
+            try
             {
-                return View("Error");
-            }
+                string? userId = _userManager.GetUserId(User);
+                await _actorProfileService.CompleteActorProfileAsync(userId, model);
 
-            return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Home");
+            }
+            catch (ArgumentException aEx)
+            {
+                TempData["Error"] = aEx.Message;
+                return RedirectToAction("Index");
+            }
         }
 
         [HttpGet]
@@ -83,20 +88,22 @@ namespace ActorsCastings.Web.Controllers
                 return View(model);
             }
 
-            ApplicationUser? user = await _userManager.GetUserAsync(User);
-            if (user == null)
+            try
             {
-                return View("Error");
+                string? userId = _userManager.GetUserId(User);
+                await _actorProfileService.AddSelectedMovieToProfileAsync(model.Id, model.Role, userId);
+
+                return RedirectToAction("Index", "ActorProfile");
             }
-
-            bool result = await _actorProfileService.AddSelectedMovieToProfileAsync(model.Id, model.Role, user.Id.ToString());
-
-            if (!result)
+            catch (ArgumentException aEx)
             {
-                return View("Error");
+                TempData["Error"] = aEx.Message;
+                return RedirectToAction("Index");
             }
-
-            return RedirectToAction("Index", "ActorProfile");
+            catch (KeyNotFoundException)
+            {
+                return RedirectToAction("Error", "Home", new { statusCode = 404 });
+            }
         }
 
         [HttpGet]
@@ -119,35 +126,39 @@ namespace ActorsCastings.Web.Controllers
                 return View(model);
             }
 
-            ApplicationUser? user = await _userManager.GetUserAsync(User);
-            if (user == null)
+            try
             {
-                return View("Error");
+                string? userId = _userManager.GetUserId(User);
+                await _actorProfileService.AddSelectedPlayToProfileAsync(model.Id, model.Role, userId);
+
+                return RedirectToAction("Index", "ActorProfile");
             }
-
-            bool result = await _actorProfileService.AddSelectedPlayToProfileAsync(model.Id, model.Role, user.Id.ToString());
-
-            if (!result)
+            catch (ArgumentException aEx)
             {
-                return View("Error");
+                TempData["Error"] = aEx.Message;
+                return RedirectToAction("Index");
             }
-
-            return RedirectToAction("Index", "ActorProfile");
+            catch (KeyNotFoundException)
+            {
+                return RedirectToAction("Error", "Home", new { statusCode = 404 });
+            }
         }
 
         [HttpGet]
         public async Task<IActionResult> Update()
         {
-            string? userId = _userManager.GetUserId(User);
-
-            if (userId == null)
+            try
             {
-                return View("Error");
+                string? userId = _userManager.GetUserId(User);
+                UpdateActorProfileViewModel model = await _actorProfileService.GetActorProfileDataForUpdateAsync(userId);
+
+                return View(model);
             }
-
-            UpdateActorProfileViewModel model = await _actorProfileService.GetActorProfileDataForUpdateAsync(userId);
-
-            return View(model);
+            catch (ArgumentException aEx)
+            {
+                TempData["Error"] = aEx.Message;
+                return RedirectToAction("Index");
+            }
         }
 
         [HttpPost]
@@ -158,12 +169,7 @@ namespace ActorsCastings.Web.Controllers
                 return View(model);
             }
 
-            bool hasUpdated = await _actorProfileService.UpdateActorProfileAsync(model);
-
-            if (!hasUpdated)
-            {
-                return View("Error");
-            }
+            await _actorProfileService.UpdateActorProfileAsync(model);
 
             return RedirectToAction("Index");
         }

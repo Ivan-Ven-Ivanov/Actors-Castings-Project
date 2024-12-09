@@ -8,7 +8,7 @@ namespace ActorsCastings.Services.Data.Interfaces
     {
         Task<ActorProfileViewModel> IndexGetMyProfileAsync(string id);
 
-        Task<bool> CompleteActorProfileAsync(string id, ActorProfileViewModel model);
+        Task CompleteActorProfileAsync(string id, ActorProfileViewModel model);
 
         Task<SelectedMovieViewModel> GetAllMoviesForSelectAsync(SelectedMovieViewModel model);
 
@@ -19,12 +19,12 @@ namespace ActorsCastings.Services.Data.Interfaces
         SelectedPlayViewModel SelectAPlayForValidation(SelectedPlayViewModel model);
 
 
-        Task<bool> AddSelectedMovieToProfileAsync(string id, string role, string userId);
+        Task AddSelectedMovieToProfileAsync(string id, string role, string userId);
 
-        Task<bool> AddSelectedPlayToProfileAsync(string id, string role, string userId);
+        Task AddSelectedPlayToProfileAsync(string id, string role, string userId);
 
         Task<UpdateActorProfileViewModel> GetActorProfileDataForUpdateAsync(string id);
 
-        Task<bool> UpdateActorProfileAsync(UpdateActorProfileViewModel model);
+        Task UpdateActorProfileAsync(UpdateActorProfileViewModel model);
     }
 }

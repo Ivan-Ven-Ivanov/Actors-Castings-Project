@@ -8,6 +8,7 @@ using ActorsCastings.Web.ViewModels.Play;
 using Microsoft.EntityFrameworkCore;
 
 using static ActorsCastings.Common.EntityValidationConstants.Casting;
+using static ActorsCastings.Common.ExceptionMessages;
 
 namespace ActorsCastings.Services.Data
 {
@@ -33,7 +34,7 @@ namespace ActorsCastings.Services.Data
             _actorPlayRepository = actorPlayRepository;
         }
 
-        public async Task<bool> AddSelectedMovieToProfileAsync(string id, string role, string userId)
+        public async Task AddSelectedMovieToProfileAsync(string id, string role, string userId)
         {
             Guid guidMovieId = Guid.Empty;
             GuidValidation(id, ref guidMovieId);
@@ -42,7 +43,7 @@ namespace ActorsCastings.Services.Data
 
             if (movie == null)
             {
-                return false;
+                throw new KeyNotFoundException(string.Format(EntityNotFoundById, nameof(Movie), id));
             }
 
             Guid guidUserId = Guid.Empty;
@@ -53,7 +54,7 @@ namespace ActorsCastings.Services.Data
 
             if (actor == null)
             {
-                return false;
+                throw new Exception(ServerError);
             }
 
             ActorMovie actorMovie = new ActorMovie
@@ -65,11 +66,9 @@ namespace ActorsCastings.Services.Data
             };
 
             await _actorMovieRepository.AddAsync(actorMovie);
-
-            return true;
         }
 
-        public async Task<bool> AddSelectedPlayToProfileAsync(string id, string role, string userId)
+        public async Task AddSelectedPlayToProfileAsync(string id, string role, string userId)
         {
             Guid guidPlayId = Guid.Empty;
             GuidValidation(id, ref guidPlayId);
@@ -78,7 +77,7 @@ namespace ActorsCastings.Services.Data
 
             if (play == null)
             {
-                return false;
+                throw new KeyNotFoundException(string.Format(EntityNotFoundById, nameof(Play), id));
             }
 
             Guid guidUserId = Guid.Empty;
@@ -89,7 +88,7 @@ namespace ActorsCastings.Services.Data
 
             if (actor == null)
             {
-                return false;
+                throw new Exception(ServerError);
             }
 
             ActorPlay actorPlay = new ActorPlay
@@ -101,11 +100,9 @@ namespace ActorsCastings.Services.Data
             };
 
             await _actorPlayRepository.AddAsync(actorPlay);
-
-            return true;
         }
 
-        public async Task<bool> CompleteActorProfileAsync(string id, ActorProfileViewModel model)
+        public async Task CompleteActorProfileAsync(string id, ActorProfileViewModel model)
         {
             Guid guidUserId = Guid.Empty;
             GuidValidation(id, ref guidUserId);
@@ -120,14 +117,7 @@ namespace ActorsCastings.Services.Data
                 UserId = guidUserId
             };
 
-            if (actorProfile == null)
-            {
-                return false;
-            }
-
             await _actorRepository.AddAsync(actorProfile);
-
-            return true;
         }
 
         public async Task<UpdateActorProfileViewModel> GetActorProfileDataForUpdateAsync(string id)
@@ -140,7 +130,7 @@ namespace ActorsCastings.Services.Data
 
             if (actor == null)
             {
-                throw new Exception();
+                throw new Exception(ServerError);
             }
 
             UpdateActorProfileViewModel model = new UpdateActorProfileViewModel
@@ -210,7 +200,7 @@ namespace ActorsCastings.Services.Data
 
             if (actor == null)
             {
-                throw new Exception("Actor not found.");
+                throw new Exception(ServerError);
             }
 
             ActorProfileViewModel model = new ActorProfileViewModel
@@ -278,14 +268,14 @@ namespace ActorsCastings.Services.Data
             return model;
         }
 
-        public async Task<bool> UpdateActorProfileAsync(UpdateActorProfileViewModel model)
+        public async Task UpdateActorProfileAsync(UpdateActorProfileViewModel model)
         {
             Actor actor = await _actorRepository
                 .FirstOrDefaultAsync(a => a.Id == model.Id);
 
             if (actor == null)
             {
-                return false;
+                throw new Exception(ServerError);
             }
 
             actor.FirstName = model.FirstName;
@@ -294,7 +284,7 @@ namespace ActorsCastings.Services.Data
             actor.ProfilePictureUrl = model.ProfilePictureUrl;
             actor.Biography = model.Biography;
 
-            return await _actorRepository.UpdateAsync(actor);
+            await _actorRepository.UpdateAsync(actor);
         }
     }
 }

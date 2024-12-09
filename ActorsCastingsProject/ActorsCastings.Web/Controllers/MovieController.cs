@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 using static ActorsCastings.Common.ApplicationConstants;
-using static ActorsCastings.Common.ExceptionMessages;
 
 namespace ActorsCastings.Web.Controllers
 {
@@ -88,13 +87,8 @@ namespace ActorsCastings.Web.Controllers
 
             try
             {
-                ApplicationUser? user = await _userManager.GetUserAsync(User);
-                if (user == null)
-                {
-                    throw new Exception(ServerError);
-                }
-
-                await _movieService.AddMovieAndRoleInItAsync(model, user.Id.ToString());
+                string? userId = _userManager.GetUserId(User);
+                await _movieService.AddMovieAndRoleInItAsync(model, userId);
 
                 return RedirectToAction("Index", "ActorProfile");
             }
