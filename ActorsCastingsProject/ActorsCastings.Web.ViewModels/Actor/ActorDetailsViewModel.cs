@@ -11,6 +11,8 @@ namespace ActorsCastings.Web.ViewModels.Actor
 
         public string? Age { get; set; }
 
+        public string PhoneNumber { get; set; } = null!;
+
         public string ProfilePictureUrl { get; set; } = null!;
 
         public string? Biography { get; set; }

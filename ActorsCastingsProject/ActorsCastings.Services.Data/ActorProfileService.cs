@@ -5,6 +5,7 @@ using ActorsCastings.Web.ViewModels.ActorProfile;
 using ActorsCastings.Web.ViewModels.Casting;
 using ActorsCastings.Web.ViewModels.Movie;
 using ActorsCastings.Web.ViewModels.Play;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 using static ActorsCastings.Common.EntityValidationConstants.Casting;
@@ -19,19 +20,22 @@ namespace ActorsCastings.Services.Data
         private readonly IRepository<ActorMovie, Guid> _actorMovieRepository;
         private readonly IRepository<Play, Guid> _playRepository;
         private readonly IRepository<ActorPlay, Guid> _actorPlayRepository;
+        private readonly UserManager<ApplicationUser> _userManager;
 
         public ActorProfileService(
             IRepository<Actor, Guid> actorRepository,
             IRepository<Movie, Guid> movieRepository,
             IRepository<ActorMovie, Guid> actorMovieRepository,
             IRepository<Play, Guid> playRepository,
-            IRepository<ActorPlay, Guid> actorPlayRepository)
+            IRepository<ActorPlay, Guid> actorPlayRepository,
+            UserManager<ApplicationUser> userManager)
         {
             _actorRepository = actorRepository;
             _movieRepository = movieRepository;
             _actorMovieRepository = actorMovieRepository;
             _playRepository = playRepository;
             _actorPlayRepository = actorPlayRepository;
+            _userManager = userManager;
         }
 
         public async Task AddSelectedMovieToProfileAsync(string id, string role, string userId)
@@ -112,10 +116,14 @@ namespace ActorsCastings.Services.Data
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 Age = model.Age,
+                PhoneNumber = model.PhoneNumber,
                 ProfilePictureUrl = model.ProfilePictureUrl,
                 Biography = model.Biography,
                 UserId = guidUserId
             };
+
+            ApplicationUser? user = await _userManager.FindByIdAsync(id);
+            user.PhoneNumber = model.PhoneNumber;
 
             await _actorRepository.AddAsync(actorProfile);
         }
@@ -209,6 +217,7 @@ namespace ActorsCastings.Services.Data
                 LastName = actor.LastName,
                 ProfilePictureUrl = actor.ProfilePictureUrl,
                 Age = actor.Age,
+                PhoneNumber = actor.PhoneNumber,
                 Biography = actor.Biography,
                 Movies = actor.ActorsMovies
                     .Select(am => new MovieViewModel

@@ -29,6 +29,11 @@ namespace ActorsCastings.Data.Models
         public string LastName { get; set; } = null!;
 
         [Required]
+        [Comment("The phone number of the Actor")]
+        [MaxLength(ActorPhoneNumberMaxValue)]
+        public string PhoneNumber { get; set; } = null!;
+
+        [Required]
         [Comment("Url of the profile picture of the actor")]
         public string ProfilePictureUrl { get; set; } = null!;
 

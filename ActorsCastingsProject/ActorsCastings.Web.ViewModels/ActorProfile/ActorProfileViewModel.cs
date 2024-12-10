@@ -19,6 +19,10 @@ namespace ActorsCastings.Web.ViewModels.ActorProfile
         [StringLength(ActorLastNameMaxLength, MinimumLength = ActorLastNameMinLength, ErrorMessage = LastNameLengthMessage)]
         public string LastName { get; set; } = null!;
 
+        [Required(ErrorMessage = PhoneNumberRequiredMessage)]
+        [StringLength(ActorPhoneNumberMaxValue, MinimumLength = ActorPhoneNumberMinValue, ErrorMessage = PhoneNumberLengthMessage)]
+        public string PhoneNumber { get; set; } = null!;
+
         [Required(ErrorMessage = ProfilePictureUrlRequiredMessage)]
         public string ProfilePictureUrl { get; set; } = null!;
 

@@ -50,6 +50,7 @@ namespace ActorsCastings.Services.Data
                 FirstName = actor.FirstName,
                 LastName = actor.LastName,
                 Age = actor.Age.ToString(),
+                PhoneNumber = actor.PhoneNumber,
                 Biography = actor.Biography,
                 ProfilePictureUrl = actor.ProfilePictureUrl,
                 Movies = actor.ActorsMovies.Select(am => new MovieViewModel

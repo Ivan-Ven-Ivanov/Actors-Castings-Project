@@ -11,6 +11,8 @@
             public const string AgeRangeMessage = "Age must be between 3 and 100.";
             public const string BiographyMaxLengthMessage = "Biography must be less than 1000 symbols.";
             public const string ProfilePictureUrlRequiredMessage = "You must have a profile picture URL.";
+            public const string PhoneNumberRequiredMessage = "Phone number is required.";
+            public const string PhoneNumberLengthMessage = "Phone number must be between 4 and 17 symbols.";
         }
 
         public static class CastingAgentProfile

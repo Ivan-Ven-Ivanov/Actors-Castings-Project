@@ -11,6 +11,8 @@
             public const int ActorBiographyMaxLength = 1000;
             public const int ActorAgeMinValue = 3;
             public const int ActorAgeMaxValue = 100;
+            public const int ActorPhoneNumberMinValue = 4;
+            public const int ActorPhoneNumberMaxValue = 17;
         }
 
         public static class Movie

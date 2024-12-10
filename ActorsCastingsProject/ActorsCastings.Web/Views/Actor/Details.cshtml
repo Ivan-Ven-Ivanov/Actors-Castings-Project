@@ -1,4 +1,10 @@
-﻿@model ActorDetailsViewModel
+﻿@using ActorsCastings.Data.Models
+@using ActorsCastings.Services.Data.Interfaces
+@using Microsoft.AspNetCore.Identity
+@model ActorDetailsViewModel
+
+@inject UserManager<ApplicationUser> userManager
+@inject ICastingAgentService castingAgentService
 
 @using static ActorsCastings.Common.ApplicationConstants
 
@@ -18,6 +24,13 @@
                 <h5 class="card-title">@Model.FirstName @Model.LastName</h5>
                 <p class="card-text"><strong>Age:</strong> @Model.Age</p>
                 <p class="card-text"><strong>Biography:</strong> @Model.Biography</p>
+                @{
+                    string? userId = userManager.GetUserId(User);
+                    if (await castingAgentService.IsUserCastingAgentAsync(userId))
+                    {
+                        <p class="card-text"><strong>Phone Number:</strong> @Model.PhoneNumber</p>
+                    }
+                }
                 <div class="mt-4">
                     <h3>Movies</h3>
                     @if (Model.Movies.Any())

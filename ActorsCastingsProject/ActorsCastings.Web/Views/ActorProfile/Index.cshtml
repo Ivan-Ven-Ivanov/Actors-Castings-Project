@@ -23,6 +23,7 @@
         <div class="col-md-8">
             <h2>@Model.FirstName @Model.LastName</h2>
             <p><strong>Age:</strong> @(Model.Age.HasValue ? Model.Age.Value.ToString() : "N/A")</p>
+            <p><strong>Phone Number:</strong> @Model.PhoneNumber</p>
             <p><strong>Biography:</strong> @(!string.IsNullOrWhiteSpace(Model.Biography) ? Model.Biography : "No biography available.")</p>
 
             <partial name="_ProfileActionsPartial" />
