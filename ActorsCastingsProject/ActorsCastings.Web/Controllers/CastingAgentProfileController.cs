@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ActorsCastings.Web.Controllers
 {
     [Authorize]
-    public class CastingAgentProfileController : BaseController
+    public class CastingAgentProfileController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ICastingAgentProfileService _castingAgentProfileService;

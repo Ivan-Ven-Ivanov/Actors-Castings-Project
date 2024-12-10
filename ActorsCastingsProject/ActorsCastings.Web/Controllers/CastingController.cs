@@ -10,7 +10,7 @@ using static ActorsCastings.Common.ApplicationConstants;
 
 namespace ActorsCastings.Web.Controllers
 {
-    public class CastingController : BaseController
+    public class CastingController : Controller
     {
         private readonly ICastingService _castingService;
         private readonly UserManager<ApplicationUser> _userManager;
