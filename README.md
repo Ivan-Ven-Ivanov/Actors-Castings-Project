@@ -89,7 +89,7 @@ Admin Features
 Folder Structure
 ----------------
 
-`/ActorsCastings
+/ActorsCastings
 │
 ├── /ActorsCastings.Web
 │   ├── /Controllers
@@ -116,7 +116,7 @@ Folder Structure
 │
 └── /ActorsCastings.Services
  └── /Interfaces
-        └── IAdminService.cs `
+        └── IAdminService.cs 
 
 ### Controllers:
 
