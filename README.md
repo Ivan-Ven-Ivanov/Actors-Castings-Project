@@ -1,25 +1,24 @@
 The Casting Place
 ===================
 
-The Casting Place is a web application designed to manage actors, movies, plays, and castings. The application allows users to apply for roles in movies or plays, and for admins to manage and approve applications, as well as edit and delete data related to actors, movies, and plays.
+The Casting Place is a web application designed for **actors** and **casting agents**. The application allows actors to apply for castings which casting agents submitted. As an actor you can add movies and theatre plays that you acted in. You can see the database of movies and plays that the actors create as they update their profiles. All users can see which actors applied for a casting. There is an admin that approves every added casting, movie, play or role.
 
 Features
 --------
 
--   **Actors Management**: Manage actors, their profiles, and applications.
--   **Movies & Plays Management**: Create and edit movies and plays, including associated roles.
--   **Casting Process**: Apply actors to specific casting roles for movies and plays.
--   **Admin Panel**: Admin users can approve, edit, and delete various entities, such as actors, movies, plays, and users.
--   **Role-based Authorization**: Separate functionality for users and administrators with distinct permissions.
-
+-   **Profile Creation**: Create and add info for yourself if you are an actor or a casting agent
+-   **Adding New Casting**: Casting agents can create new castings for the actors.
+-   **Applying for Casting**: Actors can apply to castings that look suitable for them.
+-   **Improving Portfolio**: Actors can add roles in movies or plays to improve their portfolio and be more recognizable.
+-   **Admin Panel**: Admins can approve and delete various entities, such as roles, movies, plays, and users.
+  
 Tech Stack
 ----------
 
--   **Frontend**: ASP.NET Core MVC with Razor Views
+-   **Frontend**: ASP.NET Core MVC, Razor Views with Bootstrap, CSS, JS
 -   **Backend**: ASP.NET Core, Entity Framework Core
 -   **Database**: Microsoft SQL Server
 -   **Authentication**: ASP.NET Core Identity
--   **Frontend Framework**: HTML, CSS (Bootstrap)
 
 Requirements
 ------------
@@ -27,131 +26,33 @@ Requirements
 -   .NET 6 or later
 -   Microsoft SQL Server
 -   Visual Studio or Visual Studio Code (with C# extension)
--   Node.js (if you are building or running frontend assets)
 
 Installation
 ------------
 
-1.  **Clone the repository**:
+Clone the repository, restore project dependencies, update your connection string in `appsetings.json` and apply migrations.
 
-    bash
-
-    Copy code
-
-    `git clone https://github.com/yourusername/actors-castings.git
-    cd actors-castings`
-
-2.  **Restore dependencies**: Run the following command to restore the project dependencies:
-
-    bash
-
-    Copy code
-
-    `dotnet restore`
-
-3.  **Set up the database**: The project uses Entity Framework Core for database interactions. Create the database and apply the migrations:
-
-    bash
-
-    Copy code
-
-    `dotnet ef database update`
-
-4.  **Configure application settings**: Update the `appsettings.json` file to include your database connection string and other necessary configurations.
-
-5.  **Run the application**: After setting up the database and configurations, you can start the application by running:
-
-    bash
-
-    Copy code
-
-    `dotnet run`
-
-    Navigate to `https://localhost:5001` in your browser to access the app.
+If you want to test the application as Admin, the username and password are in `appsetings.json`.
 
 Role Management
 ---------------
 
-This application uses role-based access control (RBAC) for security:
+This application uses role-based access control for security:
 
--   **Admin Role**: Users with the admin role can manage and approve actors, movies, plays, users, and more.
--   **User Role**: Regular users can apply for casting roles in movies or plays.
+-   **Admin Role**: Users with the admin role can manage and approve actors, movies, plays, users and more.
+-   **User Role**: Regular users are both actors and casting agents.
 
-You can add users and assign them roles through the application's admin panel.
+Project Architecture
+---------------
 
-Admin Features
---------------
-
--   **Approve Content**: Admins can approve actors, movies, and plays for use in the system.
--   **Edit Content**: Admins can edit and delete movies, plays, castings, and users.
--   **Manage Users**: Admins can manage users, assign roles, and delete user accounts.
-
-Folder Structure
-----------------
-
-/ActorsCastings
-│
-├── /ActorsCastings.Web
-│   ├── /Controllers
-│   │   ├── Admin
-│   │   │   ├── ApprovalController.cs
-│   │   │   ├── EditCastingController.cs
-│   │   │   ├── EditMovieController.cs
-│   │   │   └── EditUserController.cs
-│   │   └── HomeController.cs
-│   ├── /Views
-│   │   ├── /Admin
-│   │   │   ├── Approve.cshtml
-│   │   │   └── Index.cshtml
-│   ├── /Models
-│   └── /Infrastructure
-│       ├── /Extensions
-│       └── /HtmlHelpers
-│
-├── /ActorsCastings.Data
-│   ├── /Repository
-│   │   └── BaseRepository.cs
-│   └── /Models
-│       └── ApplicationUser.cs
-│
-└── /ActorsCastings.Services
- └── /Interfaces
-        └── IAdminService.cs 
-
-### Controllers:
-
--   **Admin Controllers**: Manage the CRUD operations for actors, movies, plays, and users.
--   **ApprovalController**: Handles approval of items awaiting admin review.
--   **Edit Controllers**: Provide functionality for editing and deleting various data (casting, movie, play, user).
-
-### Services:
-
--   **IAdminService**: Defines the business logic for handling administrative tasks like adding, approving, or deleting items.
-
-### Repositories:
-
--   **BaseRepository**: A generic repository used to interact with the database for all entities in the system.
-
-### HTML Helpers:
-
--   **HighlightMatch**: Highlights search query matches within text.
-
-Running the Application Locally
--------------------------------
-
-1.  Clone the repository and open the project in your preferred IDE (Visual Studio or Visual Studio Code).
-2.  Run `dotnet restore` to restore dependencies.
-3.  Run the application with `dotnet run` and navigate to `https://localhost:5001` in your browser.
-4.  To seed the admin role, ensure your application is configured to add an admin user upon startup using the seed functionality.
-
-Contributing
-------------
-
-1.  Fork the repository.
-2.  Create a new branch (`git checkout -b feature-name`).
-3.  Commit your changes (`git commit -am 'Add new feature'`).
-4.  Push the branch (`git push origin feature-name`).
-5.  Open a pull request and describe your changes.
+The application is divided into several projects:
+-    **ActorsCastings.Data**: The repository dbContext and all operations on the database.
+-    **ActorsCastings.Data.Models**: The data models of the application.
+-    **ActorsCastings.Services.Data**: All the services that hold the business logic and use the repositories.
+-    **ActorsCastings.Web**: The Web part of the application - Controllers, Views, Areas, CSS, JS, Images etc.
+-    **ActorsCastings.Web.Infrastructure**: Additional infrastructure that the Web project uses like extension methods and HTML helpers.
+-    **ActorsCastings.Web.ViewModels**: The models that pass information from the Database to the Views.
+-    **ActorsCastings.Common**: Constant messages, Exception messages etc.
 
 License
 -------
