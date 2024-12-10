@@ -5,6 +5,8 @@
         public const string AdminRoleName = "Admin";
         public const string UserRoleName = "User";
 
+        public const string NoImage = "/images/no-image.png";
+
         public const int FirstPageValue = 1;
         public const int ActorsPerPage = 6;
         public const int PlaysPerPage = 8;

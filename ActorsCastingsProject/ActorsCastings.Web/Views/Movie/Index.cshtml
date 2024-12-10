@@ -1,5 +1,7 @@
 ﻿@model PaginationViewModel<MovieViewModel>
 
+@using static ActorsCastings.Common.ApplicationConstants
+
 @{
     ViewData["Title"] = "Movies";
 
@@ -29,14 +31,7 @@
                     <a asp-action="Details" asp-route-id="@movie.Id" class="card h-100 d-flex flex-column text-decoration-none text-dark clickable-card shadow-sm hover-shadow">
                         <div class="card h-100 d-flex flex-column">
                             <div class="card-img-top d-flex align-items-center justify-content-center">
-                                @if (!string.IsNullOrEmpty(movie.ImageUrl))
-                                {
-                                    <img src="@movie.ImageUrl" class="img-fluid img-thumbnail" alt="@movie.Title" style="object-fit: contain">
-                                }
-                                else
-                                {
-                                    <img src="https://via.placeholder.com/200x300?text=No+Image" class="card-img-top" alt="No Image">
-                                }
+                                <img src="@(!string.IsNullOrEmpty(movie.ImageUrl) ? movie.ImageUrl : NoImage)" class="img-fluid img-thumbnail" alt="@movie.Title Picture" style="object-fit: contain">
                             </div>
                             <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 opacity-0 hover-overlay"></div>
                             <div class="card-body d-flex flex-column justify-content-between flex-grow-1">

@@ -1,5 +1,7 @@
 ﻿@model SelectedPlayViewModel
 
+@using static ActorsCastings.Common.ApplicationConstants
+
 <div class="container mt-5">
     <h1 class="text-center">Add Play to Your Profile</h1>
 
@@ -17,7 +19,7 @@
                     <div class="card h-100 clickable-card @((play.IsSelected ? "selected" : ""))" data-play-id="@play.Id" onclick="toggleSelection(this)">
                         <div class="card-body">
                             <h5 class="card-title">@play.Title</h5>
-                            <img src="@play.ImageUrl" class="card-img-top" alt="@play.Title Picture" style="max-height: 200px; object-fit: contain" />
+                            <img src="@(!string.IsNullOrEmpty(play.ImageUrl) ? play.ImageUrl : NoImage)" class="card-img-top" alt="@play.Title Picture" style="max-height: 200px; object-fit: contain" />
                             <p class="card-text">
                                 <strong>Release Year:</strong> @play.ReleaseYear <br />
                                 <strong>Director:</strong> @play.Director

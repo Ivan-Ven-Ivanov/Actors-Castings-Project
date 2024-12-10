@@ -1,5 +1,7 @@
 ﻿@model SelectedMovieViewModel
 
+@using static ActorsCastings.Common.ApplicationConstants
+
 <div class="container mt-5">
     <h1 class="text-center">Add Movie to Your Profile</h1>
 
@@ -17,7 +19,7 @@
                     <div class="card h-100 clickable-card @((movie.IsSelected ? "selected" : ""))" data-movie-id="@movie.Id" onclick="toggleSelection(this)">
                         <div class="card-body">
                             <h5 class="card-title">@movie.Title</h5>
-                            <img src="@movie.ImageUrl" class="card-img-top" alt="@movie.Title Picture" style="max-height: 200px; object-fit: contain" />
+                            <img src="@(!string.IsNullOrEmpty(movie.ImageUrl) ? movie.ImageUrl : NoImage)" class="card-img-top" alt="@movie.Title Picture" style="max-height: 200px; object-fit: contain" />
                             <p class="card-text">
                                 <strong>Release Year:</strong> @movie.ReleaseYear <br />
                                 <strong>Director:</strong> @movie.Director
