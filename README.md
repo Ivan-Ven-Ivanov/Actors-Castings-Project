@@ -53,6 +53,7 @@ The application is divided into several projects:
 -    **ActorsCastings.Web.Infrastructure**: Additional infrastructure that the Web project uses like extension methods and HTML helpers.
 -    **ActorsCastings.Web.ViewModels**: The models that pass information from the Database to the Views.
 -    **ActorsCastings.Common**: Constant messages, Exception messages etc.
+-    **ActorsCastings.Services.Tests**: Unit Tests for the services.
 
 License
 -------
