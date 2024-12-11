@@ -3,7 +3,6 @@ using ActorsCastings.Data.Repository.Interfaces;
 using ActorsCastings.Services.Data.Interfaces;
 using ActorsCastings.Web.ViewModels.Actor;
 using ActorsCastings.Web.ViewModels.Casting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
 
@@ -19,20 +18,16 @@ namespace ActorsCastings.Services.Data
         private readonly IRepository<Actor, Guid> _actorRepository;
         private readonly IRepository<CastingAgent, Guid> _castingAgentRepository;
         private readonly IRepository<ActorCasting, Guid> _actorCastingRepository;
-        private readonly UserManager<ApplicationUser> _userManager;
-
         public CastingService(
             IRepository<Casting, Guid> repository,
             IRepository<Actor, Guid> actorRepository,
             IRepository<CastingAgent, Guid> castingAgentRepository,
-            IRepository<ActorCasting, Guid> actorCastingRepository,
-            UserManager<ApplicationUser> userManager)
+            IRepository<ActorCasting, Guid> actorCastingRepository)
         {
             _castingRepository = repository;
             _actorRepository = actorRepository;
             _castingAgentRepository = castingAgentRepository;
             _actorCastingRepository = actorCastingRepository;
-            _userManager = userManager;
         }
         public async Task AddCastingAsync(AddCastingViewModel model, string userId)
         {
@@ -132,7 +127,7 @@ namespace ActorsCastings.Services.Data
 
             CastingDetailsViewModel model = new CastingDetailsViewModel
             {
-                Id = id.ToString(),
+                Id = id,
                 Title = casting.Title,
                 Description = casting.Description,
                 CastingEnd = casting.CastingEnd.ToString(CastingEndDateTimeFormatString),
