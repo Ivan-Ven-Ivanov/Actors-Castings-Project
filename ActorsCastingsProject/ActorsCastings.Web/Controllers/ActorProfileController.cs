@@ -59,6 +59,9 @@ namespace ActorsCastings.Web.Controllers
                 string? userId = _userManager.GetUserId(User);
                 await _actorProfileService.CompleteActorProfileAsync(userId, model);
 
+                var user = await _userManager.FindByIdAsync(userId);
+                user.PhoneNumber = model.PhoneNumber;
+
                 return RedirectToAction("Index", "Home");
             }
             catch (ArgumentException aEx)
