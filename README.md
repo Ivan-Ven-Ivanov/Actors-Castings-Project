@@ -32,7 +32,7 @@ Installation
 
 Clone the repository, restore project dependencies, update your connection string in `appsetings.json` and apply migrations.
 
-If you want to test the application as Admin, the username and password are in `appsetings.json`.
+*If you want to test the application as Admin, the username and password are in `appsetings.json`.*
 
 Role Management
 ---------------
