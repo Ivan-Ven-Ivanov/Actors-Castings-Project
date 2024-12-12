@@ -14,7 +14,7 @@ namespace ActorsCastings.Web.Infrastructure.HtmlHelpers
                 return new HtmlString(HtmlEncoder.Default.Encode(text));
             }
 
-            string safeText = HtmlEncoder.Default.Encode(text);
+            string? safeText = HtmlEncoder.Default.Encode(text ?? string.Empty);
             string safeQuery = HtmlEncoder.Default.Encode(query);
 
             string highlightedText = Regex.Replace(

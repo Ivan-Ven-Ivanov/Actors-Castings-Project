@@ -65,7 +65,6 @@ namespace ActorsCastings.Web.Controllers
             }
             catch (KeyNotFoundException)
             {
-                //TODO: Logging
                 return RedirectToAction("Error", "Home", new { statusCode = 404 });
             }
         }
