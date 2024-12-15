@@ -152,6 +152,7 @@ namespace ActorsCastings.Services.Data
             List<CastingViewModel> models = await _castingRepository
                 .GetAllAttached()
                 .Include(c => c.ActorsCastings)
+                .Where(c => c.IsApproved)
                 .OrderByDescending(c => c.CreatedOn)
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)

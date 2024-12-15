@@ -23,7 +23,7 @@
 @{
     string? userId = userManager.GetUserId(User);
 
-    if (await castingAgentService.IsUserCastingAgentAsync(userId))
+    if (userId != null && await castingAgentService.IsUserCastingAgentAsync(userId))
     {
         <div class="mb-4">
             <a asp-action="Add" class="btn btn-success btn-lg d-inline-flex align-items-center shadow-sm" style="gap: 10px; padding: 10px 20px; border-radius: 8px;">

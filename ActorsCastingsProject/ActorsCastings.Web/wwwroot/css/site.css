@@ -53,12 +53,11 @@ body {
 }
 
 .clickable-card:hover {
-    transform: scale(1.05); /* Slightly enlarge on hover */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
-    text-decoration: none; /* Ensure text doesn't get underlined */
+    transform: scale(1.05); 
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
+    text-decoration: none; 
 }
 
-    /* Overlay effect on hover */
     .clickable-card:hover .hover-overlay {
         opacity: 1;
     }
@@ -69,7 +68,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5); /* Dark transparent overlay */
+    background: rgba(0, 0, 0, 0.5); 
     opacity: 0;
     transition: opacity 0.2s ease-in-out;
 }

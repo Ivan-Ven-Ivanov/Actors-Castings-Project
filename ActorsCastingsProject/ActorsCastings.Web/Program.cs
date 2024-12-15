@@ -2,6 +2,7 @@ using ActorsCastings.Data.Models;
 using ActorsCastings.Services.Data;
 using ActorsCastings.Web.Data;
 using ActorsCastings.Web.Infrastructure.Extensions;
+using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -34,7 +35,7 @@ namespace ActorsCastings.Web
             builder.Services.AddCookiePolicy(options =>
             {
                 options.Secure = CookieSecurePolicy.Always;
-                options.HttpOnly = Microsoft.AspNetCore.CookiePolicy.HttpOnlyPolicy.Always;
+                options.HttpOnly = HttpOnlyPolicy.Always;
                 options.MinimumSameSitePolicy = SameSiteMode.Strict;
             });
 
